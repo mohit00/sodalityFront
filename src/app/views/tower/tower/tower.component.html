@@ -1,0 +1,69 @@
+
+<div class="m-033">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['/Tower/Add']"
+    routerLinkActive="router-link-active"
+    style="margin-bottom: 10px; float:right"
+  >
+  Add Tower
+
+  </button>
+<mat-form-field class="margin-333" style="width: 100%">
+  <input 
+  matInput 
+  placeholder="Type to filter all columns" 
+  value=""
+  (keyup)='updateFilter($event)'>
+</mat-form-field>
+
+<div class="mat-box-shadow margin-333">
+    <ngx-datatable class="material bg-white" 
+    [columnMode]="'force'"  
+    [headerHeight]="50"
+    [footerHeight]="50" 
+    [rowHeight]="50"
+    [limit]="8"
+    [rows]="rows"
+    [columns]="columns" >
+    <ngx-datatable-column name="id" [sortable]="true">
+        <ng-template    let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+          {{rowIndex + 1}}
+        </ng-template>
+      </ngx-datatable-column>
+        
+      <ngx-datatable-column name="Name" [sortable]="true">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.towerName}}
+            </ng-template>
+        </ngx-datatable-column>
+      <ngx-datatable-column name="Tower Description" [sortable]="true">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.towerDescription}}
+            </ng-template>
+        </ngx-datatable-column>
+        
+      <ngx-datatable-column name="created Date">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.createdDate | date:'shortDate'}}
+          </ng-template>
+        </ngx-datatable-column>
+    <ngx-datatable-column name="last Modified Date">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{row.lastModifiedDate | date:'shortDate'}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Action">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              <button mat-icon-button aria-label="Example icon-button with a heart icon" (click) = "editTower(row.uuid)">
+                  <mat-icon>edit</mat-icon>
+                </button> 
+                <button mat-icon-button aria-label="Example icon-button with a heart icon" style ="color:red" >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+           </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+</div>
+</div>

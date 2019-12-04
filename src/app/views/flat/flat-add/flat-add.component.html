@@ -1,0 +1,131 @@
+<mat-card class="p-0">
+    <mat-card-title class="">
+      <div class="card-title-text">Flat {{pageType}}</div>
+      <mat-divider></mat-divider>
+    </mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Flat Info</ng-template>
+            
+            <div fxLayout="row wrap">
+                <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Flat No.</mat-label>
+                        <input matInput placeholder="Placeholder"   formControlName="unit_no" required  >
+                        
+                       </mat-form-field>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
+      <mat-form-field appearance="outline">
+          <mat-label>Flat Type</mat-label> 
+          <mat-select    formControlName="unit_type" required  >
+            <mat-option  value ="commercial" >
+                Commercial
+            </mat-option>
+            <mat-option  value ="residential" >
+                Residential
+            </mat-option>
+          </mat-select>
+         
+         </mat-form-field>
+    </div>
+    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
+        <mat-form-field appearance="outline"   >
+                 <mat-label>Select Tower</mat-label>
+    
+                <mat-select   formControlName="parentId" required >
+                  <mat-option *ngFor="let list of towerList" [value]="list.uuid">
+                    {{list.towerName}}
+                  </mat-option>
+                </mat-select>
+           </mat-form-field>
+      </div>
+      <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
+          <mat-form-field appearance="outline">
+              <mat-label>Flat Super Area(sq ft)</mat-label>
+              <input matInput type ="number" placeholder="Placeholder"  formControlName="unit_super_area" required     >
+              
+             </mat-form-field>
+</div>
+<div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="100">
+    <mat-form-field appearance="outline">
+        <mat-label>Unit of measurement</mat-label> 
+        <mat-select nake ="UOM" formControlName="UOM" required >
+          <mat-option  value ="KW" >
+              KW
+          </mat-option>
+          <mat-option  value ="KV" >
+              KV
+          </mat-option>
+        </mat-select>        
+       </mat-form-field>
+</div>
+<div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="100">
+    <mat-form-field appearance="outline">
+        <mat-label>Sanctioned Load Grid</mat-label>
+        <input  type ="number" matInput placeholder="Placeholder"    formControlName="sanctionedLoadGrid" required  >
+        
+       </mat-form-field>
+</div>
+<div fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="100">
+    <mat-form-field appearance="outline">
+        <mat-label>Sanctioned Load BackUp</mat-label>
+        <input  type ="number" matInput placeholder="Placeholder"   formControlName="sanctionedLoadBackUp" required >
+        
+       </mat-form-field>
+</div>
+<div fxFlex="100" fxFlex.gt-sm="34" fxFlex.sm="100">
+    <mat-form-field appearance="outline">
+        <mat-label>Flat Status</mat-label> 
+        <mat-select  formControlName="soldStatus" required >
+          <mat-option  value ="Sold" >
+              Sold
+          </mat-option>
+          <mat-option  value ="Sold" >
+              Not Sold
+          </mat-option>
+        </mat-select>
+       
+       </mat-form-field>
+</div>
+ <div fxFlex="100" fxFlex.gt-sm="34" fxFlex.sm="100" *ngIf ="firstFormGroup.value.unit_type == 'residential'">
+    <mat-form-field appearance="outline">
+        <mat-label>Flat Remark</mat-label> 
+        <mat-select  formControlName="unit_remark"   >
+          <mat-option  value ="1bhk" >
+              1 Bhk
+          </mat-option>
+          <mat-option  value ="2bhk" >
+              2 Bhk
+          </mat-option>
+          <mat-option  value ="3bhk" >
+              3 Bhk
+          </mat-option>
+          <mat-option  value ="4bhk" >
+              4 Bhk
+          </mat-option>
+          <mat-option  value ="5bhk" >
+              5 Bhk
+          </mat-option>
+        </mat-select>
+       
+       </mat-form-field>
+</div>
+
+<div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100">
+    <mat-form-field appearance="outline" class="textareaForm">
+        <mat-label>About Flat</mat-label>
+        <textarea matInput placeholder="About Flat"     formControlName="Description"  ></textarea>
+        
+      </mat-form-field>
+  </div>
+  </div>
+  <div fxLayout="row">
+      <button mat-raised-button color="accent" routerLink="/Unit/List"  >Back</button>
+      <span fxFlex="8px"></span>
+      <button mat-raised-button color="primary"(click) ="createUnit();" *ngIf ="pageType == 'Add'">Submit</button>
+      <button mat-raised-button color="primary"(click) ="updateUnit();" *ngIf ="pageType == 'Update'">Update</button>
+  
+    </div>
+  </form>
+      </mat-card-content></mat-card>

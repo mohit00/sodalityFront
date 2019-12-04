@@ -1,0 +1,47 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div class="card-title-text">Tower {{pageType}}</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+      <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Tower Info</ng-template>
+          
+          <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                  <mat-form-field appearance="outline">
+                      <mat-label>Tower Name</mat-label>
+                      <input matInput placeholder="Placeholder" formControlName="name" required  >
+                      <mat-error *ngIf="hasfirstError('name','required')">
+                          This field <strong>required</strong>
+                        </mat-error>
+                     </mat-form-field>
+</div>
+<div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+    <mat-form-field appearance="outline">
+        <mat-label>No. Of Floor</mat-label>
+        <input matInput type ="number" placeholder="Placeholder" formControlName="no_of_tower" required  >
+        <mat-error *ngIf="hasfirstError('no_of_tower','required')">
+            This field <strong>required</strong>
+          </mat-error>
+       </mat-form-field>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100">
+      <mat-form-field appearance="outline" class="textareaForm">
+          <mat-label>About Tower</mat-label>
+          <textarea matInput placeholder="About Address"  formControlName="description" required></textarea>
+          <mat-error *ngIf="hasfirstError('description','required')">
+              This field <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </div>
+</div>
+<div fxLayout="row">
+    <button mat-raised-button color="accent" routerLink="/Tower/List"  >Back</button>
+    <span fxFlex="8px"></span>
+    <button mat-raised-button color="primary"(click) ="createTower();" *ngIf ="pageType == 'Add'">Submit</button>
+    <button mat-raised-button color="primary"(click) ="updateTower();" *ngIf ="pageType == 'Update'">Update</button>
+
+  </div>
+</form>
+    </mat-card-content></mat-card>
