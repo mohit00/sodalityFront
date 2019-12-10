@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   apiURL: 'developmentApi',
-  LOCAL_BASE:' http://localhost:8080/'
+  LOCAL_BASE:' http://192.168.54.231:8080/'
 };
