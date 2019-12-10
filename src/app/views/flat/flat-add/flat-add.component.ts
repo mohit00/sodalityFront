@@ -88,7 +88,7 @@ export class FlatAddComponent implements OnInit {
       unit_type: [data.unit_type, [
         Validators.required
       ]], 
-      parentId: [sessionStorage.getItem('toweruuId'), [
+      parentId: [{value:sessionStorage.getItem('toweruuId'),disabled: true,} , [
         Validators.required
       ]], 
       uuId:[data.uuid, [
@@ -109,7 +109,7 @@ export class FlatAddComponent implements OnInit {
         Validators.required
       ]],unit_remark: [data.unit_remark, [
          
-      ]]k
+      ]]
     }) 
   }
   ngOnInit() {
