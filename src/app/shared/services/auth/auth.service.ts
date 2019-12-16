@@ -22,7 +22,7 @@ BASE_URL =  environment.LOCAL_BASE;
                  ) { }
       
      login(data:any): Observable < any > {
-
+     
       return this._http.post(  this.BASE_URL+'user/login', data).pipe(
         // eg. "map" without a dot before
         map(data => {
@@ -31,7 +31,7 @@ BASE_URL =  environment.LOCAL_BASE;
         // "catchError" instead "catch"
         catchError(error => {
           alert("Something went wrong ;)");
-          return Observable.throw('Something went wrong ;)');
+          return Observable.throw(error);
         })
       );
     }   

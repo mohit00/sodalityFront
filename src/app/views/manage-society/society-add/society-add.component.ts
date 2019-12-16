@@ -277,7 +277,7 @@ this.Service.societySave(this.fd).subscribe(res=>{
  this.dialog.success(dataJson);
  this.Router.navigate(['society/List']);
 })
-  }
+}
 
   updateSociety(){
     let billLogoArray=[];

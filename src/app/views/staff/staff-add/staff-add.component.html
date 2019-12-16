@@ -1,3 +1,215 @@
-<p>
-  staff-add works!
-</p>
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div class="card-title-text">Staff {{pageType}}</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <mat-horizontal-stepper [linear]="true">
+      <mat-step [stepControl]="firstFormGroup">
+   
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Basic Info</ng-template>
+          
+          <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="name" required  >
+                <mat-error *ngIf="hasfirstError('name','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+             </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>Employee ID</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="employeeId" required  >
+                <mat-error *ngIf="hasfirstError('employeeId','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>Mobile Number</mat-label>
+                <input matInput placeholder="Placeholder"  formControlName="mobileNumber" required  >
+                <mat-error *ngIf="hasfirstError('mobileNumber','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>Designation</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="designation" required >
+                <mat-error *ngIf="hasfirstError('designation','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>Category</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="category"   >
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+                <mat-form-field appearance="outline">
+                  <mat-label>DateOfBirth</mat-label>
+                  <input matInput placeholder="Placeholder" formControlName="dateOfBirth" [matDatepicker]="dobDatepicker">
+                  <mat-datepicker-toggle matSuffix [for]="dobDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #dobDatepicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="100">
+              <mat-form-field appearance="outline" class="textareaForm">
+                <mat-label>Address</mat-label>
+                <textarea matInput placeholder="Leave a comment" formControlName="address" ></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        <div>
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+         <ng-template matStepLabel>Verification Details</ng-template>
+         <div fxLayout="row wrap">
+         <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>DateOfCardIssue</mat-label>
+              <input matInput placeholder="Date" formControlName="dateOfCardIssue" [matDatepicker]="appDatepicker">
+              <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #appDatepicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>Valid Upto</mat-label>
+                <input matInput name  = "validUpto" placeholder="Valid Upto" formControlName="validUpto" [matDatepicker]="validDatepicker">
+                <mat-datepicker-toggle matSuffix [for]="validDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #validDatepicker></mat-datepicker>
+              </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>From</mat-label>
+              <input matInput placeholder="From" formControlName="from" [matDatepicker]="fromDatepicker">
+              <mat-datepicker-toggle matSuffix [for]="fromDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #fromDatepicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>To</mat-label>
+                <input matInput name = "to" placeholder="To" formControlName="to" [matDatepicker]="toDatepicker">
+                <mat-datepicker-toggle matSuffix [for]="toDatepicker"></mat-datepicker-toggle>
+                <mat-datepicker #toDatepicker></mat-datepicker>
+              </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Aadhar No.</mat-label>
+              <input matInput placeholder="Aadhar No."  formControlName="aadharNo">
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>Work Area</mat-label>
+                <mat-select formControlName="chooseStaffWorkArea">
+                    <mat-option value="Tower">
+                        Tower
+                    </mat-option>
+                    <mat-option value="Club">
+                        Club
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" style = "margin-top: 15px;">
+              <mat-checkbox> Police Verification</mat-checkbox>
+          </div>
+        </div>
+        <div>
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+         <ng-template matStepLabel>Document Upload</ng-template>
+         <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100"> 
+ 
+                <mat-label >Photo</mat-label>
+                <div class="upload-btn-wrapper" style="width: 100%;">
+                    <button mat-icon-button  aria-label="Example icon-button with a heart icon">
+                        <mat-icon style ="font-size: 44px;">cloud_upload</mat-icon>
+                      </button>
+                      <input  style="width:100%" type="file"   (change)="handleFileInput($event.target.files,'pic')" multiple />
+                    </div>
+               <table class="default-table mat-box-shadow mb-24" style="width: 100%">
+                  <thead>
+                  <tr>
+                      <th width="30%"> Photo Name</th>
+                      <th>Size</th>
+                       <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody *ngIf="pic.length>0; else picNoData">
+                  <tr *ngFor="let item of pic;let index = index">
+                      <td>{{ item.name }}</td>
+                      <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
+                    
+                      
+                      <td nowrap>
+                         
+            
+                          <button 
+                          mat-raised-button
+                          color="warn"
+                          class="mx-4"
+                          (click)="remove(index,'pic')">Remove</button>
+                          <button 
+                          mat-raised-button
+                          color="primary"
+                          class="mx-4"
+                          (click)="view(item)">View</button>
+                      </td>
+                  </tr>
+                  </tbody>
+                  <ng-template #picNoData>
+                    <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
+                  </ng-template>
+              </table>
+            </div>
+         </div>
+         <div fxLayout="row">
+            <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+            <span fxFlex="18px"></span>
+            <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+        </form>
+      </mat-step>
+          <mat-step>
+        <ng-template matStepLabel >Done</ng-template>
+        <div>
+          <mat-icon class="pt-1" [style.fontSize]="'36px'">check</mat-icon>
+        </div>
+        <div class="pb-1 mb-1"> You Are Done.</div>
+        <div fxLayout="row">
+          <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+          <span fxFlex="8px"></span>
+          <button mat-raised-button color="primary"(click) ="createStaff();" *ngIf ="pageType == 'Add'">Submit</button>
+          <button mat-raised-button color="primary"(click) ="updateStaff();" *ngIf ="pageType == 'Update'">Update</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card-content>
+</mat-card>
+ 

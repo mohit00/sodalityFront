@@ -31,3 +31,4 @@ import { Signin2Component } from './signin2/signin2.component';
   declarations: [ForgotPasswordComponent, LockscreenComponent, NotFoundComponent, ErrorComponent, Signup2Component,   Signin2Component]
 })
 export class SessionsModule { }
+

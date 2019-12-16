@@ -22,6 +22,13 @@ export class TablesService {
   SOCIETY_UPDATE = 'user/Society/Update';
 
   GET_SOCIETY_DATA_BY_ID = 'user/get/society/'
+
+   //Staff
+   GET_STAFF_LIST = 'user/get/society/staff'
+   GET_STAFF_BY_UUID = 'user/get/staff/'
+   SAVE_STAFF = 'user/staff/save'
+   UPDATE_STAFF = 'user/staff/update'
+
   //Tower
   GET_TOWER_LIST = 'Tower/get/List'
   GET_TOWER_BY_UUID = 'Tower/get'
@@ -32,6 +39,11 @@ UNIT_ADD='Unit/Add';
 UNIT_GET_BY_TOWER ='Unit/Get'
 UNIT_UPDATE ='Unit/Update';
 UNIT_DETAIL_BY_UUID ='Unit/Get';
+//Category
+GET_CATEGORY_LIST = 'Category/Get'
+//GET_CATEGORY_BY_UUID = 'Category/get'
+SAVE_CATEGORY = 'Category/Add'
+UPDATE_CATEGORY = 'Category/Update'
 
   constructor(private _http: HttpClient, private router: Router
     // tslint:disable-next-line: no-shadowed-variable
@@ -239,7 +251,143 @@ UNIT_DETAIL_BY_UUID ='Unit/Get';
       })
     );
   }
- 
+  getCategoryList(): Observable<any> {
+    
+    this.userDetail = JSON.parse(sessionStorage.getItem('data'));
+    let dataJson = {
+      parentId: this.userDetail.data.id
+    }
+    return this._http.post(this.BASE_URL + this.GET_CATEGORY_LIST, dataJson).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  /*getCategory(): Observable<any> {
+
+     
+    return this._http.get(this.BASE_URL + this.GET_CATEGORY_BY_UUID+'/'+sessionStorage.getItem('categoryuuId')).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }*/
+ saveCategory(data): Observable<any> {
+  this.userDetail = JSON.parse(sessionStorage.getItem('data'));
+  data.parentId = this.userDetail.data.id
+
+
+    return this._http.post(this.BASE_URL + this.SAVE_CATEGORY,data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  updateCategory(data): Observable<any> {
+
+    this.userDetail = JSON.parse(sessionStorage.getItem('data'));
+
+    data.parent_id = this.userDetail.data.id
+   
+    return this._http.put(this.BASE_URL + this.UPDATE_CATEGORY,data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+
+  getStaffList(): Observable<any> {
+    let dataJson = {
+      uuid: sessionStorage.getItem('uuId')
+    }
+
+    return this._http.post(this.BASE_URL + this.GET_STAFF_LIST, dataJson).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+
+  staffget(data): Observable<any> {
+
+    return this._http.get(this.BASE_URL + this.GET_STAFF_BY_UUID + data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  staffSave(data): Observable<any> {
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type':  'application/x-www-form-urlencoded' 
+    //    })
+    // };
+    return this._http.post(this.BASE_URL + this.SAVE_STAFF, data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  staffUpdate(data): Observable<any> {
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type':  'application/x-www-form-urlencoded' 
+    //    })
+    // };
+    return this._http.put(this.BASE_URL + this.UPDATE_STAFF, data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
 
   handleError = (e) => {
   }

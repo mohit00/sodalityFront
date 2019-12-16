@@ -1,0 +1,30 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div class="card-title-text">Category {{pageType}}</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+      <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Category Info</ng-template>
+          
+          <div fxLayout="row wrap">
+              <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100">
+                  <mat-form-field appearance="outline">
+                      <mat-label>Category Title</mat-label>
+                      <input matInput placeholder="Placeholder" formControlName="title" required  >
+                      <mat-error *ngIf="hasfirstError('title','required')">
+                          This field <strong>required</strong>
+                        </mat-error>
+                     </mat-form-field>
+</div>
+
+</div>
+<div fxLayout="row">
+    <button mat-raised-button color="accent" routerLink="/Category/List"  >Back</button>
+    <span fxFlex="8px"></span>
+    <button mat-raised-button color="primary"(click) ="createCategory();" *ngIf ="pageType == 'Add'">Submit</button>
+    <button mat-raised-button color="primary"(click) ="updateCategory();" *ngIf ="pageType == 'Update'">Update</button>
+
+  </div>
+</form>
+    </mat-card-content></mat-card>

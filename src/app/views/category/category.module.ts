@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TowerComponent } from './tower/tower.component';
-import { TowerAddComponent } from './tower-add/tower-add.component';
-import {towerRoutingModule} from './tower.routing'
+import { CategoryRoutingModule } from './category-routing.module';
+import { CategoryComponent } from './category/category.component';
+import { CategoryAddComponent } from './category-add/category-add.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -11,10 +11,11 @@ import { MatTableDataSource } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
-  declarations: [TowerComponent, TowerAddComponent],
-  imports: [FlexLayoutModule,
-    CommonModule,towerRoutingModule,FormsModule, ReactiveFormsModule, 
-     NgxDatatableModule,SharedMaterialModule
+  declarations: [CategoryComponent, CategoryAddComponent],
+  imports: [
+    CommonModule,FlexLayoutModule,FormsModule, ReactiveFormsModule, 
+    NgxDatatableModule,SharedMaterialModule,
+    CategoryRoutingModule
   ],providers:[MatTableDataSource]
 })
-export class TowerModule { }
+export class CategoryModule { }

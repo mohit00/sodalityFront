@@ -123,10 +123,9 @@ export class NavigationService {
         { name: "Society Info", state: "society/Update" },
         { name: "Tower", state: "Tower" },
         { name: "Flat", state: "Unit" },
-
         { name: "Resident", state: "Resident" },
-        { name: "staff", state: "Staff" },
-
+        { name: "Category", state: "Category" },
+        { name: "Staff", state: "Staff" },
        ]
     }
     // {

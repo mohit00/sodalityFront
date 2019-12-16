@@ -4,7 +4,7 @@
   "license": "https://themeforest.net/licenses/terms/regular",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4300",
     "serveProd": "ng serve --environment=prod",
     "build": "ng build --prod=true --aot=true --extractCss=true --optimization=true",
     "test": "ng test",

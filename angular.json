@@ -22,7 +22,7 @@
             ],
             "styles": [
               "src/assets/styles/app.scss"
-            ],
+             ],
             "scripts": []
           },
           "configurations": {

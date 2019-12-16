@@ -51,7 +51,17 @@ export const rootRouterConfig: Routes = [
                 data: { title: 'Flat', breadcrumb: 'Flat'}
 
 
-      }
+      },{
+        path:'Category',
+        loadChildren: () => import('./views/category/category.module').then(m => m.CategoryModule),
+                data: { title: 'Category', breadcrumb: 'Category'}
+
+      },{
+        path:'Staff',
+        loadChildren: () => import('./views/staff/staff.module').then(m => m.StaffModule),
+                data: { title: 'Staff', breadcrumb: 'Staff'}
+
+      },
      
     ]
   }

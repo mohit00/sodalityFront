@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { TablesService } from 'app/views/manage-society/manage-society.service';
 import { Router } from '@angular/router';
-
+ 
 @Component({
-  selector: 'app-staff',
-  templateUrl: './staff.component.html',
-  styleUrls: ['./staff.component.scss']
+  selector: 'app-category',
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.scss']
 })
-export class StaffComponent implements OnInit {
+export class CategoryComponent implements OnInit {
   rows = [];
   columns = [];
   temp = [];
@@ -17,8 +17,9 @@ export class StaffComponent implements OnInit {
   ngOnInit() {
     this.columns = this.service.getDataConf();
      
-     this.getStaffList();
+     this.getCategoryList();
   }
+
   updateFilter(event) {
     const val = event.target.value.toLowerCase();
     var columns = Object.keys(this.temp[0]);
@@ -38,14 +39,16 @@ export class StaffComponent implements OnInit {
     });
     this.rows = rows;
   }
-  editStaff(data){
-sessionStorage.setItem('uuId',data);
-this.Router.navigate(['staff/Update']);
+
+  editCategory(data){
+    sessionStorage.setItem('categoryparentId',data);
+    this.Router.navigate(['Category/Update']);
   }
-  getStaffList(){
-    this.service.getStaffList().subscribe(res=>{
-      console.log(JSON.stringify(res.data))
-      this.rows = this.temp =res.data;
-    })
+
+  getCategoryList() {
+    this.service.getCategoryList().subscribe(res=>{
+        console.log(JSON.stringify(res))
+        this.rows = this.temp =res;
+      })
   }
 }
