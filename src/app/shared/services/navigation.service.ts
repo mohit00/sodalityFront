@@ -108,11 +108,16 @@ export class NavigationService {
     },
     {
       name: "DASHBOARD",
-      type: "link",
-      tooltip: "Dashboard",
+       tooltip: "Dashboard",
       icon: "dashboard",
-      state: "dashboard/default",
-       
+      
+      type: "dropDown",
+      
+        sub: [
+        { name: "Sodality Dash", state: "dashboard/default" },
+        { name: "facility Dashboard", state: "dashboard/facility" },
+        { name: "myxenius", state: "dashboard/myxenius" },
+        ]
     } ,
     {
       name: "Manage Society",

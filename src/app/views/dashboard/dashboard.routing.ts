@@ -12,14 +12,14 @@ export const DashboardRoutes: Routes = [
     data: { title: "Default", breadcrumb: "Default" }
   },
   {
-    path: "analytics",
+    path: "facility",
     component: AnalyticsComponent,
     data: { title: "Analytics", breadcrumb: "Analytics" }
   },
   {
-    path: "crypto",
+    path: "myxenius",
     component: CryptocurrencyComponent,
-    data: { title: "Cryptocurrency", breadcrumb: "Cryptocurrency" }
+    data: { title: "Cryptocurrency", breadcrumb: "myxenius" }
   },
   {
     path: "dark",
