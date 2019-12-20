@@ -62,8 +62,13 @@
 
                                   <mat-form-field appearance="outline">
                                       <mat-label>Contact Number</mat-label>
-                                      <input matInput placeholder="Placeholder" formControlName="contactNumber"   >
-                                     
+                                      <input matInput  type ="number" placeholder="Placeholder" formControlName="contactNumber" required  >
+                                      <mat-error *ngIf="hasfirstError('contactNumber','required')">
+                                        This field <strong>required</strong>
+                                      </mat-error>
+                                       <mat-error *ngIf="hasfirstError('contactNumber','minLength')">
+                                          Must Be <strong> greator than 6 character</strong>
+                                        </mat-error>
                                      </mat-form-field>
                                     </div>
                                     <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
@@ -213,7 +218,6 @@
       </mat-step>
       <mat-step [stepControl]="secondFormGroup">
           <form [formGroup]="secondFormGroup">
-           
             <ng-template matStepLabel>Society Image</ng-template>
             <div fxLayout="row wrap">
                 <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50"> 

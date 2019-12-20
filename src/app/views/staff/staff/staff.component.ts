@@ -39,8 +39,8 @@ export class StaffComponent implements OnInit {
     this.rows = rows;
   }
   editStaff(data){
-sessionStorage.setItem('uuId',data);
-this.Router.navigate(['staff/Update']);
+sessionStorage.setItem('detailUuid',data);
+this.Router.navigate(['Staff/Update']);
   }
   getStaffList(){
     this.service.getStaffList().subscribe(res=>{

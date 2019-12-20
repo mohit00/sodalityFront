@@ -16,13 +16,16 @@ const routes: Routes = [{
   data: {
      title: "Add",
      breadcrumb: "Add"
+     ,
+       id:""
      }
   },{
     path:"Update",
     component:CategoryAddComponent,
     data: {
        title: "Update",
-       breadcrumb: "Update"
+       breadcrumb: "Update",
+       id:""
        }
   },{ 
     path: '', 

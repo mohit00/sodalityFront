@@ -40,7 +40,7 @@ export class TowerComponent implements OnInit {
     this.rows = rows;
   }
   editTower(data){
-sessionStorage.setItem('toweruuId',data);
+sessionStorage.setItem('detailUuid',data);
 this.Router.navigate(['Tower/Update']);
   }
   getSocietyList(){

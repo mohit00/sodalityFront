@@ -1,3 +1,292 @@
-<p>
-  resident-add works!
-</p>
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div class="card-title-text">Resident {{pageType}}</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <mat-horizontal-stepper [linear]="true">
+      <mat-step [stepControl]="firstFormGroup">
+   
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Basic Info</ng-template>
+          
+          <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="100">
+              <mat-form-field appearance="outline">
+                <mat-label>first Name</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="firstName" required  >
+                <mat-error *ngIf="hasfirstError('firstName','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+             </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="100">
+              <mat-form-field appearance="outline">
+                <mat-label>Middle Name</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="middleName"    >
+               
+             </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="100">
+              <mat-form-field appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="lastName" required  >
+                <mat-error *ngIf="hasfirstError('lastName','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+             </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="25">
+              <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="email" required  >
+                <mat-error *ngIf="hasfirstError('email','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+             </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="25">
+              <mat-form-field appearance="outline">
+                <mat-label>Alternate Email Id</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="alternateEmailId"  >
+                
+             </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>Mobile Number</mat-label>
+                <input matInput placeholder="Placeholder" type  ="number"  formControlName="mobileNumber" required  >
+                <mat-error *ngIf="hasfirstError('mobileNumber','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+              <mat-form-field appearance="outline">
+                <mat-label>Alternate Mobile Number</mat-label>
+                <input matInput placeholder="Placeholder" type  ="number"  formControlName="alternateMobileNumber"    >
+                 
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="25">
+              <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="password" required  >
+                <mat-error *ngIf="hasfirstError('password','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        <div>
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+         <ng-template matStepLabel>Resident Society Details</ng-template>
+         <div fxLayout="row wrap">
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Select Tower</mat-label>
+                          <mat-select  formControlName="towerId"  (selectionChange)="getflatList(secondFormGroup.value.towerId)"  > 
+              <mat-option  *ngFor ="let list of towerList" [value] ="list.uuid">{{list.towerName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div>
+         
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>landLine</mat-label>
+              <input matInput placeholder="Placeholder" type  ="number"  formControlName="landLine"    >
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Intercom</mat-label>
+              <input matInput placeholder="Placeholder" type  ="number"  formControlName="intercom" required  >
+              <mat-error *ngIf="hasSecondError('intercom','required')">
+                This field <strong>required</strong>
+              </mat-error>
+
+            </mat-form-field>
+          </div>
+ 
+          
+         
+          
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Occupation</mat-label>
+              <input matInput placeholder="Placeholder" type  ="text"   formControlName="occupation"  >
+              
+
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+              <mat-form-field appearance="outline" >
+                <mat-label>Resident Type</mat-label>
+                <mat-select    formControlName="residentType" >
+                    <mat-option value="Owner">
+                        Owner
+                    </mat-option>
+                    <mat-option value="Tentent">
+                        Tentent
+                    </mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Access Card Number</mat-label>
+            <input matInput placeholder="Placeholder" type  ="text"   formControlName="accessCardNumber"   >
+            
+
+          </mat-form-field>
+          </div>
+         
+
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Possesion Date</mat-label>
+              <input matInput placeholder="Placeholder" formControlName="possesionDate" [matDatepicker]="dobDatepicker">
+              <mat-datepicker-toggle matSuffix [for]="dobDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #dobDatepicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <mat-form-field appearance="outline">
+              <mat-label>Service Start Date</mat-label>
+              <input matInput placeholder="Placeholder" formControlName="serviceStartDate" [matDatepicker]="appDatepicker">
+              <mat-datepicker-toggle matSuffix [for]="appDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #appDatepicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+         
+          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" style = "margin-top: 15px;">
+
+            <mat-checkbox  formControlName="residentResiding"  > Resident Residing</mat-checkbox>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" style = "margin-top: 15px;">
+          <mat-checkbox  formControlName="clubMembership" > club Membership</mat-checkbox>
+      </div>
+    
+    <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100">
+           
+      <mat-form-field appearance="outline" style="margin-top: 13px;">
+        <!-- <mat-label>Unit Owned</mat-label>
+                    <mat-select  formControlName="flatOwned"  multiple> 
+        <mat-option *ngFor ="let list of flatList" [value] ="list.uuid"  >{{list.unitNo}}</mat-option>
+      </mat-select> -->
+
+         <mat-chip-list #chipList aria-label="Unit Selection">
+          <mat-chip
+            *ngFor="let fruit of fruits"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="removechip(fruit.uuid)">
+            {{fruit.unitNo}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Add Unit..."
+            #fruitInput
+            [formControl]="fruitCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let fruit of flatList" [value]="fruit">
+            {{fruit.unitNo}}
+          </mat-option>
+        </mat-autocomplete>
+     
+    </mat-form-field>
+    </div>
+        </div>
+        <div style="
+        margin-top: 14px;">
+          <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+
+          <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+         <ng-template matStepLabel>Document Upload</ng-template>
+         <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100"> 
+ 
+                <mat-label >Photo</mat-label>
+                <div class="upload-btn-wrapper" style="width: 100%;">
+                    <button mat-icon-button  aria-label="Example icon-button with a heart icon">
+                        <mat-icon style ="font-size: 44px;">cloud_upload</mat-icon>
+                      </button>
+                      <input  style="width:100%" type="file"   (change)="handleFileInput($event.target.files,'pic')" multiple />
+                    </div>
+               <table class="default-table mat-box-shadow mb-24" style="width: 100%">
+                  <thead>
+                  <tr>
+                      <th width="30%"> Photo Name</th>
+                      <th>Size</th>
+                       <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody *ngIf="pic.length>0; else picNoData">
+                  <tr *ngFor="let item of pic;let index = index">
+                      <td>{{ item.name }}</td>
+                      <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
+                    
+                      
+                      <td nowrap>
+                         
+            
+                          <button 
+                          mat-raised-button
+                          color="warn"
+                          class="mx-4"
+                          (click)="remove(index,'pic')">Remove</button>
+                          <button 
+                          mat-raised-button
+                          color="primary"
+                          class="mx-4"
+                          (click)="view(item)">View</button>
+                      </td>
+                  </tr>
+                  </tbody>
+                  <ng-template #picNoData>
+                    <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
+                  </ng-template>
+              </table>
+            </div>
+         </div>
+         <div fxLayout="row">
+            <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+            <span fxFlex="18px"></span>
+            <button mat-raised-button color="primary" matStepperNext>Next</button>
+        </div>
+        </form>
+      </mat-step>
+          <mat-step>
+        <ng-template matStepLabel >Done</ng-template>
+        <div>
+          <mat-icon class="pt-1" [style.fontSize]="'36px'">check</mat-icon>
+        </div>
+        <div class="pb-1 mb-1"> You Are Done.</div>
+        <div fxLayout="row">
+          <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+          <span fxFlex="8px"></span>
+          <button mat-raised-button color="primary"(click) ="createResident();" *ngIf ="pageType == 'Add'">Submit</button>
+          <button mat-raised-button color="primary"(click) ="updateResident();" *ngIf ="pageType == 'Update'">Update</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card-content>
+</mat-card>
+ 

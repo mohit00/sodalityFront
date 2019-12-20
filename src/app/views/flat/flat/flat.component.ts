@@ -42,7 +42,7 @@ export class FlatComponent implements OnInit {
     this.rows = rows;
   }
   editTower(data){
-sessionStorage.setItem('unituuId',data);
+sessionStorage.setItem('detailUuid',data);
 this.Router.navigate(['Unit/Update']);
   }
 

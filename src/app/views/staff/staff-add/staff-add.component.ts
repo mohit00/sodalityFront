@@ -33,17 +33,16 @@ export class StaffAddComponent implements OnInit {
   }
   ngOnInit() {
     this.createForm();
-
+    this.categoryList();
     this.pageType = sessionStorage.getItem('breadCrumb');
      if(this.pageType=='Add'){
-      this.createForm();
-     }else if(this.pageType=='Update'){
+      }else if(this.pageType=='Update'){
       this.staffDetail();
      }
   }
 
   staffDetail(){
-    this.Service.staffget(sessionStorage.getItem("uuId")).subscribe(res=>{
+    this.Service.staffget(sessionStorage.getItem("detailUuid")).subscribe(res=>{
       this.updateForm(res)
     })
   }
@@ -56,19 +55,27 @@ export class StaffAddComponent implements OnInit {
       this.pic.push({name:data.staffDetals.pic.split('/')[2]})
     }
     this.firstFormGroup = this.fb.group({
+      id:[data.id],
       name: [data.staffDetals.name, [
         Validators.required
       ]],
+      email: [data.email, [
+        Validators.required,
+        Validators.email
+      ]], password: [data.password, [
+        Validators.required
+      ]],
+      staffDetailId:[data.staffDetals.id],
       employeeId: [data.staffDetals.employeeId, [
         Validators.required
       ]],
-      mobileNumber: [data.staffDetals.mobileNumber, [
+      mobileNumber: [parseInt(data.staffDetals.mobileNumber), [
         Validators.required
       ]],
       designation: [data.staffDetals.designation, [
         Validators.required
       ]],
-      category: [data.staffDetals.category],
+      categoryId: [data.staffDetals.category.uuid],
       dateOfBirth: [data.staffDetals.dateOfBirth],
       address: [data.staffDetals.address],
     });
@@ -88,6 +95,12 @@ export class StaffAddComponent implements OnInit {
 
   createForm(){
     this.firstFormGroup = this.fb.group({
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ]], password: ['', [
+        Validators.required
+      ]],
       name: ['', [
         Validators.required
       ]],
@@ -100,7 +113,7 @@ export class StaffAddComponent implements OnInit {
       designation: ['', [
         Validators.required
       ]],
-      category: [''],
+      categoryId: [''],
       dateOfBirth: [''],
       address: [''],
     });
@@ -141,7 +154,12 @@ export class StaffAddComponent implements OnInit {
         }
       }
     }
-
+    categoryListData:any;
+    categoryList(){
+      this.Service.getCategoryList().subscribe(res=>{
+        this.categoryListData = res;
+       })
+    }
   fd: FormData;
   createStaff() {
     this.fd = new FormData();
@@ -151,16 +169,17 @@ export class StaffAddComponent implements OnInit {
       }
     }else{
       this.fd.append("pic", "");
-    }
-    
+    } 
     let dataJson = {
-      user_type: 'Staff',
-      staffDetals: {
+      email:this.firstFormGroup.value.email,
+      password:this.firstFormGroup.value.password,
+      parent_id: this.userDetail.data.id, 
+      userDetail: {
         name: this.firstFormGroup.value.name,
         employeeId: this.firstFormGroup.value.employeeId,
         mobileNumber: this.firstFormGroup.value.mobileNumber,
         designation: this.firstFormGroup.value.designation,
-        category: this.firstFormGroup.value.category,
+        categoryId: this.firstFormGroup.value.categoryId,
         dateOfBirth: this.firstFormGroup.value.dateOfBirth,
         address: this.firstFormGroup.value.address,
         dateOfCardIssue: this.secondFormGroup.value.dateOfCardIssue,
@@ -172,52 +191,42 @@ export class StaffAddComponent implements OnInit {
         policeVerification: this.secondFormGroup.value.policeVerification,
       }
     }
+    console.log(JSON.stringify(dataJson));
     this.fd.append("data", JSON.stringify(dataJson));
     console.log(this.fd)
-    //this.AppLoaderService.open();
+     this.AppLoaderService.open();
 
     this.Service.staffSave(this.fd).subscribe(res=>{
-      this.AppLoaderService.close();
+       this.AppLoaderService.close();
       let dataJson = {
         title:'success',
         message:'Staff Successfully Created'
       }
       this.dialog.success(dataJson);
-      this.Router.navigate(['staff/List']);
+      this.Router.navigate(['Staff/List']);
     })
   }
 
  updateStaff(){
-  let picArray=[];
   this.fd = new FormData();
   if (this.pic.length > 0) {
     for (var i = 0; i < this.pic.length; i++) {
-      if(this.pic[i].size){
-        this.fd.append("pic", this.pic[i]);
-
-      }else{
-        picArray.push(this.pic[i].name);
-      }
+      this.fd.append("pic", this.pic[i]);
     }
   }else{
     this.fd.append("pic", "");
-  }
-  
+  } 
   let dataJson = {
-    /*id:this.dataDetail.id.toString(),
-    password: this.dataDetail.password,*/
-    user_type: 'Staff',
-    /*parent_id: this.dataDetail.data.id,
-    email: this.dataDetail.email,
-    uuid:this.dataDetail.uuid,*/
-    staffDetals: {
-      id:this.dataDetail.staffDetals.id.toString(),
-     // createdDate:this.dataDetail.createdDate,
+    id:this.firstFormGroup.value.id,
+    email:this.firstFormGroup.value.email,
+    password:this.firstFormGroup.value.password,
+    userDetail: {
+      id:this.firstFormGroup.value.staffDetailId,
       name: this.firstFormGroup.value.name,
       employeeId: this.firstFormGroup.value.employeeId,
-      mobileNumber: this.firstFormGroup.value.mobileNumber,
+      mobileNumber: parseInt(this.firstFormGroup.value.mobileNumber),
       designation: this.firstFormGroup.value.designation,
-      category: this.firstFormGroup.value.category,
+      categoryId: this.firstFormGroup.value.categoryId,
       dateOfBirth: this.firstFormGroup.value.dateOfBirth,
       address: this.firstFormGroup.value.address,
       dateOfCardIssue: this.secondFormGroup.value.dateOfCardIssue,
@@ -227,21 +236,21 @@ export class StaffAddComponent implements OnInit {
       aadharNo: this.secondFormGroup.value.aadharNo,
       chooseStaffWorkArea: this.secondFormGroup.value.chooseStaffWorkArea,
       policeVerification: this.secondFormGroup.value.policeVerification,
-      picArray:picArray[0]
     }
   }
+  console.log(JSON.stringify(dataJson));
   this.fd.append("data", JSON.stringify(dataJson));
   console.log(this.fd)
-  this.AppLoaderService.open();
+   this.AppLoaderService.open();
 
   this.Service.staffUpdate(this.fd).subscribe(res=>{
-  this.AppLoaderService.close();
-  let dataJson = {
-    title:'success',
-    message:'Staff Updated Created'
-  }
-  this.dialog.success(dataJson);
-  this.Router.navigate(['staff/List']);
+    this.AppLoaderService.close();
+    let dataJson = {
+      title:'success',
+      message:'Staff Successfully Updated'
+    }
+    this.dialog.success(dataJson);
+    this.Router.navigate(['Staff/List']);
   })
 }
 

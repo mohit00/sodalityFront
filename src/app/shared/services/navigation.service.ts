@@ -69,15 +69,7 @@ export class NavigationService {
        sub: [
         { name: "Society", state: "society/List" },
        ]
-    }
-    // {
-    //   name: "CHARTS",
-    //   type: "link",
-    //   tooltip: "Charts",
-    //   icon: "show_chart",
-    //   state: "charts"
-    // },
-     
+    }    
   ];
 
   societyDash: IMenuItem[] = [
@@ -127,7 +119,9 @@ export class NavigationService {
        sub: [
         { name: "Society Info", state: "society/Update" },
         { name: "Tower", state: "Tower" },
-        { name: "Flat", state: "Unit" },
+        { name: "Unit Type", state: "UnitType/List" },
+
+        { name: "Unit", state: "Unit" },
         { name: "Resident", state: "Resident" },
         { name: "Category", state: "Category" },
         { name: "Staff", state: "Staff" },

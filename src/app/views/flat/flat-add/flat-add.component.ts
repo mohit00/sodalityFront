@@ -19,6 +19,7 @@ export class FlatAddComponent implements OnInit {
   firstFormGroup:FormGroup;
    pageType:any;
   towerList: any;
+  unitType: any;
   constructor(private Router:Router, private fb: FormBuilder,private Service:TablesService,private AppLoaderService:AppLoaderService,private dialog:AppConfirmService) {
     this.createForm();
  
@@ -61,6 +62,8 @@ export class FlatAddComponent implements OnInit {
         Validators.required
       ]] ,unit_remark: ['', [
          
+      ]],pipeGas: [false, [
+         
       ]]
     }) 
   }
@@ -68,6 +71,11 @@ export class FlatAddComponent implements OnInit {
   public hasfirstError = (controlName: string, errorName: string) => {
     return this.firstFormGroup.controls[controlName].hasError(errorName);
  }
+ getUnitTypeList() {
+  this.Service.getUnitTypeList().subscribe(res=>{
+        this.unitType=res.data;
+    })
+}
   towerDetail(){
  this.Service.getFlat().subscribe(res=>{
     
@@ -109,11 +117,14 @@ export class FlatAddComponent implements OnInit {
         Validators.required
       ]],unit_remark: [data.unit_remark, [
          
+      ]],pipeGas: [data.pipeGas, [
+         
       ]]
     }) 
   }
   ngOnInit() {
-    this.getTowerList()
+    this.getTowerList();
+    this.getUnitTypeList();
   }
   createUnit(){
     this.AppLoaderService.open();

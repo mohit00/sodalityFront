@@ -6,11 +6,11 @@ import { AppConfirmService } from 'app/shared/services/app-confirm/app-confirm.s
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-category-add',
-  templateUrl: './category-add.component.html',
-  styleUrls: ['./category-add.component.scss']
+  selector: 'app-unit-type-add',
+  templateUrl: './unit-type-add.component.html',
+  styleUrls: ['./unit-type-add.component.scss']
 })
-export class CategoryAddComponent implements OnInit {
+export class UnitTypeAddComponent implements OnInit {
 
 
   firstFormGroup: FormGroup;
@@ -34,6 +34,12 @@ export class CategoryAddComponent implements OnInit {
     this.firstFormGroup = this.fb.group({
       title: ['', [
         Validators.required
+      ]],carpetArea: ['', [
+        Validators.required
+      ]],builtUpArea: ['', [
+        Validators.required
+      ]],superBuiltUpArea: ['', [
+        Validators.required
       ]],
     })
   }
@@ -46,12 +52,13 @@ export class CategoryAddComponent implements OnInit {
 
   categoryDetail(id: any) { 
 
-    this.Service.getCategory(id).subscribe(res => {
+    this.Service.unitTypeget(id).subscribe(res => {
        this.updateForm(res);
     })
   }
   
-  updateForm(res: { title: any; id: any; parrentAccount: any; uuid: any; }) {
+  updateForm(res: any) {
+    console.log(JSON.stringify(res))
     this.firstFormGroup = this.fb.group({
       title: [res.title, [
         Validators.required
@@ -62,39 +69,46 @@ export class CategoryAddComponent implements OnInit {
       uuid: [res.uuid],
       parrentAccount: [res.parrentAccount, [
         Validators.required
-      ]],
-      uuId: [res.uuid, [
+      ]] ,
+        carpetArea: [res.carpetArea, [
+        Validators.required
+      ]],builtUpArea: [res.builtUpArea, [
+        Validators.required
+      ]],superBuiltUpArea: [res.superBuiltUpArea, [
         Validators.required
       ]],
     })
   }
+
   ngOnInit() {
   }
-  createCategory() {
+  createUnitType() {
     this.AppLoaderService.open();
-
-    this.Service.saveCategory(this.firstFormGroup.value).subscribe(res => {
+    this.firstFormGroup.value.parent_id = (sessionStorage.getItem('uuId'));
+    console.log(JSON.stringify(this.firstFormGroup.value))
+    this.Service.unitTypeSave(this.firstFormGroup.value).subscribe(res => {
       this.AppLoaderService.close();
       let dataJson = {
         title: 'success',
-        message: 'Category Successfully Created'
+        message: 'Unit Type Successfully Created'
       }
       this.dialog.success(dataJson);
-      this.Router.navigate(['Category/List']);
+      this.Router.navigate(['UnitType/List']);
     })
 
   }
-  updateCategory() {
+  updateUnitType() {
     this.AppLoaderService.open();
+    this.firstFormGroup.value.parent_id = (sessionStorage.getItem('uuId'));
 
-    this.Service.updateCategory(this.firstFormGroup.value).subscribe(res => {
+    this.Service.unitTypeUpdate(this.firstFormGroup.value).subscribe(res => {
       this.AppLoaderService.close();
       let dataJson = {
         title: 'sucess',
-        message: 'Category Successfully Updated'
+        message: 'Unit Type Successfully Updated'
       }
       this.dialog.success(dataJson);
-      this.Router.navigate(['Category/List']);
+      this.Router.navigate(['UnitType/List']);
     })
 
   }

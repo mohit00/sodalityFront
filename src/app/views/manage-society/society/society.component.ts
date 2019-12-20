@@ -40,7 +40,7 @@ export class SocietyComponent implements OnInit {
     this.rows = rows;
   }
   editSociety(data){
-sessionStorage.setItem('uuId',data);
+sessionStorage.setItem('detailUuid',data);
 this.Router.navigate(['society/Update']);
   }
   getSocietyList(){

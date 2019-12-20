@@ -93,7 +93,9 @@ export class SocietyAddComponent implements OnInit {
       ]], password: [{value:data.password,   disabled: true} , [
         Validators.required
       ]],
-      contactNumber: [data.societyDetail.contactNumber],
+      contactNumber: [parseInt(data.societyDetail.contactNumber),[
+        Validators.required
+      ]],
       contactEmail: [data.societyDetail.contactEmail, [
         Validators.email
       ]],
@@ -131,7 +133,9 @@ export class SocietyAddComponent implements OnInit {
       password: ['', [
         Validators.required
       ]],
-      contactNumber: [''],
+      contactNumber: ['',[
+        Validators.required
+      ]],
       contactEmail: ['', [
         Validators.email
       ]],
@@ -349,7 +353,7 @@ let societyLogoArray=[];
 
 
     let dataJson = {
-      id:this.dataDetail.id.toString(),
+      id:this.dataDetail.id,
 
       password: this.dataDetail.password,
       user_type: 'Society',

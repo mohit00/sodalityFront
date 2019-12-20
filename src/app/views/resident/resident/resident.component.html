@@ -1,3 +1,86 @@
-<p>
-  resident works!
-</p>
+
+<div class="m-033">
+  <button
+    mat-raised-button
+    color="primary"
+    [routerLink]="['/Resident/Add']"
+    routerLinkActive="router-link-active"
+    style="margin-bottom: 10px; float:right" >
+  Add Resident
+
+  </button>
+  <button
+  mat-raised-button
+  color="primary"
+  [routerLink]="['/Resident/Family/Member/Add']"
+  routerLinkActive="router-link-active"
+  style="margin-bottom: 10px; float:right" >
+Add  Family Member
+
+</button>
+<mat-form-field class="margin-333" style="width: 100%">
+  <input 
+  matInput 
+  placeholder="Type to filter all columns" 
+  value=""
+  (keyup)='updateFilter($event)'>
+</mat-form-field>
+
+<div class="mat-box-shadow margin-333">
+    <ngx-datatable class="material bg-white" 
+    [columnMode]="'force'"  
+    [headerHeight]="50"
+    [footerHeight]="50" 
+    [rowHeight]="'auto'"
+    [limit]="8"
+    [rows]="rows"
+    [columns]="columns" >
+    <ngx-datatable-column name="id" [sortable]="true">
+        <ng-template    let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+          {{rowIndex + 1}}
+        </ng-template>
+      </ngx-datatable-column>
+        
+      <ngx-datatable-column name="Name" [sortable]="true">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.firstName }}
+            </ng-template>
+        </ngx-datatable-column>
+      <ngx-datatable-column name="Email" [sortable]="true">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.email}}
+            </ng-template>
+        </ngx-datatable-column>
+      <ngx-datatable-column name="Mobile Number" [sortable]="true">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.mobileNumber}}
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="club Member Ship" [sortable]="true">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+                {{row.clubMemberShip}}
+              </ng-template>
+          </ngx-datatable-column>
+      <ngx-datatable-column name="created Date">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{row.createdDate | date:'shortDate'}}
+          </ng-template>
+        </ngx-datatable-column>
+    <ngx-datatable-column name="last Modified Date">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{row.lastModifiedDate | date:'shortDate'}}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Action">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+              <button mat-icon-button aria-label="Example icon-button with a heart icon" (click) = "editStaff(row.uuid)">
+                  <mat-icon>edit</mat-icon>
+                </button> 
+                <button mat-icon-button aria-label="Example icon-button with a heart icon" style ="color:red" >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+           </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+</div>
+</div>

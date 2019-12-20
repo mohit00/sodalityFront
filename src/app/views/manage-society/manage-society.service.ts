@@ -41,10 +41,19 @@ UNIT_UPDATE ='Unit/Update';
 UNIT_DETAIL_BY_UUID ='Unit/Get';
 //Category
 GET_CATEGORY_LIST = 'Category/Get'
-//GET_CATEGORY_BY_UUID = 'Category/get'
+GET_CATEGORY_BY_UUID = 'Category/Get/'
 SAVE_CATEGORY = 'Category/Add'
 UPDATE_CATEGORY = 'Category/Update'
-
+//Resident
+GET_RESIDENT_LIST ='user/get/society/resident';
+GET_RESIDENT_BY_UUID = 'user/get/resident/'
+SAVE_RESIDENT = 'user/resident/save'
+UPDATE_RESIDENT= 'user/resident/update'
+// Unit Type
+GET_UNIT_TYPE ='Unittype/Get';
+GET_UNIT_TYPE_BY_UUID = 'Unittype/Get/'
+SAVE_UNIT_TYPE = 'Unittype/Add'
+UPDATE_UNIT_TYPET= 'Unittype/Update'
   constructor(private _http: HttpClient, private router: Router
     // tslint:disable-next-line: no-shadowed-variable
   ) {
@@ -141,7 +150,7 @@ UPDATE_CATEGORY = 'Category/Update'
   getTower(): Observable<any> {
 
      
-    return this._http.get(this.BASE_URL + this.GET_TOWER_BY_UUID+'/'+sessionStorage.getItem('toweruuId')).pipe(
+    return this._http.get(this.BASE_URL + this.GET_TOWER_BY_UUID+'/'+sessionStorage.getItem('detailUuid')).pipe(
       // eg. "map" without a dot before
       map(data => {
         return data;
@@ -239,7 +248,7 @@ UPDATE_CATEGORY = 'Category/Update'
 
     
 
-    return this._http.get(this.BASE_URL + this.UNIT_DETAIL_BY_UUID+'/'+sessionStorage.getItem('unituuId')).pipe(
+    return this._http.get(this.BASE_URL + this.UNIT_DETAIL_BY_UUID+'/'+sessionStorage.getItem('detailUuid')).pipe(
       // eg. "map" without a dot before
       map(data => {
         return data;
@@ -269,10 +278,10 @@ UPDATE_CATEGORY = 'Category/Update'
       })
     );
   }
-  /*getCategory(): Observable<any> {
+ getCategory(id): Observable<any> {
 
      
-    return this._http.get(this.BASE_URL + this.GET_CATEGORY_BY_UUID+'/'+sessionStorage.getItem('categoryuuId')).pipe(
+    return this._http.get(this.BASE_URL + this.GET_CATEGORY_BY_UUID+id).pipe(
       // eg. "map" without a dot before
       map(data => {
         return data;
@@ -283,7 +292,7 @@ UPDATE_CATEGORY = 'Category/Update'
         return Observable.throw('Something went wrong ;)');
       })
     );
-  }*/
+  } 
  saveCategory(data): Observable<any> {
   this.userDetail = JSON.parse(sessionStorage.getItem('data'));
   data.parentId = this.userDetail.data.id
@@ -388,7 +397,138 @@ UPDATE_CATEGORY = 'Category/Update'
       })
     );
   }
+// Resident function
 
+getResidentList(): Observable<any> {
+  let dataJson = {
+    uuid: sessionStorage.getItem('uuId')
+  }
+
+  return this._http.post(this.BASE_URL + this.GET_RESIDENT_LIST, dataJson).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
+
+residentget(data): Observable<any> {
+
+  return this._http.get(this.BASE_URL + this.GET_RESIDENT_BY_UUID + data).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
+residentSave(data): Observable<any> {
+  
+  return this._http.post(this.BASE_URL + this.SAVE_RESIDENT, data).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
+residentUpdate(data): Observable<any> {
+  // const httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/x-www-form-urlencoded' 
+  //    })
+  // };
+  return this._http.put(this.BASE_URL + this.UPDATE_RESIDENT, data).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
+// Unit Type Service 
+
+getUnitTypeList(): Observable<any> {
+  let dataJson = {
+    parentId: sessionStorage.getItem('uuId')
+  }
+
+  return this._http.post(this.BASE_URL + this.GET_UNIT_TYPE, dataJson).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
+
+unitTypeget(data): Observable<any> {
+
+  return this._http.get(this.BASE_URL + this.GET_UNIT_TYPE_BY_UUID + data).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
+unitTypeSave(data): Observable<any> {
+ 
+  return this._http.post(this.BASE_URL + this.SAVE_UNIT_TYPE, data).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
+unitTypeUpdate(data): Observable<any> {
+   // const httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type':  'application/x-www-form-urlencoded' 
+  //    })
+  // };
+  return this._http.put(this.BASE_URL + this.UPDATE_UNIT_TYPET, data).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
   handleError = (e) => {
   }
   getDataConf() {

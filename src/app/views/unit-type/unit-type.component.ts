@@ -3,11 +3,11 @@ import { TablesService } from 'app/views/manage-society/manage-society.service';
 import { Router,NavigationExtras } from '@angular/router';
  
 @Component({
-  selector: 'app-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  selector: 'app-unit-type',
+  templateUrl: './unit-type.component.html',
+  styleUrls: ['./unit-type.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class UnitTypeComponent implements OnInit {
   rows = [];
   columns = [];
   temp = [];
@@ -43,13 +43,13 @@ export class CategoryComponent implements OnInit {
   editCategory(data){
  
     sessionStorage.setItem('detailUuid',data);
-    this.Router.navigate(['Category/Update' ]);  
+    this.Router.navigate(['UnitType/Update' ]);  
   }
 
   getCategoryList() {
-    this.service.getCategoryList().subscribe(res=>{
+    this.service.getUnitTypeList().subscribe(res=>{
         console.log(JSON.stringify(res))
-        this.rows = this.temp =res;
+        this.rows = this.temp =res.data;
       })
   }
 }

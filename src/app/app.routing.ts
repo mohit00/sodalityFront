@@ -61,6 +61,16 @@ export const rootRouterConfig: Routes = [
         loadChildren: () => import('./views/staff/staff.module').then(m => m.StaffModule),
                 data: { title: 'Staff', breadcrumb: 'Staff'}
 
+      },{
+        path:'Resident',
+        loadChildren: () => import('./views/resident/resident.module').then(m => m.ResidentModule),
+                data: { title: 'Resident', breadcrumb: 'Resident'}
+
+      },{
+        path:'UnitType',
+        loadChildren: () => import('./views/unit-type/unit-type.module').then(m => m.UnitTypeModule),
+                data: { title: 'Unit Type', breadcrumb: 'UnitType'}
+
       },
      
     ]
