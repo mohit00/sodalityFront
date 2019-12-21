@@ -1,0 +1,77 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div class="card-title-text">Resident {{pageType}}</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="firstFormGroup">
+      {{this.firstFormGroup.value |json}}
+      <ng-template matStepLabel>Family Info</ng-template>
+
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Placeholder"  formControlName="name"  required>
+          
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="email" required>
+           
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="password"  required>
+            <mat-error *ngIf="hasfirstError('password','required')">
+              This field <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Mobile number</mat-label>
+            <input matInput placeholder="Placeholder" type="number"  formControlName="mobileNumber" >
+           </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
+          <mat-form-field appearance="outline">
+               <mat-label>RelationShip</mat-label>
+              <mat-select formControlName="relationShip">
+                  <mat-option value="Tower">
+                      Father
+                  </mat-option>
+                  <mat-option value="Club">
+                      Mother
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+         </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
+             <mat-form-field appearance="outline">
+              <mat-label>Unit Owner</mat-label>
+              <mat-select formControlName="parent_id">
+                  <mat-option *ngFor ="let list of residentListData" value="{{list.uuid}}">
+                      {{list.firstName }}
+                  </mat-option>
+                 
+                </mat-select>
+ 
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row">
+        <button mat-raised-button color="accent" routerLink="/UnitType/List">Back</button>
+        <span fxFlex="8px"></span>
+        <button mat-raised-button color="primary" (click)="addFamilyMember();" *ngIf="pageType == 'Family Add'">Submit</button>
+        <button mat-raised-button color="primary" (click)="updateFamilyMember();"
+          *ngIf="pageType == 'Family Update'">Update</button>
+
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

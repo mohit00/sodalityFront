@@ -9,12 +9,12 @@
   Add Resident
 
   </button>
-  <button
+  <button  
   mat-raised-button
   color="primary"
   [routerLink]="['/Resident/Family/Member/Add']"
   routerLinkActive="router-link-active"
-  style="margin-bottom: 10px; float:right" >
+  style="margin-bottom: 10px; float:right;margin-right: 10px;" >
 Add  Family Member
 
 </button>
@@ -76,6 +76,10 @@ Add  Family Member
               <button mat-icon-button aria-label="Example icon-button with a heart icon" (click) = "editStaff(row.uuid)">
                   <mat-icon>edit</mat-icon>
                 </button> 
+                
+                <button mat-icon-button aria-label="Example icon-button with a heart icon" (click) ="familyMemberList(row.uuid)" >
+                  <mat-icon>group_add</mat-icon>
+                </button>
                 <button mat-icon-button aria-label="Example icon-button with a heart icon" style ="color:red" >
                     <mat-icon>delete</mat-icon>
                   </button>

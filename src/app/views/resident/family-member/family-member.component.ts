@@ -3,11 +3,11 @@ import { TablesService } from 'app/views/manage-society/manage-society.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-resident',
-  templateUrl: './resident.component.html',
-  styleUrls: ['./resident.component.scss']
+  selector: 'app-family-member',
+  templateUrl: './family-member.component.html',
+  styleUrls: ['./family-member.component.scss']
 })
-export class ResidentComponent implements OnInit {
+export class FamilyMemberComponent implements OnInit {
   rows = [];
   columns = [];
   temp = [];
@@ -39,7 +39,7 @@ export class ResidentComponent implements OnInit {
     this.rows = rows;
   }
   familyMemberList(data){
-  this.Router.navigate(['']);
+  this.Router.navigate(['Family/Member/List']);
 
   }
   editStaff(data){
