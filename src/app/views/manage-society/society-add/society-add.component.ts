@@ -45,8 +45,8 @@ export class SocietyAddComponent implements OnInit {
     
   }
   societyDetail(){
-
-    this.Service.societyget(sessionStorage.getItem("uuId")).subscribe(res=>{
+ 
+    this.Service.societyget(sessionStorage.getItem("detailUuid")).subscribe(res=>{
        
        this.updateForm(res)
     })

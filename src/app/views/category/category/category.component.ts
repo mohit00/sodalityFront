@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TablesService } from 'app/views/manage-society/manage-society.service';
 import { Router,NavigationExtras } from '@angular/router';
- 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
@@ -11,10 +10,9 @@ export class CategoryComponent implements OnInit {
   rows = [];
   columns = [];
   temp = [];
-
   constructor(private service: TablesService,private Router:Router) { }
-
   ngOnInit() {
+  alert("sd")
     this.columns = this.service.getDataConf();
      
      this.getCategoryList();
@@ -47,7 +45,9 @@ export class CategoryComponent implements OnInit {
   }
 
   getCategoryList() {
-    this.service.getCategoryList().subscribe(res=>{
+      
+
+    this.service.getCategoryList(JSON.parse(sessionStorage.getItem('data')).id).subscribe(res=>{
         console.log(JSON.stringify(res))
         this.rows = this.temp =res;
       })

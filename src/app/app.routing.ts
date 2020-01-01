@@ -71,6 +71,11 @@ export const rootRouterConfig: Routes = [
         loadChildren: () => import('./views/unit-type/unit-type.module').then(m => m.UnitTypeModule),
                 data: { title: 'Unit Type', breadcrumb: 'UnitType'}
 
+      },{
+        path:'Complain',
+        loadChildren: () => import('./views/complain/complain.module').then(m => m.ComplainModule),
+                data: { title: 'Complain', breadcrumb: 'Complain'}
+
       },
      
     ]

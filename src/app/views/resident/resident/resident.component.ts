@@ -39,7 +39,8 @@ export class ResidentComponent implements OnInit {
     this.rows = rows;
   }
   familyMemberList(data){
-  this.Router.navigate(['']);
+    sessionStorage.setItem(this.service.FAMILY_Owner_UUID,data)
+  this.Router.navigate(['Resident/Family/Member/List']);
 
   }
   editStaff(data){

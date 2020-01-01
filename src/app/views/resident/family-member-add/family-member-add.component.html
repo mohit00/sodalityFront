@@ -5,8 +5,7 @@
   </mat-card-title>
   <mat-card-content>
     <form [formGroup]="firstFormGroup">
-      {{this.firstFormGroup.value |json}}
-      <ng-template matStepLabel>Family Info</ng-template>
+       <ng-template matStepLabel>Family Info</ng-template>
 
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="100">
@@ -42,10 +41,10 @@
           <mat-form-field appearance="outline">
                <mat-label>RelationShip</mat-label>
               <mat-select formControlName="relationShip">
-                  <mat-option value="Tower">
+                  <mat-option value="Father">
                       Father
                   </mat-option>
-                  <mat-option value="Club">
+                  <mat-option value="Mother">
                       Mother
                   </mat-option>
                 </mat-select>
@@ -65,7 +64,7 @@
         </div>
       </div>
       <div fxLayout="row">
-        <button mat-raised-button color="accent" routerLink="/UnitType/List">Back</button>
+        <button mat-raised-button color="accent" routerLink="/Resident/Family/Member/List">Back</button>
         <span fxFlex="8px"></span>
         <button mat-raised-button color="primary" (click)="addFamilyMember();" *ngIf="pageType == 'Family Add'">Submit</button>
         <button mat-raised-button color="primary" (click)="updateFamilyMember();"

@@ -42,12 +42,12 @@ export class FamilyMemberComponent implements OnInit {
   this.Router.navigate(['Family/Member/List']);
 
   }
-  editStaff(data){
-sessionStorage.setItem('detailUuid',data);
-this.Router.navigate(['Resident/Update']);
+  editFamilyMember(data){
+sessionStorage.setItem(this.service.FAMILY_MEMBER_UUID,data);
+this.Router.navigate(['/Resident/Family/Member/Update']);
   }
   getStaffList(){
-    this.service.getResidentList().subscribe(res=>{
+    this.service.getFamilyList(sessionStorage.getItem(this.service.FAMILY_Owner_UUID)).subscribe(res=>{
       console.log(JSON.stringify(res.data))
         this.rows = this.temp =res.data;
     })

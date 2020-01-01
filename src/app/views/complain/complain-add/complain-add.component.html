@@ -1,0 +1,103 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+    <div class="card-title-text">Complain {{pageType}}</div>
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Category Info</ng-template>
+      <div fxLayout="row wrap">
+        <div fxFlex="100" fxFlex.gt-sm="75" fxFlex.sm="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Complain Title</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="title" required>
+            <mat-error *ngIf="hasfirstError('title','required')">
+              This field <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Select Category</mat-label>
+            <mat-select required formControlName="categoryUuid">
+              <mat-option *ngFor ="let list of categoryList"value="{{list.uuid}}">
+                {{list.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100" *ngIf ="flatList.length > 1">
+          <mat-form-field appearance="outline">
+            <mat-label>Select Flat</mat-label>
+            <mat-select required formControlName="unitUuid">
+              <mat-option *ngFor ="let list of flatList"value="{{list.uuid}}">
+                {{list.unitNo}}
+              </mat-option>
+ 
+            </mat-select>
+          </mat-form-field>
+        </div>
+       
+       
+        <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100"> 
+ 
+          <mat-label >Complain Images</mat-label>
+          <div class="upload-btn-wrapper" style="width: 100%;">
+              <button mat-icon-button  aria-label="Example icon-button with a heart icon">
+                  <mat-icon style ="font-size: 44px;">cloud_upload</mat-icon>
+                </button>
+              <input  style="width:100%" type="file"  multiple  (change)="handleFileInput($event.target.files,'logo')" />
+            </div>
+          <table class="default-table mat-box-shadow mb-24" style="width: 100%">
+            <thead>
+            <tr>
+                <th width="30%"> Logo Name</th>
+                <th>Size</th>
+                 <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody *ngIf="complainImage.length>0; else societyLogoNoData">
+            <tr *ngFor="let item of complainImage;let index = index">
+                <td>{{ item.name }}</td>
+                <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
+              
+                
+                <td nowrap>
+                   
+    
+                    <button 
+                    mat-raised-button
+                    color="warn"
+                    class="mx-4"
+                    (click)="remove(index,'logo')">Remove</button>
+                    <button 
+                    mat-raised-button
+                    color="primary"
+                    class="mx-4"
+                    (click)="view(item)">View</button>
+                </td>
+            </tr>
+            </tbody>
+            <ng-template #societyLogoNoData>
+              <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
+            </ng-template>
+        </table>
+     </div>
+     <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100">
+      <mat-form-field appearance="outline" class="textareaForm">
+        <mat-label>Complain Description</mat-label>
+        <textarea matInput placeholder="Complain Description" formControlName="description"></textarea>
+      </mat-form-field>
+    </div>
+      </div>
+      <div fxLayout="row">
+        <button mat-raised-button color="accent" routerLink="/Category/List">Back</button>
+        <span fxFlex="8px"></span>
+        <button mat-raised-button color="primary" (click)="createCategory();" *ngIf="pageType == 'Add'">Submit</button>
+        <button mat-raised-button color="primary" (click)="updateCategory();"
+          *ngIf="pageType == 'Update'">Update</button>
+
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

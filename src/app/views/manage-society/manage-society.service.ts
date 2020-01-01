@@ -16,6 +16,9 @@ import { environment } from 'environments/environment';
 })
 export class TablesService {
   userDetail: any;
+  FAMILY_Owner_UUID = "familyOwnerUUid";
+  FAMILY_MEMBER_UUID = "familyMemberUUid";
+
   BASE_URL = environment.LOCAL_BASE;
   GET_SOCIETY_LIST = 'user/get/admin/society';
   SOCIETY_SAVE = 'user/Save/society';
@@ -49,6 +52,7 @@ export class TablesService {
   GET_RESIDENT_BY_UUID = 'user/get/resident/'
   SAVE_RESIDENT = 'user/resident/save'
   UPDATE_RESIDENT = 'user/resident/update'
+  GET_RESIDENT_FLAT = 'Unit/Resident/Get/';
   // Unit Type
   GET_UNIT_TYPE = 'Unittype/Get';
   GET_UNIT_TYPE_BY_UUID = 'Unittype/Get/'
@@ -60,11 +64,75 @@ export class TablesService {
   FAMILY_GET_BY_UUID = 'user/family/get/';
   FAMILY_GET_LIST = 'user/family/get';
   FAMILY_UPDATE = 'user/family/update';
+// Parent GET UUid 
+GET_PARENT_UUID ='user/get/parent/uuid/';
+//COMPLAIN SERVICE GET 
+RESIDENT_GET_COMPLAIN = 'Complain/get/Resident/Complain/List';
+CREATE_COMPLAIN = 'Complain/Add';
+UPDATE_COMPLAIN = 'Complain/Update';
+
+GET_COMPLAIN_DETAIL = 'Complain/get/';
 
   constructor(private _http: HttpClient, private router: Router
     // tslint:disable-next-line: no-shadowed-variable
   ) {
 
+  }
+  getResidentUnitUuid(data): Observable<any> {
+
+    return this._http.get(this.BASE_URL + this.GET_RESIDENT_FLAT + data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  getComplainDetail(data):Observable<any>{
+    
+    return this._http.get(this.BASE_URL + this.GET_COMPLAIN_DETAIL + data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  updateComplain(data): Observable<any> {
+
+    return this._http.post(this.BASE_URL + this.UPDATE_COMPLAIN , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  getParentUuid(data): Observable<any> {
+
+    return this._http.get(this.BASE_URL + this.GET_PARENT_UUID + data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
   }
   getSocietyList(): Observable<any> {
     this.userDetail = JSON.parse(sessionStorage.getItem('data'));
@@ -267,11 +335,10 @@ export class TablesService {
       })
     );
   }
-  getCategoryList(): Observable<any> {
+  getCategoryList(data): Observable<any> {
 
-    this.userDetail = JSON.parse(sessionStorage.getItem('data'));
     let dataJson = {
-      parentId: this.userDetail.data.id
+      parentId: data
     }
     return this._http.post(this.BASE_URL + this.GET_CATEGORY_LIST, dataJson).pipe(
       // eg. "map" without a dot before
@@ -541,7 +608,7 @@ export class TablesService {
 
   getFamilyList(data): Observable<any> {
     let dataJson = {
-      parentId: data
+      residentId: data
     }
 
     return this._http.post(this.BASE_URL + this.FAMILY_GET_LIST, dataJson).pipe(
@@ -598,6 +665,34 @@ export class TablesService {
       })
     );
   }
+  //Complain service
+   
+ complainSave(data): Observable<any> {
+  return this._http.post(this.BASE_URL + this.CREATE_COMPLAIN, data).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
+complainResidetGet(data): Observable<any> {
+  return this._http.post(this.BASE_URL + this.RESIDENT_GET_COMPLAIN, data).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
   handleError = (e) => {
   }
   getDataConf() {

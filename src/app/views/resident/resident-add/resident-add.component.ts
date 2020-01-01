@@ -267,7 +267,7 @@ export class ResidentAddComponent implements OnInit {
   }
   categoryListData: any;
   categoryList() {
-    this.Service.getCategoryList().subscribe(res => {
+    this.Service.getCategoryList(JSON.parse(sessionStorage.getItem('data')).id).subscribe(res => {
       this.categoryListData = res;
     })
   }

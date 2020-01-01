@@ -177,7 +177,7 @@ export class NavigationService {
       tooltip: "Manage Society",
       icon: "view_carousel",
        sub: [
-        { name: "Society", state: "society/List" },
+        { name: "Complain", state: "Complain/List" },
        ]
     }
     // {

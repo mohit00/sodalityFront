@@ -3,6 +3,7 @@ import { NavigationService } from "../../../shared/services/navigation.service";
 import { ThemeService } from "../../services/theme.service";
 import { Subscription } from "rxjs";
 import { ILayoutConf, LayoutService } from "app/shared/services/layout.service";
+import { TablesService } from "app/views/manage-society/manage-society.service";
 
 @Component({
   selector: "app-sidebar-side",
@@ -17,10 +18,11 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
   userData: any;
 
   constructor(
+    private Service: TablesService,
     private navService: NavigationService,
     public themeService: ThemeService,
     private layout: LayoutService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.iconTypeMenuTitle = this.navService.iconTypeMenuTitle;
@@ -35,10 +37,28 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   ngAfterViewInit() {
 
-    this.userData =  JSON.parse(sessionStorage.getItem('data'))
-    this.navService.publishNavigationChange(this.userData.data.user_type);
-    if(this.userData.data.user_type != 'Admin'){
-      sessionStorage.setItem('uuId',this.userData.data.uuid)
+    this.userData = JSON.parse(sessionStorage.getItem('data'))
+    if (this.userData.data.user_type != 'Admin') {
+
+      if (this.userData.data.user_type == 'FamilyMember') {
+        this.navService.publishNavigationChange("Resident");
+
+        sessionStorage.setItem('detailUuid', this.userData.data.uuid)
+
+        this.Service.getParentUuid(this.userData.data.uuid).subscribe(res => {
+          sessionStorage.setItem('uuId', res.uuid)
+
+        })
+      } else {
+        sessionStorage.setItem('uuId', this.userData.data.uuid)
+        sessionStorage.setItem('detailUuid', this.userData.data.uuid)
+        this.navService.publishNavigationChange(this.userData.data.user_type);
+
+      }
+
+    } else {
+      this.navService.publishNavigationChange(this.userData.data.user_type);
+
     }
   }
   ngOnDestroy() {
@@ -50,14 +70,14 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
     if (
       this.layoutConf.sidebarCompactToggle
     ) {
-        this.layout.publishLayoutChange({
+      this.layout.publishLayoutChange({
         sidebarCompactToggle: false
       });
     } else {
-        this.layout.publishLayoutChange({
-            // sidebarStyle: "compact",
-            sidebarCompactToggle: true
-          });
+      this.layout.publishLayoutChange({
+        // sidebarStyle: "compact",
+        sidebarCompactToggle: true
+      });
     }
   }
 }

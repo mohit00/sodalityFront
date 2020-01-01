@@ -25,8 +25,7 @@ export class Signin2Component implements OnInit {
   }
   signin(){
     if(this.signupForm.valid){
-      alert(JSON.stringify(this.signupForm.value));
-      this.AuthService.login(this.signupForm.value).subscribe(res=>{
+       this.AuthService.login(this.signupForm.value).subscribe(res=>{
         if(res.status){
           sessionStorage.setItem('data',JSON.stringify(res));
           this.Router.navigate(['dashboard/default']);
