@@ -3,11 +3,11 @@ import { TablesService } from 'app/views/manage-society/manage-society.service';
 import { Router,NavigationExtras } from '@angular/router';
 
 @Component({
-  selector: 'app-complain',
-  templateUrl: './complain.component.html',
-  styleUrls: ['./complain.component.scss']
+  selector: 'app-society-complain',
+  templateUrl: './society-complain.component.html',
+  styleUrls: ['./society-complain.component.scss']
 })
-export class ComplainComponent implements OnInit {
+export class SocietyComplainComponent implements OnInit {
   rows = [];
   columns = [];
   temp = [];
@@ -41,14 +41,14 @@ export class ComplainComponent implements OnInit {
   
     editCategory(data){
        sessionStorage.setItem('detailUuid',data);
-      this.Router.navigate(['Complain/Update' ]);  
+      this.Router.navigate(['SocietyComplain/Update' ]);  
     }
   
     getCategoryList() {
       let dataJson ={
         parentId:sessionStorage.getItem("uuId")
       }
-      this.service.complainResidetGet(dataJson).subscribe(res=>{
+      this.service.complainSocietyGet(dataJson).subscribe(res=>{
           console.log(JSON.stringify(res))
           this.rows = this.temp =res.data;
         })

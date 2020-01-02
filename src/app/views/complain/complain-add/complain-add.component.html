@@ -48,7 +48,7 @@
                 </button>
               <input  style="width:100%" type="file"  multiple  (change)="handleFileInput($event.target.files,'logo')" />
             </div>
-          <table class="default-table mat-box-shadow mb-24" style="width: 100%">
+          <table class="default-table mat-box-shadow mb-24" style="width: 100%" *ngIf ="complainImage">
             <thead>
             <tr>
                 <th width="30%"> Logo Name</th>
@@ -91,7 +91,7 @@
     </div>
       </div>
       <div fxLayout="row">
-        <button mat-raised-button color="accent" routerLink="/Category/List">Back</button>
+        <button mat-raised-button color="accent" routerLink="/Complain/List">Back</button>
         <span fxFlex="8px"></span>
         <button mat-raised-button color="primary" (click)="createCategory();" *ngIf="pageType == 'Add'">Submit</button>
         <button mat-raised-button color="primary" (click)="updateCategory();"

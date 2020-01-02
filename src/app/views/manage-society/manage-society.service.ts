@@ -72,7 +72,8 @@ CREATE_COMPLAIN = 'Complain/Add';
 UPDATE_COMPLAIN = 'Complain/Update';
 
 GET_COMPLAIN_DETAIL = 'Complain/get/';
-
+SOCIETY_COMPLAIN_GET ='Complain/get/Society/Complain/List';
+GET_SOCIETY_COMPLAIN_LIST = 'Complain/get/Society/Complain/List';
   constructor(private _http: HttpClient, private router: Router
     // tslint:disable-next-line: no-shadowed-variable
   ) {
@@ -340,7 +341,7 @@ GET_COMPLAIN_DETAIL = 'Complain/get/';
     let dataJson = {
       parentId: data
     }
-    return this._http.post(this.BASE_URL + this.GET_CATEGORY_LIST, dataJson).pipe(
+     return this._http.post(this.BASE_URL + this.GET_CATEGORY_LIST, dataJson).pipe(
       // eg. "map" without a dot before
       map(data => {
         return data;
@@ -682,6 +683,19 @@ GET_COMPLAIN_DETAIL = 'Complain/get/';
 }
 complainResidetGet(data): Observable<any> {
   return this._http.post(this.BASE_URL + this.RESIDENT_GET_COMPLAIN, data).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
+complainSocietyGet(data): Observable<any> {
+  return this._http.post(this.BASE_URL + this.GET_SOCIETY_COMPLAIN_LIST, data).pipe(
     // eg. "map" without a dot before
     map(data => {
       return data;

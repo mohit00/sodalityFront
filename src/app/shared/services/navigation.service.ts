@@ -125,6 +125,8 @@ export class NavigationService {
         { name: "Resident", state: "Resident" },
         { name: "Category", state: "Category" },
         { name: "Staff", state: "Staff" },
+        { name: "Complain", state: "SocietyComplain" },
+
        ]
     }
     // {

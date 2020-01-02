@@ -27,6 +27,7 @@ export class SocietyAddComponent implements OnInit {
   imageList: any = [];
   public billLogo1: FileUploader = new FileUploader({ url: 'https://evening-anchorage-315.herokuapp.com/api/' });
   userDetail: any;
+  userData: any;
   constructor(private Router:Router, private fb: FormBuilder,private Service:TablesService,private AppLoaderService:AppLoaderService,private dialog:AppConfirmService) {
     this.userDetail = JSON.parse(sessionStorage.getItem("data"));
   }
@@ -45,8 +46,16 @@ export class SocietyAddComponent implements OnInit {
     
   }
   societyDetail(){
- 
-    this.Service.societyget(sessionStorage.getItem("detailUuid")).subscribe(res=>{
+    this.userData = JSON.parse(sessionStorage.getItem('data'))
+    let detailId  ="";
+    if (this.userData.data.user_type == 'Society') {
+      detailId = sessionStorage.getItem("uuId")
+
+    }else{
+      detailId = sessionStorage.getItem("detailUuid")
+
+    }
+    this.Service.societyget(detailId).subscribe(res=>{
        
        this.updateForm(res)
     })

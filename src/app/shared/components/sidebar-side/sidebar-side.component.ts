@@ -43,16 +43,14 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.userData.data.user_type == 'FamilyMember') {
         this.navService.publishNavigationChange("Resident");
 
-        sessionStorage.setItem('detailUuid', this.userData.data.uuid)
-
+ 
         this.Service.getParentUuid(this.userData.data.uuid).subscribe(res => {
           sessionStorage.setItem('uuId', res.uuid)
 
         })
       } else {
         sessionStorage.setItem('uuId', this.userData.data.uuid)
-        sessionStorage.setItem('detailUuid', this.userData.data.uuid)
-        this.navService.publishNavigationChange(this.userData.data.user_type);
+         this.navService.publishNavigationChange(this.userData.data.user_type);
 
       }
 
