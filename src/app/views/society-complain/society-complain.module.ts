@@ -10,9 +10,11 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { MatTableDataSource } from '@angular/material'; 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { QuillModule } from 'ngx-quill';
+
 @NgModule({
   declarations: [SocietyComplainComponent, SocietyComplainAddComponent],
-  imports: [FormsModule, ReactiveFormsModule,NgxDatatableModule,SharedMaterialModule,FlexLayoutModule,
+  imports: [QuillModule,FormsModule, ReactiveFormsModule,NgxDatatableModule,SharedMaterialModule,FlexLayoutModule,
     CommonModule,
     SocietyComplainRoutingModule
   ],providers:[MatTableDataSource]

@@ -6,14 +6,14 @@ import { AppConfirmService } from 'app/shared/services/app-confirm/app-confirm.s
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-society-complain-add',
-  templateUrl: './society-complain-add.component.html',
-  styleUrls: ['./society-complain-add.component.scss']
+  selector: 'app-staff-complain-add',
+  templateUrl: './staff-complain-add.component.html',
+  styleUrls: ['./staff-complain-add.component.scss']
 })
-export class SocietyComplainAddComponent implements OnInit {
+export class StaffComplainAddComponent implements OnInit {
   firstFormGroup: FormGroup;
-  pageType: any;
   secondFormGroup:FormGroup;
+  pageType: any;
   societyLogo: any = []
   categoryList: any;
   flatList: any = [];
@@ -21,7 +21,6 @@ export class SocietyComplainAddComponent implements OnInit {
   fd: FormData;
   AssignedToList: any;
   complainUUid: any;
-  complainCommentList: any;
   constructor(private route: ActivatedRoute, private Router: Router, private fb: FormBuilder, private Service: TablesService, private AppLoaderService: AppLoaderService, private dialog: AppConfirmService) {
     this.createForm();
     setTimeout(() => {
@@ -34,11 +33,8 @@ export class SocietyComplainAddComponent implements OnInit {
       }
     }, 100)
   }
-  categoryGetList() {
-    this.Service.getCategoryList(JSON.parse(sessionStorage.getItem('data')).data.id).subscribe(res => {
-      this.categoryList = res;
-    })
-  }
+
+
   handleFileInput(files: any, type) {
 
     this.complainImage = [];
@@ -92,7 +88,7 @@ export class SocietyComplainAddComponent implements OnInit {
       residentUuid: [''],
       unitUuid: [''],
       categoryUuid: [''],
-      assignToId:[],
+      assignToId: [],
 
     })
     this.secondFormGroup = this.fb.group({
@@ -102,9 +98,7 @@ export class SocietyComplainAddComponent implements OnInit {
       comment: ['', [
         Validators.required
       ]],
-      commentByUuid: [sessionStorage.getItem("uuId") ],
-      complainUuid:[]
-
+      commentByUuid: ['' ] 
     })
   }
   // "residentUuid":"966436d6-b1ff-445f-97e1-a5b62f8a147e",
@@ -113,28 +107,9 @@ export class SocietyComplainAddComponent implements OnInit {
   public hasfirstError = (controlName: string, errorName: string) => {
     return this.firstFormGroup.controls[controlName].hasError(errorName);
   }
-
-
-
-  categoryDetail(id: any) {
-
-    this.Service.getComplainDetail(id).subscribe(res => {
-      this.updateForm(res);
-    })
-  }
-  getCommentList(data){
-    let datajson = {
-      uuid:data
-    }
-    this.Service.commentGet(datajson).subscribe(res=>{
-      console.log(JSON.stringify(res))
-      this.complainCommentList =res.data
-    })
-  }
   addComplain(){
     this.AppLoaderService.open();
-    console.log(this.secondFormGroup.value);
-    
+
     this.Service.commentAdd(this.secondFormGroup.value).subscribe(res=>{
       this.AppLoaderService.close();
 
@@ -146,23 +121,42 @@ export class SocietyComplainAddComponent implements OnInit {
        this.getCommentList(this.complainUUid);
     })
   }
+
+
+  categoryDetail(id: any) {
+
+    this.Service.getComplainDetail(id).subscribe(res => {
+      this.updateForm(res);
+    })
+  }
+  complainCommentList:any;
+getCommentList(data){
+  let datajson = {
+    uuid:data
+  }
+  this.Service.commentGet(datajson).subscribe(res=>{
+    console.log(JSON.stringify(res))
+    this.complainCommentList =res.data
+  })
+}
   updateForm(res) {
     this.complainUUid = res.uuid;
-
+    this.getCommentList(res.uuid);
+    console.log(JSON.stringify(res))
     this.getStaffListByCategory(res.category.uuid);
     this.firstFormGroup = this.fb.group({
-      title: [{value:res.title,   disabled: true} , [
+      title: [{ value: res.title, disabled: true }, [
         Validators.required
       ]
       ],
-       complainId:  {value:res.uuid,   disabled: true},
-      description: [ {value:res.description,   disabled: true}],
-      residentUuid: [{value:res.resident.uuid,   disabled: true}],
-      unitUuid: [{value:res.unit.uuid,   disabled: true}],
-      categoryUuid: [{value:res.category.uuid,   disabled: true}],
-      assignToId:[],
-     })
-     this.secondFormGroup = this.fb.group({
+      complainId: { value: res.uuid, disabled: true },
+      description: [{ value: res.description, disabled: true }],
+      residentUuid: [{ value: res.resident.uuid, disabled: true }],
+      unitUuid: [{ value: res.unit.uuid, disabled: true }],
+      categoryUuid: [{ value: res.category.uuid, disabled: true }],
+      assignToId: [],
+    })
+    this.secondFormGroup = this.fb.group({
       status: ['', [
         Validators.required
       ]],
@@ -173,19 +167,18 @@ export class SocietyComplainAddComponent implements OnInit {
       complainUuid:[res.uuid]
 
     })
-    if(res.images){
+    if (res.images) {
       this.complainImage = res.images
 
     }
-     
+
   }
-  getStaffListByCategory(data){
-    this.Service.getStaffListByCategory(data).subscribe(res=>{
+  getStaffListByCategory(data) {
+    this.Service.getStaffListByCategory(data).subscribe(res => {
       this.AssignedToList = res.data;
     })
   }
   ngOnInit() {
-    this.categoryGetList();
     this.getFlatList();
   }
   createCategory() {
@@ -204,10 +197,7 @@ export class SocietyComplainAddComponent implements OnInit {
 
     }
     this.fd.append("data", JSON.stringify(this.firstFormGroup.value));
-
-
     this.AppLoaderService.open();
-
     this.Service.complainSave(this.fd
     ).subscribe(res => {
       this.AppLoaderService.close();
@@ -218,10 +208,9 @@ export class SocietyComplainAddComponent implements OnInit {
       this.dialog.success(dataJson);
       this.Router.navigate(['SocietyComplain/List']);
     })
-
   }
   updateCategory() {
-      console.log(JSON.stringify(this.firstFormGroup.getRawValue()))
+    console.log(JSON.stringify(this.firstFormGroup.getRawValue()))
     this.AppLoaderService.open();
 
     this.Service.complainAssignTo(this.firstFormGroup.getRawValue()

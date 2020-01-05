@@ -1,0 +1,161 @@
+<mat-card class="p-0">
+  <mat-card-title class="">
+  
+    <mat-divider></mat-divider>
+  </mat-card-title>
+  <mat-card-content>
+    <mat-horizontal-stepper [linear]="true">
+      <mat-step >
+        <ng-template matStepLabel>Complain Info</ng-template>
+        <mat-card class="p-0">
+         
+          <mat-card-content>
+            <form [formGroup]="firstFormGroup">
+              <ng-template matStepLabel>Category Info</ng-template>
+              <div fxLayout="row wrap">
+                <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Complain Title</mat-label>
+                    <input matInput placeholder="Placeholder" formControlName="title" readonly>
+                    <mat-error *ngIf="hasfirstError('title','required')">
+                      This field <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                
+            
+                <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100" *ngIf ="flatList.length > 1">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Select Flat</mat-label>
+                    <mat-select required formControlName="unitUuid">
+                      <mat-option *ngFor ="let list of flatList"value="{{list.uuid}}">
+                        {{list.unitNo}}
+                      </mat-option>
+         
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+               
+               
+                <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100"> 
+         
+                  <mat-label >Complain Images</mat-label>
+           
+                  <table class="default-table mat-box-shadow mb-24" style="width: 100%" *ngIf ="complainImage">
+                    <thead>
+                    <tr>
+                        <th width="30%"> Logo Name</th>
+                        <th>Size</th>
+                         <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="complainImage.length>0; else societyLogoNoData">
+                    <tr *ngFor="let item of complainImage;let index = index">
+                        <td>{{ item.name }}</td>
+                        <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
+                      
+                        
+                        <td nowrap>
+                           
+             
+                            <button 
+                            mat-raised-button
+                            color="primary"
+                            class="mx-4"
+                            (click)="view(item)">View</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <ng-template #societyLogoNoData>
+                      <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
+                    </ng-template>
+                </table>
+             </div>
+             <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100">
+              <mat-form-field appearance="outline" class="textareaForm">
+                <mat-label>Complain Description</mat-label>
+                <textarea matInput placeholder="Complain Description"  readonly formControlName="description"></textarea>
+              </mat-form-field>
+            </div>
+              </div>
+             
+            </form>
+          </mat-card-content>
+        </mat-card>
+         </mat-step>
+          <mat-step >
+            <ng-template matStepLabel>Status Change</ng-template>
+            <form [formGroup]="secondFormGroup">
+            <div fxLayout="row wrap">
+              <div fxLayout="column" fxFlex="100" fxFlex.gt-md="40">
+                <mat-form-field appearance="outline">
+                  <mat-label>Select Status</mat-label>
+                  <mat-select required  formControlName="status" >
+                    <mat-option value="Inprogress" >
+                     In Progress
+                    </mat-option>
+                    <mat-option value="Pending" >
+                      Pending
+                     </mat-option>
+                    <mat-option value="Resolved" >
+                      Resolved
+                     </mat-option>
+                  </mat-select>
+                </mat-form-field>
+</div>
+ 
+<div fxLayout="column" fxFlex="100" fxFlex.gt-md="100">
+  <div class="pb-1">
+    <quill-editor theme="snow" formControlName="comment" ></quill-editor>
+    <!-- <small 
+    *ngIf="mailForm.controls.message.errors && 
+    (mailForm.controls.message.dirty || mailForm.controls.message.touched) && 
+    (mailForm.controls.message.errors.required)" 
+    class="form-error-msg"> Message is required </small> -->
+</div>
+</div>
+
+
+</div>
+<div fxLayout="row">
+   <span fxFlex="8px"></span>
+  <button mat-raised-button color="primary"(click) ="addComplain();" >Submit</button>
+</div>
+</form>
+          </mat-step>
+          <mat-step >
+            <ng-template matStepLabel>Complain Comment</ng-template>
+            <div fxLayout="row wrap">
+              <div fxLayout="column" fxFlex="100" fxFlex.gt-md="100">
+                <!-- Time line -->
+                <mat-card class="default" *ngIf ="complainCommentList">
+                  <mat-card-title style="margin-bottom: 10px;">No. of Comments - {{complainCommentList.length}} / Current Status - {{complainCommentList[complainCommentList.length-1].complainStatus}}</mat-card-title>
+              
+                  <mat-card-content>
+                    <div class="timeline" *ngFor ="let list of complainCommentList">
+                      <div class="timeline-item">
+                        <div class="timeline-badge">
+                          <img src="assets/images/face-6.jpg" alt="">
+                        </div>
+                        <div class="timeline-body">
+                          <div class="timeline-body-top" fxLayout="row">
+                            <a  class="timeline-body-title mr-1"><b>{{list.commentBy.email}}</b> updated his status</a>
+                            <span class="text-muted">{{list.complainDate | date}}</span>
+                            <span fxFlex></span>
+                          </div>
+                          <div class="timeline-body-content" [innerHTML]="list.comment">
+                           
+                           </div>
+                         
+                        </div>
+                      </div>
+              
+             
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+                </div></div></mat-step>
+
+             
+        </mat-horizontal-stepper></mat-card-content></mat-card>
+

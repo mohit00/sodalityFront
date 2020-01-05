@@ -31,7 +31,7 @@ export class TablesService {
   GET_STAFF_BY_UUID = 'user/get/staff/'
   SAVE_STAFF = 'user/staff/save'
   UPDATE_STAFF = 'user/staff/update'
-
+GET_STAFF_BY_CATEGORY = 'user/get/society/staff/byCategory'
   //Tower
   GET_TOWER_LIST = 'Tower/get/List'
   GET_TOWER_BY_UUID = 'Tower/get'
@@ -74,10 +74,70 @@ UPDATE_COMPLAIN = 'Complain/Update';
 GET_COMPLAIN_DETAIL = 'Complain/get/';
 SOCIETY_COMPLAIN_GET ='Complain/get/Society/Complain/List';
 GET_SOCIETY_COMPLAIN_LIST = 'Complain/get/Society/Complain/List';
-  constructor(private _http: HttpClient, private router: Router
+COMPLAIN_ASSIGN_TO = 'Complain/Assign/to'
+COMPLAIN_STAFF_LIST  = 'Complain/get/Staff/Complain/List'
+
+//Comment
+COMMENT_ADD ='ComplainComment/Add'
+COMMENT_GET ="ComplainComment/Get"
+   constructor(private _http: HttpClient, private router: Router
     // tslint:disable-next-line: no-shadowed-variable
   ) {
 
+  }
+  commentGet(data): Observable<any>{
+    return this._http.post(this.BASE_URL + this.COMMENT_GET , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  commentAdd(data): Observable<any>{
+    return this._http.post(this.BASE_URL + this.COMMENT_ADD , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  complainAssignTo(data): Observable<any> {
+
+    return this._http.post(this.BASE_URL + this.COMPLAIN_ASSIGN_TO , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  complainStaffList(data): Observable<any> {
+
+    return this._http.post(this.BASE_URL + this.COMPLAIN_STAFF_LIST , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
   }
   getResidentUnitUuid(data): Observable<any> {
 
@@ -421,7 +481,25 @@ GET_SOCIETY_COMPLAIN_LIST = 'Complain/get/Society/Complain/List';
       })
     );
   }
+getStaffListByCategory(data):Observable<any>{
+  
+  let dataJson = {
+    uuid: sessionStorage.getItem('uuId'),
+    categoryUUid:data
+  }
 
+  return this._http.post(this.BASE_URL + this.GET_STAFF_BY_CATEGORY, dataJson).pipe(
+    // eg. "map" without a dot before
+    map(data => {
+      return data;
+    }),
+    // "catchError" instead "catch"
+    catchError(error => {
+      alert("Something went wrong ;)");
+      return Observable.throw('Something went wrong ;)');
+    })
+  );
+}
   staffget(data): Observable<any> {
 
     return this._http.get(this.BASE_URL + this.GET_STAFF_BY_UUID + data).pipe(
