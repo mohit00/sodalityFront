@@ -7,6 +7,7 @@ import { AppLoaderService } from '../../../shared/services/app-loader/app-loader
 import { AppConfirmService } from '../../../shared/services/app-confirm/app-confirm.service';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
+import { NavigationService } from 'app/shared/services/navigation.service';
    
 @Component({
   selector: 'app-society-add',
@@ -28,7 +29,8 @@ export class SocietyAddComponent implements OnInit {
   public billLogo1: FileUploader = new FileUploader({ url: 'https://evening-anchorage-315.herokuapp.com/api/' });
   userDetail: any;
   userData: any;
-  constructor(private Router:Router, private fb: FormBuilder,private Service:TablesService,private AppLoaderService:AppLoaderService,private dialog:AppConfirmService) {
+  constructor(    private navService: NavigationService,
+   private Router:Router, private fb: FormBuilder,private Service:TablesService,private AppLoaderService:AppLoaderService,private dialog:AppConfirmService) {
     this.userDetail = JSON.parse(sessionStorage.getItem("data"));
   }
   public hasfirstError = (controlName: string, errorName: string) => {
@@ -181,7 +183,7 @@ view(bill) {
         win.document.write('<iframe src="' + this.tet  + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
       };
      }else{
-      window.open(environment.LOCAL_BASE+"resources/images/"+bill.name);
+      window.open(environment.LOCAL_BASE+"/images/"+bill.name);
      }
   }
   handleFileInput(files: any, type) {
@@ -400,13 +402,24 @@ let societyLogoArray=[];
     this.AppLoaderService.open();
 
 this.Service.societyUpdate(this.fd).subscribe(res=>{
+  console.log(JSON.stringify(res))
+  this.userData.data.societyDetail.societyDisplayName = res.societyDetail.societyDisplayName;
+  this.userData.data.societyDetail.societyLogo = res.societyDetail.societyLogo;
+sessionStorage.setItem("data",JSON.stringify(this.userData))
+  this.navService.publishNavigationChange(this.userData.data.user_type);
+
   this.AppLoaderService.close();
   let dataJson = {
     title:'sucess',
     message:'Society Updated Created'
   }
  this.dialog.success(dataJson);
- this.Router.navigate(['society/List']);
+ if(this.userData.data.user_type =="Society"){
+   
+ }else{
+  this.Router.navigate(['society/List']);
+
+ }
 })
   }
   remove(index, type) {

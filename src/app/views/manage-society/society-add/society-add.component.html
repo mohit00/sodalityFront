@@ -167,7 +167,7 @@
                                                                   <button mat-icon-button  aria-label="Example icon-button with a heart icon">
                                                                       <mat-icon style ="font-size: 44px;">cloud_upload</mat-icon>
                                                                     </button>
-                                                                  <input  style="width:100%" type="file"   (change)="handleFileInput($event.target.files,'bill')" />
+                                                                  <input  style="width:100%" type="file"    accept="image/*" (change)="handleFileInput($event.target.files,'bill')" />
                                                                 </div>
                                                               
                                                              </div>
@@ -227,7 +227,7 @@
                             <button mat-icon-button  aria-label="Example icon-button with a heart icon">
                                 <mat-icon style ="font-size: 44px;">cloud_upload</mat-icon>
                               </button>
-                            <input  style="width:100%" type="file"    (change)="handleFileInput($event.target.files,'logo')" />
+                            <input  style="width:100%" type="file"    accept="image/*"  (change)="handleFileInput($event.target.files,'logo')" />
                           </div>
                         <table class="default-table mat-box-shadow mb-24" style="width: 100%">
                           <thead>
@@ -272,7 +272,7 @@
                           <button mat-icon-button  aria-label="Example icon-button with a heart icon">
                               <mat-icon style ="font-size: 44px;">cloud_upload</mat-icon>
                             </button>
-                            <input  style="width:100%" type="file"   (change)="handleFileInput($event.target.files,'ad')" multiple/>
+                            <input  style="width:100%" type="file"  accept="image/*"  (change)="handleFileInput($event.target.files,'ad')" multiple/>
                           </div>
                      <table class="default-table mat-box-shadow mb-24" style="width: 100%">
                         <thead>
@@ -317,7 +317,7 @@
         <button mat-icon-button  aria-label="Example icon-button with a heart icon">
             <mat-icon style ="font-size: 44px;">cloud_upload</mat-icon>
           </button>
-          <input  style="width:100%" type="file"   (change)="handleFileInput($event.target.files,'album')" multiple />
+          <input  style="width:100%" type="file"   accept="image/*" (change)="handleFileInput($event.target.files,'album')" multiple />
         </div>
    <table class="default-table mat-box-shadow mb-24" style="width: 100%">
       <thead>

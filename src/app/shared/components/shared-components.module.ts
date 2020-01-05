@@ -9,7 +9,7 @@ import { SearchModule } from '../search/search.module';
 import { SharedPipesModule } from '../pipes/shared-pipes.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedDirectivesModule } from '../directives/shared-directives.module';
-
+import {SafePipe} from '../directives/safe.pipe'
 // ONLY REQUIRED FOR **SIDE** NAVIGATION LAYOUT
 import { HeaderSideComponent } from './header-side/header-side.component';
 import { SidebarSideComponent } from './sidebar-side/sidebar-side.component';
@@ -37,7 +37,7 @@ import { EgretExampleViewerTemplateComponent } from './example-viewer-template/e
 import {AppSuccessComponent} from '../services/app-confirm/app-success';
 
 const components = [
-  HeaderTopComponent,
+  HeaderTopComponent,SafePipe,
   SidebarTopComponent,
   SidenavComponent,
   NotificationsComponent,

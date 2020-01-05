@@ -4,6 +4,8 @@ import { ThemeService } from "../../services/theme.service";
 import { Subscription } from "rxjs";
 import { ILayoutConf, LayoutService } from "app/shared/services/layout.service";
 import { TablesService } from "app/views/manage-society/manage-society.service";
+import { environment } from "environments/environment";
+ 
 
 @Component({
   selector: "app-sidebar-side",
@@ -27,6 +29,11 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.iconTypeMenuTitle = this.navService.iconTypeMenuTitle;
     this.menuItemsSub = this.navService.menuItems$.subscribe(menuItem => {
+      this.userData = JSON.parse(sessionStorage.getItem('data'))
+
+      this.imageUrl = environment.LOCAL_BASE+this.userData.data.societyDetail.societyLogo;
+      this.userName = this.userData.data.societyDetail.societyDisplayName;
+
       this.menuItems = menuItem;
       //Checks item list has any icon type.
       this.hasIconTypeMenuItem = !!this.menuItems.filter(
@@ -35,11 +42,33 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.layoutConf = this.layout.layoutConf;
   }
+  imageUrl:any = "";
+  userName:any = "";
+  showImage:any = false
   ngAfterViewInit() {
 
     this.userData = JSON.parse(sessionStorage.getItem('data'))
     if (this.userData.data.user_type != 'Admin') {
-
+      setTimeout(()=>{
+        if(this.userData.data.user_type == 'Society'){
+          this.imageUrl = environment.LOCAL_BASE+this.userData.data.societyDetail.societyLogo;
+          this.userName = this.userData.data.societyDetail.societyDisplayName;
+          this.showImage = true
+         }
+        if(this.userData.data.user_type == 'FamilyMember'){
+         }
+        if(this.userData.data.user_type == 'Resident'){
+          this.imageUrl = environment.LOCAL_BASE+this.userData.data.societyDetail.societyLogo;
+          this.userName = this.userData.data.societyDetail.societyDisplayName;
+  
+         }
+        if(this.userData.data.user_type == 'Staff'){
+          this.imageUrl = environment.LOCAL_BASE+this.userData.data.societyDetail.societyLogo;
+          this.userName = this.userData.data.societyDetail.societyDisplayName;
+  
+         }
+      },100)
+      
       if (this.userData.data.user_type == 'FamilyMember') {
         this.navService.publishNavigationChange("Resident");
 
@@ -55,6 +84,7 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
     } else {
+       
       this.navService.publishNavigationChange(this.userData.data.user_type);
 
     }

@@ -254,7 +254,7 @@ export class ResidentAddComponent implements OnInit {
         win.document.write('<iframe src="' + this.tet + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
       };
     } else {
-      window.open(environment.LOCAL_BASE + "resources/images/" + pic.name);
+      window.open(environment.LOCAL_BASE + "/images/" + pic.name);
     }
   }
   handleFileInput(files: any, type) {
