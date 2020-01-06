@@ -4,6 +4,7 @@ import { TablesService } from '../../manage-society/manage-society.service';
 import { AppLoaderService } from '../../../shared/services/app-loader/app-loader.service';
 import { AppConfirmService } from 'app/shared/services/app-confirm/app-confirm.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-complain-add',
@@ -31,21 +32,15 @@ export class ComplainAddComponent implements OnInit {
     }, 100)
   }
   categoryGetList() {
-    this.Service.getCategoryList(JSON.parse(sessionStorage.getItem('data')).data.parrentAccount.id).subscribe(res => {
+    this.Service.getCategoryResidentList((sessionStorage.getItem('uuId'))).subscribe(res => {
       this.categoryList = res;
     })
   }
   handleFileInput(files: any, type) {
-
     this.complainImage = [];
-
     for (var i = 0; i < files.length; i++) {
       this.complainImage.push(files[i])
     }
-
-
-
-
   }
   remove(index, type) {
 
@@ -64,7 +59,7 @@ export class ComplainAddComponent implements OnInit {
         win.document.write('<iframe src="' + reader.result + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
       };
     } else {
-      //  window.open(environment.LOCAL_BASE+"/images/"+bill.name);
+       window.open(environment.LOCAL_BASE+"/images/"+bill.name);
     }
   }
   getFlatList() {
@@ -107,7 +102,14 @@ export class ComplainAddComponent implements OnInit {
   }
 
   updateForm(res) {
-   
+    this.complainImage = [];
+    if(res.images){
+      for(var i=0;i<res.images.length ;i++){
+         this.complainImage.push({
+          name:res.images[i].split('/')[2]
+        })
+      }
+    }
     this.firstFormGroup = this.fb.group({
       title: [res.title, [
         Validators.required
@@ -120,10 +122,7 @@ export class ComplainAddComponent implements OnInit {
       unitUuid: [res.unit.uuid],
       categoryUuid: [res.category.uuid],
     })
-    if(res.images){
-      this.complainImage = res.images
-
-    }
+   
      
   }
   ngOnInit() {

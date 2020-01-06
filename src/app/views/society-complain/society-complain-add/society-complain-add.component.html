@@ -97,7 +97,7 @@
     </div>
       </div>
       <div fxLayout="row">
-        <button mat-raised-button color="accent" routerLink="/Complain/List">Back</button>
+        <button mat-raised-button color="accent" routerLink="/SocietyComplain/List">Back</button>
         <span fxFlex="8px"></span>
         <button mat-raised-button color="primary" (click)="createCategory();" *ngIf="pageType == 'Add'">Submit</button>
         <button mat-raised-button color="primary" (click)="updateCategory();"
@@ -116,6 +116,9 @@
       <mat-form-field appearance="outline">
         <mat-label>Select Status</mat-label>
         <mat-select required  formControlName="status" >
+          <mat-option value="Assigned" >
+            Assigned
+          </mat-option>
           <mat-option value="Inprogress" >
            In Progress
           </mat-option>
@@ -125,6 +128,10 @@
           <mat-option value="Resolved" >
             Resolved
            </mat-option>
+           <mat-option value="Reopen" >
+            Reopen
+           </mat-option>
+               
         </mat-select>
       </mat-form-field>
 </div>
@@ -153,14 +160,14 @@ class="form-error-msg"> Message is required </small> -->
   <div fxLayout="row wrap">
     <div fxLayout="column" fxFlex="100" fxFlex.gt-md="100">
       <!-- Time line -->
-      <mat-card class="default" *ngIf ="complainCommentList">
+      <mat-card class="default" *ngIf ="complainCommentList.length >0">
         <mat-card-title style="margin-bottom: 10px;">No. of Comments - {{complainCommentList.length}} / Current Status - {{complainCommentList[complainCommentList.length-1].complainStatus}}</mat-card-title>
     
         <mat-card-content>
           <div class="timeline" *ngFor ="let list of complainCommentList">
             <div class="timeline-item">
               <div class="timeline-badge">
-                <img src="assets/images/face-6.jpg" alt="">
+                <img  [src]="list.profileImage | safe" alt="">
               </div>
               <div class="timeline-body">
                 <div class="timeline-body-top" fxLayout="row">

@@ -4,6 +4,7 @@ import { TablesService } from '../../manage-society/manage-society.service';
 import { AppLoaderService } from '../../../shared/services/app-loader/app-loader.service';
 import { AppConfirmService } from 'app/shared/services/app-confirm/app-confirm.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-society-complain-add',
@@ -21,7 +22,7 @@ export class SocietyComplainAddComponent implements OnInit {
   fd: FormData;
   AssignedToList: any;
   complainUUid: any;
-  complainCommentList: any;
+  complainCommentList: any =[];
   constructor(private route: ActivatedRoute, private Router: Router, private fb: FormBuilder, private Service: TablesService, private AppLoaderService: AppLoaderService, private dialog: AppConfirmService) {
     this.createForm();
     setTimeout(() => {
@@ -68,7 +69,7 @@ export class SocietyComplainAddComponent implements OnInit {
         win.document.write('<iframe src="' + reader.result + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
       };
     } else {
-      //  window.open(environment.LOCAL_BASE+"resources/images/"+bill.name);
+      window.open(environment.LOCAL_BASE+"/images/"+bill.name);
     }
   }
   getFlatList() {
@@ -119,6 +120,7 @@ export class SocietyComplainAddComponent implements OnInit {
   categoryDetail(id: any) {
 
     this.Service.getComplainDetail(id).subscribe(res => {
+      console.log(JSON.stringify(res))
       this.updateForm(res);
     })
   }
@@ -127,8 +129,11 @@ export class SocietyComplainAddComponent implements OnInit {
       uuid:data
     }
     this.Service.commentGet(datajson).subscribe(res=>{
-      console.log(JSON.stringify(res))
+       
       this.complainCommentList =res.data
+      for(var i=0;i<this.complainCommentList.length ;i++ ){
+        this.complainCommentList[i].profileImage = environment.LOCAL_BASE+this.complainCommentList[i].profileImage
+      }
     })
   }
   addComplain(){
@@ -147,8 +152,26 @@ export class SocietyComplainAddComponent implements OnInit {
     })
   }
   updateForm(res) {
+  let  assignedUUid = [];
+    if(res.assignedTo){
+      if(res.assignedTo.length > 0){
+        for(var i=0;i<res.assignedTo.length ;i++){
+          assignedUUid.push(res.assignedTo[i].uuid)  
+           
+        }
+      }
+    }
     this.complainUUid = res.uuid;
-
+    this.getCommentList(res.uuid);
+    this.complainImage=[];
+    if(res.images){
+      for(var i=0;i<res.images.length ;i++){
+        this.complainImage.push({
+          name:res.images[i].split('/')[2]
+        })
+      }
+ 
+    }
     this.getStaffListByCategory(res.category.uuid);
     this.firstFormGroup = this.fb.group({
       title: [{value:res.title,   disabled: true} , [
@@ -160,7 +183,7 @@ export class SocietyComplainAddComponent implements OnInit {
       residentUuid: [{value:res.resident.uuid,   disabled: true}],
       unitUuid: [{value:res.unit.uuid,   disabled: true}],
       categoryUuid: [{value:res.category.uuid,   disabled: true}],
-      assignToId:[],
+      assignToId:[assignedUUid],
      })
      this.secondFormGroup = this.fb.group({
       status: ['', [
@@ -173,10 +196,7 @@ export class SocietyComplainAddComponent implements OnInit {
       complainUuid:[res.uuid]
 
     })
-    if(res.images){
-      this.complainImage = res.images
-
-    }
+    
      
   }
   getStaffListByCategory(data){

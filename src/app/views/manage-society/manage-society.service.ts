@@ -44,6 +44,8 @@ GET_STAFF_BY_CATEGORY = 'user/get/society/staff/byCategory'
   UNIT_DETAIL_BY_UUID = 'Unit/Get';
   //Category
   GET_CATEGORY_LIST = 'Category/Get'
+  GET_CATEGORY_LIST_BY_RESIDENT = 'Category/Get/ByResident'
+
   GET_CATEGORY_BY_UUID = 'Category/Get/'
   SAVE_CATEGORY = 'Category/Add'
   UPDATE_CATEGORY = 'Category/Update'
@@ -413,6 +415,24 @@ COMMENT_GET ="ComplainComment/Get"
       })
     );
   }
+  getCategoryResidentList(data): Observable<any> {
+
+    let dataJson = {
+      parentId: data
+    }
+     return this._http.post(this.BASE_URL + this.GET_CATEGORY_LIST_BY_RESIDENT, dataJson).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  
   getCategory(id): Observable<any> {
 
 

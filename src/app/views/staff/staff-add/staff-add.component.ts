@@ -165,10 +165,10 @@ export class StaffAddComponent implements OnInit {
     this.fd = new FormData();
     if (this.pic.length > 0) {
       for (var i = 0; i < this.pic.length; i++) {
-        this.fd.append("pic", this.pic[i]);
+        this.fd.append("files", this.pic[i]);
       }
     }else{
-      this.fd.append("pic", "");
+      this.fd.append("files", "");
     } 
     let dataJson = {
       email:this.firstFormGroup.value.email,
@@ -211,10 +211,10 @@ export class StaffAddComponent implements OnInit {
   this.fd = new FormData();
   if (this.pic.length > 0) {
     for (var i = 0; i < this.pic.length; i++) {
-      this.fd.append("pic", this.pic[i]);
+      this.fd.append("files", this.pic[i]);
     }
   }else{
-    this.fd.append("pic", "");
+    this.fd.append("files", "");
   } 
   let dataJson = {
     id:this.firstFormGroup.value.id,

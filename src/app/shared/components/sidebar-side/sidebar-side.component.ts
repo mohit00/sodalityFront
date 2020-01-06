@@ -30,10 +30,24 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
     this.iconTypeMenuTitle = this.navService.iconTypeMenuTitle;
     this.menuItemsSub = this.navService.menuItems$.subscribe(menuItem => {
       this.userData = JSON.parse(sessionStorage.getItem('data'))
+      if(this.userData.data.user_type == 'Society'){
+        this.imageUrl = environment.LOCAL_BASE+this.userData.data.societyDetail.societyLogo;
+        this.userName = this.userData.data.societyDetail.societyDisplayName;
+        this.showImage = true
 
-      this.imageUrl = environment.LOCAL_BASE+this.userData.data.societyDetail.societyLogo;
-      this.userName = this.userData.data.societyDetail.societyDisplayName;
+      }
+      if(this.userData.data.user_type == 'Resident'){
+        this.imageUrl = environment.LOCAL_BASE+this.userData.data.residentDetail.profileImage;
+        this.userName = this.userData.data.residentDetail.firstName;
+        this.showImage = true
 
+      }
+      if(this.userData.data.user_type == 'Staff'){
+        this.imageUrl = environment.LOCAL_BASE+this.userData.data.staffDetals.pic;
+        this.userName = this.userData.data.staffDetals.name;
+        this.showImage = true
+
+       }
       this.menuItems = menuItem;
       //Checks item list has any icon type.
       this.hasIconTypeMenuItem = !!this.menuItems.filter(
@@ -57,15 +71,17 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
          }
         if(this.userData.data.user_type == 'FamilyMember'){
          }
-        if(this.userData.data.user_type == 'Resident'){
-          this.imageUrl = environment.LOCAL_BASE+this.userData.data.societyDetail.societyLogo;
-          this.userName = this.userData.data.societyDetail.societyDisplayName;
-  
-         }
+         if(this.userData.data.user_type == 'Resident'){
+          this.imageUrl = environment.LOCAL_BASE+this.userData.data.residentDetail.profileImage;
+          this.userName = this.userData.data.residentDetail.firstName;
+          this.showImage = true
+
+        }
         if(this.userData.data.user_type == 'Staff'){
-          this.imageUrl = environment.LOCAL_BASE+this.userData.data.societyDetail.societyLogo;
-          this.userName = this.userData.data.societyDetail.societyDisplayName;
-  
+          this.imageUrl = environment.LOCAL_BASE+this.userData.data.staffDetals.pic;
+          this.userName = this.userData.data.staffDetals.name;
+          this.showImage = true
+
          }
       },100)
       

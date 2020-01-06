@@ -403,10 +403,13 @@ let societyLogoArray=[];
 
 this.Service.societyUpdate(this.fd).subscribe(res=>{
   console.log(JSON.stringify(res))
-  this.userData.data.societyDetail.societyDisplayName = res.societyDetail.societyDisplayName;
-  this.userData.data.societyDetail.societyLogo = res.societyDetail.societyLogo;
-sessionStorage.setItem("data",JSON.stringify(this.userData))
-  this.navService.publishNavigationChange(this.userData.data.user_type);
+  if(this.userData.data.user_type == "Society"){
+    this.userData.data.societyDetail.societyDisplayName = res.societyDetail.societyDisplayName;
+    this.userData.data.societyDetail.societyLogo = res.societyDetail.societyLogo;
+  sessionStorage.setItem("data",JSON.stringify(this.userData))
+    this.navService.publishNavigationChange(this.userData.data.user_type);
+  }
+
 
   this.AppLoaderService.close();
   let dataJson = {

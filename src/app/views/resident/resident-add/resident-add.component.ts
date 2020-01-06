@@ -38,6 +38,7 @@ export class ResidentAddComponent implements OnInit {
 
   @ViewChild('fruitInput', { static: false }) fruitInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
+  residentLogo: any[];
 
 
 
@@ -126,15 +127,33 @@ export class ResidentAddComponent implements OnInit {
       this.updateForm(res)
     })
   }
+// getFlatTower(){
+//   this.Service.getParentUuid().subscribe(res=>{
 
+//   })
+// }
   dataDetail: any;
   updateForm(data) {
+    this.pic = [];
+    if(data.residentDetail.profileImage){
+      this.pic.push({
+        name:data.residentDetail.profileImage.split('/')[2]
+      })
+    }
+    if(data.flatOwned){
+      for(var i=0;i<data.flatOwned.length ;i++){
+        this.fruits.push({
+          unitNo:data.flatOwned[i].unit_no,
+          uuid:data.flatOwned[i].uuid
+        })
+      }
+    }
 
     this.dataDetail = data;
     // if (data.residentDetals.pic) {
     //   this.pic.push({ name: data.residentDetals.pic.split('/')[2] })
     // }
-    this.fruits = data.flatOwned;
+    // this.fruits = data.flatOwned;
     this.firstFormGroup = this.fb.group({
       email: [data.email, [
         Validators.required,
@@ -233,6 +252,7 @@ export class ResidentAddComponent implements OnInit {
     })
 
   }
+   
   getflatList(data) {
     let dataJson = {
       "parentId": data
@@ -273,8 +293,7 @@ export class ResidentAddComponent implements OnInit {
   }
   fd: FormData;
   createResident() {
-    alert(JSON.stringify(this.fruits))
-    this.secondFormGroup.value.flatOwned = [];
+     this.secondFormGroup.value.flatOwned = [];
 
     for (var i = 0; i < this.fruits.length; i++) {
       this.secondFormGroup.value.flatOwned.push(this.fruits[i].uuid);
@@ -282,10 +301,10 @@ export class ResidentAddComponent implements OnInit {
     this.fd = new FormData();
     if (this.pic.length > 0) {
       for (var i = 0; i < this.pic.length; i++) {
-        this.fd.append("pic", this.pic[i]);
+        this.fd.append("files", this.pic[i]);
       }
     } else {
-      this.fd.append("pic", "");
+      this.fd.append("files", "");
     }
     let dataJson = {
       email: this.firstFormGroup.value.email,
@@ -297,11 +316,11 @@ export class ResidentAddComponent implements OnInit {
         "middleName": this.firstFormGroup.value.middleName,
         "lastName": this.firstFormGroup.value.lastName,
         "clubMembership": this.secondFormGroup.value.clubMembership,
-        "mobileNumber": this.firstFormGroup.value.mobileNumber.toString(),
-        "alternateMobileNumber": (this.firstFormGroup.value.alternateMobileNumber).toString(),
+        "mobileNumber": this.firstFormGroup.value.mobileNumber,
+        "alternateMobileNumber": (this.firstFormGroup.value.alternateMobileNumber),
         "alternateEmailId": this.firstFormGroup.value.alternateEmailId,
-        "landLine": this.secondFormGroup.value.landLine.toString(),
-        "intercom": (this.secondFormGroup.value.intercom).toString(),
+        "landLine": this.secondFormGroup.value.landLine,
+        "intercom": (this.secondFormGroup.value.intercom),
         residentType: this.secondFormGroup.value.residentType,
         "occupation": this.secondFormGroup.value.occupation,
         "accessCardNumber": this.secondFormGroup.value.accessCardNumber,
@@ -370,7 +389,7 @@ export class ResidentAddComponent implements OnInit {
         message: 'resident Successfully Updated'
       }
       this.dialog.success(dataJson);
-      this.Router.navigate(['resident/List']);
+      this.Router.navigate(['Resident/List']);
     })
   }
 

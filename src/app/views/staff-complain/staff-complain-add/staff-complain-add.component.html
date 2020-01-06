@@ -44,7 +44,7 @@
                   <table class="default-table mat-box-shadow mb-24" style="width: 100%" *ngIf ="complainImage">
                     <thead>
                     <tr>
-                        <th width="30%"> Logo Name</th>
+                        <th width="30%"> File Name</th>
                         <th>Size</th>
                          <th>Actions</th>
                     </tr>
@@ -128,14 +128,14 @@
             <div fxLayout="row wrap">
               <div fxLayout="column" fxFlex="100" fxFlex.gt-md="100">
                 <!-- Time line -->
-                <mat-card class="default" *ngIf ="complainCommentList">
+                <mat-card class="default" *ngIf ="complainCommentList.length >0">
                   <mat-card-title style="margin-bottom: 10px;">No. of Comments - {{complainCommentList.length}} / Current Status - {{complainCommentList[complainCommentList.length-1].complainStatus}}</mat-card-title>
               
                   <mat-card-content>
                     <div class="timeline" *ngFor ="let list of complainCommentList">
                       <div class="timeline-item">
                         <div class="timeline-badge">
-                          <img src="assets/images/face-6.jpg" alt="">
+                          <img [src]="list.profileImage | safe" alt="">
                         </div>
                         <div class="timeline-body">
                           <div class="timeline-body-top" fxLayout="row">

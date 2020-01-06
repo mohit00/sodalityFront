@@ -18,14 +18,14 @@
             <!-- Sidebar user -->
             <div class="app-user">
                 <div class="app-user-photo">
-                <!-- <img  *ngIf ="!showImage"src="assets/images/face-7.jpg" class="mat-elevation-z1" alt=""> -->
-                <img   [src]="imageUrl | safe "  class="mat-elevation-z1" alt="">
+                <img  *ngIf ="!showImage"src="assets/images/face-7.jpg" class="mat-elevation-z1" alt="">
+                <img  *ngIf ="showImage" [src]="imageUrl | safe "  class="mat-elevation-z1" alt="">
 
                 </div>
                 <span class="app-user-name mb-05">
                 <mat-icon class="icon-xs text-muted">lock</mat-icon> 
-                <span >{{userName}}</span>
-                <!-- <span *ngIf ="!userName">User</span> -->
+                <span *ngIf ="showImage">{{userName}}</span>
+               <span  *ngIf ="!showImage">User</span> 
 
                 </span>
                 <!-- Small buttons -->

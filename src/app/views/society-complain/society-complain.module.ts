@@ -11,10 +11,11 @@ import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { MatTableDataSource } from '@angular/material'; 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { QuillModule } from 'ngx-quill';
+import { SharedComponentsModule } from 'app/shared/components/shared-components.module';
 
 @NgModule({
   declarations: [SocietyComplainComponent, SocietyComplainAddComponent],
-  imports: [QuillModule,FormsModule, ReactiveFormsModule,NgxDatatableModule,SharedMaterialModule,FlexLayoutModule,
+  imports: [SharedComponentsModule,QuillModule,FormsModule, ReactiveFormsModule,NgxDatatableModule,SharedMaterialModule,FlexLayoutModule,
     CommonModule,
     SocietyComplainRoutingModule
   ],providers:[MatTableDataSource]

@@ -4,6 +4,7 @@ import { TablesService } from '../../manage-society/manage-society.service';
 import { AppLoaderService } from '../../../shared/services/app-loader/app-loader.service';
 import { AppConfirmService } from 'app/shared/services/app-confirm/app-confirm.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-staff-complain-add',
@@ -64,7 +65,7 @@ export class StaffComplainAddComponent implements OnInit {
         win.document.write('<iframe src="' + reader.result + '" frameborder="0" style="border:0; top:0px; left:0px; bottom:0px; right:0px; width:100%; height:100%;" allowfullscreen></iframe>');
       };
     } else {
-      //  window.open(environment.LOCAL_BASE+"resources/images/"+bill.name);
+        window.open(environment.LOCAL_BASE+"/images/"+bill.name);
     }
   }
   getFlatList() {
@@ -129,7 +130,7 @@ export class StaffComplainAddComponent implements OnInit {
       this.updateForm(res);
     })
   }
-  complainCommentList:any;
+  complainCommentList:any=[];
 getCommentList(data){
   let datajson = {
     uuid:data
@@ -137,10 +138,20 @@ getCommentList(data){
   this.Service.commentGet(datajson).subscribe(res=>{
     console.log(JSON.stringify(res))
     this.complainCommentList =res.data
+    for(var i=0;i<this.complainCommentList.length ;i++ ){
+      this.complainCommentList[i].profileImage = environment.LOCAL_BASE+this.complainCommentList[i].profileImage
+    }
   })
 }
   updateForm(res) {
     this.complainUUid = res.uuid;
+    this.complainImage =[];
+    if (res.images) {
+      for(var i=0 ;i<res.images.length;i++){
+        this.complainImage.push({name:res.images[i].split("/")[2]})
+      }
+ 
+    }
     this.getCommentList(res.uuid);
     console.log(JSON.stringify(res))
     this.getStaffListByCategory(res.category.uuid);
@@ -167,10 +178,7 @@ getCommentList(data){
       complainUuid:[res.uuid]
 
     })
-    if (res.images) {
-      this.complainImage = res.images
-
-    }
+  
 
   }
   getStaffListByCategory(data) {
