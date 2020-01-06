@@ -7,6 +7,16 @@ import {
 import { egretAnimations } from "app/shared/animations/egret-animations";
 import { ThemeService } from "app/shared/services/theme.service";
 import tinyColor from 'tinycolor2';
+import * as Highcharts from 'highcharts';
+import highcharts3D from 'highcharts/highcharts-3d.src';
+import HC_solidgauge from 'highcharts/modules/solid-gauge';
+import HC_more from 'highcharts/highcharts-more';
+import HC_exporting from 'highcharts/modules/exporting';
+HC_exporting(Highcharts);
+HC_more(Highcharts);
+HC_solidgauge(Highcharts);
+
+highcharts3D(Highcharts);
 
 @Component({
   selector: "app-analytics",
@@ -35,6 +45,369 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
     private themeService: ThemeService
   ) {}
 
+  highcharts = Highcharts;
+  chartOptions = {   
+   chart: {
+     type: 'pie',
+     options3d: {
+         enabled: true,
+         alpha: 45
+     }
+ },
+ title: {
+   text: ''
+ },
+ subtitle: {
+     text: ''
+ },
+ plotOptions: {
+     pie: {
+         innerSize: 100,
+         depth: 45
+     }
+ },
+ series: [{
+     name: 'Load',
+     dataLabels: {
+       enabled: false
+     },
+     data: [
+         ['Tower 1', 8],
+         ['Tower 2', 3],
+         ['Tower 3', 1],
+         ['Tower 4', 6],
+         ['Tower 5', 8],
+         ['Tower 6', 4],
+      ]
+   }]
+  };
+
+  barchartOptions = {      
+   chart: {
+      type: 'column',
+      options3d: {
+         enabled: true,
+         alpha: 7,
+         beta: 18,
+         depth: 70
+      }
+   },         
+   title : {
+      text: ''   
+   },
+   yAxis: {
+     title: {
+         text: null
+     }
+   },
+   series : [{
+     name: 'Water level',
+      data: [['T-1',29.9],
+             ['T-2',71.5],
+             ['T-3',106.4],
+             ['T-4',129.2],
+             ['T-4',144.0], 
+             ['T-4',176.0], 
+             ['T-4', 135.6], 
+             ['T-4',148.5]], 
+    }]
+};
+
+linechartOptions = {   
+  chart: {
+     type: "spline"
+  },
+  title: {
+     text: ""
+  },
+  subtitle: {
+     text: ""
+  },
+  xAxis:{
+     categories:["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  },
+  yAxis: {          
+     title:{
+        text:""
+     } 
+  },
+  tooltip: {
+     valueSuffix:" "
+  },
+  series: [{
+     name: 'DG',
+     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,26.5, 23.3, 18.3, 13.9, 9.6]
+  },
+  {
+     name: 'Grid',
+     data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8,24.1, 20.1, 14.1, 8.6, 2.5]
+  }]
+};
+
+gaugeChartOptions = {      
+chart: {
+  type: 'gauge',
+  plotBackgroundColor: null,
+  plotBackgroundImage: null,
+  plotBorderWidth: 0,
+  plotShadow: false
+},
+
+title: {
+  text: ''
+},
+
+pane: {
+  startAngle: -150,
+  endAngle: 150,
+  background: [{
+      backgroundColor: {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+              [0, '#FFF'],
+              [1, '#333']
+          ]
+      },
+      borderWidth: 0,
+      outerRadius: '109%'
+  }, {
+      backgroundColor: {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+              [0, '#333'],
+              [1, '#FFF']
+          ]
+      },
+      borderWidth: 1,
+      outerRadius: '107%'
+  }, {
+      // default background
+  }, {
+      backgroundColor: '#DDD',
+      borderWidth: 0,
+      outerRadius: '105%',
+      innerRadius: '103%'
+  }]
+},
+
+// the value axis
+yAxis: {
+  min: 0,
+  max: 200,
+
+  minorTickInterval: 'auto',
+  minorTickWidth: 1,
+  minorTickLength: 10,
+  minorTickPosition: 'inside',
+  minorTickColor: '#666',
+
+  tickPixelInterval: 30,
+  tickWidth: 2,
+  tickPosition: 'inside',
+  tickLength: 10,
+  tickColor: '#666',
+  labels: {
+      step: 2,
+      rotation: 'auto'
+  },
+  title: {
+      text: 'km/h'
+  },
+  plotBands: [{
+      from: 0,
+      to: 120,
+      color: '#55BF3B' // green
+  }, {
+      from: 120,
+      to: 160,
+      color: '#DDDF0D' // yellow
+  }, {
+      from: 160,
+      to: 200,
+      color: '#DF5353' // red
+  }]
+},
+
+series: [{
+  name: 'Speed',
+  data: [80],
+  tooltip: {
+      valueSuffix: ' km/h'
+  }
+}]
+};
+
+solidgaugechartOptions = {      
+  chart: {
+    type: 'solidgauge',
+    height: '110%',
+},
+
+title: {
+    text: '',
+    style: {
+        fontSize: '24px'
+    }
+},
+tooltip: {
+  borderWidth: 0,
+  backgroundColor: 'none',
+  shadow: false,
+  style: {
+      fontSize: '16px'
+  },
+  valueSuffix: '%',
+  pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}</span>',
+  positioner: function (labelWidth) {
+      return {
+          x: (this.chart.chartWidth - labelWidth) / 2,
+          y: (this.chart.plotHeight / 2) + 15
+      };
+  }
+},
+
+pane: {
+  startAngle: 0,
+  endAngle: 360,
+  background: [{ // Track for Move
+      outerRadius: '112%',
+      innerRadius: '88%',
+      backgroundColor: new Highcharts.Color(Highcharts.getOptions().colors[0])
+          .setOpacity(0.3)
+          .get(),
+      borderWidth: 0
+  }, { // Track for Exercise
+      outerRadius: '87%',
+      innerRadius: '63%',
+      backgroundColor: new Highcharts.Color(Highcharts.getOptions().colors[1])
+          .setOpacity(0.3)
+          .get(),
+      borderWidth: 0
+  }, { // Track for Stand
+      outerRadius: '62%',
+      innerRadius: '38%',
+      backgroundColor: new Highcharts.Color(Highcharts.getOptions().colors[2])
+          .setOpacity(0.3)
+          .get(),
+      borderWidth: 0
+  }]
+},
+
+yAxis: {
+  min: 0,
+  max: 100,
+  lineWidth: 0,
+  tickPositions: []
+},
+
+plotOptions: {
+  solidgauge: {
+      dataLabels: {
+          enabled: false
+      },
+      linecap: 'round',
+      stickyTracking: false,
+      rounded: true
+  }
+},
+
+series: [{
+  name: 'Move',
+  data: [{
+      color: Highcharts.getOptions().colors[0],
+      radius: '112%',
+      innerRadius: '88%',
+      y: 80
+  }]
+}, {
+  name: 'Exercise',
+  data: [{
+      color: Highcharts.getOptions().colors[1],
+      radius: '87%',
+      innerRadius: '63%',
+      y: 65
+  }]
+}, {
+  name: 'Stand',
+  data: [{
+      color: Highcharts.getOptions().colors[2],
+      radius: '62%',
+      innerRadius: '38%',
+      y: 50
+  }]
+}]
+};
+
+doughnutChartOptions = {      
+chart: {
+  renderTo: 'container',
+  type: 'pie'
+},
+title: {
+  text: ''
+},
+yAxis: {
+  title: {
+      text: ''
+  }
+},
+plotOptions: {
+  pie: {
+      shadow: false
+  }
+},
+/*tooltip: {
+  formatter: function() {
+      return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+  }
+},*/
+series: [{
+  name: 'AMR',
+  data: [["Gateway",6],["DIC",4],["Meter",7]],
+  size: '60%',
+  innerSize: '70%',
+  showInLegend:false,
+  dataLabels: {
+      enabled: false
+  }
+}]
+};
+
+
+doughnutChartColors1: any[] = [{
+  backgroundColor: ['#44ad3e', '#49c7f5',]
+}];
+  doughnutChartColors2: any[] = [{
+  backgroundColor: ['#44ad3e', '#49c7f5',]
+}];
+total1: number = 500;
+data1: number = 200;
+doughnutChartData1: number[] = [this.data1, (this.total1 - this.data1)];
+
+total2: number = 600;
+data2: number = 400;
+doughnutChartData2: number[] = [this.data2, (this.total2 - this.data2)];
+doughnutLabels = ['Activated', 'Connected']
+doughnutChartType = 'doughnut';
+doughnutOptions: any = {
+  cutoutPercentage: 85,
+  responsive: true,
+  legend: {
+    display: false,
+    position: 'bottom'
+  },
+  elements: {
+    arc: {
+      borderWidth: 0,
+    }
+  },
+  tooltips: {
+    enabled: true
+  }
+};
+
+
   ngAfterViewInit() {}
   ngOnInit() {
     this.themeService.onThemeChange.subscribe(activeTheme => {
@@ -53,60 +426,32 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
 
     this.countryTrafficStats = [
       {
-        country: "US",
-        visitor: 14040,
-        pageView: 10000,
-        download: 1000,
-        bounceRate: 30,
-        flag: "flag-icon-us"
+        country: "Basement Light 1",
+        Status: "Y"
       },
       {
-        country: "India",
-        visitor: 12500,
-        pageView: 10000,
-        download: 1000,
-        bounceRate: 45,
-        flag: "flag-icon-in"
+        country: "Basement Light 2",
+        Status: "N"
       },
       {
-        country: "UK",
-        visitor: 11000,
-        pageView: 10000,
-        download: 1000,
-        bounceRate: 50,
-        flag: "flag-icon-gb"
+        country: "Lobby Light 1",
+        Status: "Y"
       },
       {
-        country: "Brazil",
-        visitor: 4000,
-        pageView: 10000,
-        download: 1000,
-        bounceRate: 30,
-        flag: "flag-icon-br"
+        country: "Lobby Light 2",
+        Status: "Y"
       },
       {
-        country: "Spain",
-        visitor: 4000,
-        pageView: 10000,
-        download: 1000,
-        bounceRate: 45,
-        flag: "flag-icon-es"
+        country: "Lobby Light 3",
+        Status: "N"
       },
       {
-        country: "Mexico",
-        visitor: 4000,
-        pageView: 10000,
-        download: 1000,
-        bounceRate: 70,
-        flag: "flag-icon-mx"
+        country: "Main Gate 1",
+        Status: "N"
       },
       {
-        country: "Russia",
-        visitor: 4000,
-        pageView: 10000,
-        download: 1000,
-        bounceRate: 40,
-        flag: "flag-icon-ru"
+        country: "Main Gate 1",
+        Status: "Y"
       }
     ];
 

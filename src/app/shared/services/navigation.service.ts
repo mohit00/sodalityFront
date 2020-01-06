@@ -58,7 +58,51 @@ export class NavigationService {
       type: "link",
       tooltip: "Dashboard",
       icon: "dashboard",
-      state: "dashboard/default",
+      state: "dashboard/Admin",
+       
+    } ,
+    {
+      name: "Manage Society",
+      type: "dropDown",
+      tooltip: "Manage Society",
+      icon: "view_carousel",
+       sub: [
+        { name: "Group", state: "Group/List" },
+       ]
+    }    
+  ];
+ GroupDash: IMenuItem[] = [
+    {
+      name: "HOME",
+      type: "icon",
+      tooltip: "Home",
+      icon: "home",
+      state: "home"
+    },
+    {
+      name: "PROFILE",
+      type: "icon",
+      tooltip: "Profile",
+      icon: "person",
+      state: "profile/overview"
+    },
+    {
+      name: "TOUR",
+      type: "icon",
+      tooltip: "Tour",
+      icon: "flight_takeoff",
+      state: "tour"
+    },
+    {
+      type: "separator",
+      name: "Main Items"
+    },
+    {
+      name: "DASHBOARD",
+      type: "link",
+      tooltip: "Dashboard",
+      icon: "dashboard",
+      state: "dashboard/Group",
        
     } ,
     {
@@ -71,7 +115,6 @@ export class NavigationService {
        ]
     }    
   ];
-
   societyDash: IMenuItem[] = [
     {
       name: "HOME",
@@ -106,7 +149,7 @@ export class NavigationService {
       type: "dropDown",
       
         sub: [
-        { name: "Sodality Dash", state: "dashboard/default" },
+        { name: "Sodality Dash", state: "dashboard/Society" },
         { name: "facility Dashboard", state: "dashboard/facility" },
         { name: "myxenius", state: "dashboard/myxenius" },
         ]
@@ -170,7 +213,7 @@ export class NavigationService {
       type: "link",
       tooltip: "Dashboard",
       icon: "dashboard",
-      state: "dashboard/default",
+      state: "dashboard/Resident",
        
     } ,
     {
@@ -222,7 +265,7 @@ export class NavigationService {
       type: "link",
       tooltip: "Dashboard",
       icon: "dashboard",
-      state: "dashboard/default",
+      state: "dashboard/Staff",
        
     } ,
     {

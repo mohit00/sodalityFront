@@ -1,120 +1,181 @@
 <!-- First row -->
-<mat-card
-  class="p-0"
-  [@animate]="{ value: '*', params: { y: '50px', delay: '300ms' } }"
->
-  <div fxLayout="row wrap">
-    <div
-      fxFlex="50"
-      fxFlex.gt-sm="20"
-      fxFlex.sm="50"
-    >
-      <div class="text-center pt-1 pb-1 border-right-light">
-        <mat-icon class="text-green">show_chart</mat-icon>
-        <h4 class="m-0 ">5040</h4>
-        <small class="m-0 ">Page views</small>
-      </div>
-    </div>
-    <div
-      fxFlex="50"
-      fxFlex.gt-sm="20"
-      fxFlex.sm="50"
-    >
-      <div class="text-center pt-1 pb-1 border-right-light">
-        <mat-icon class="text-blue">cloud_download</mat-icon>
-        <h4 class="m-0 ">1200</h4>
-        <small class="m-0 ">Downloads</small>
-      </div>
-    </div>
-    <div
-      fxFlex="50"
-      fxFlex.gt-sm="20"
-      fxFlex.sm="50"
-    >
-      <div class="text-center pt-1 pb-1 border-right-light">
-        <mat-icon class="text-green">comment</mat-icon>
-        <h4 class="m-0 ">16420</h4>
-        <small class="m-0 ">Comments</small>
-      </div>
-    </div>
-    <div
-      fxFlex="50"
-      fxFlex.gt-sm="20"
-      fxFlex.sm="50"
-    >
-      <div class="text-center pt-1 pb-1 border-right-light">
-        <mat-icon class="text-blue">person</mat-icon>
-        <h4 class="m-0 ">3010</h4>
-        <small class="m-0 ">Profile views</small>
-      </div>
-    </div>
-    <div
-      fxFlex="50"
-      fxFlex.gt-sm="20"
-      fxFlex.sm="50"
-    >
-      <div class="text-center pt-1 pb-1">
-        <mat-icon class="text-red">favorite</mat-icon>
-        <h4 class="m-0 ">4070</h4>
-        <small class="m-0 ">Likes</small>
-      </div>
-    </div>
+<div fxLayout="row wrap">
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{scale:'.9',delay:'300ms'}}">
+    <mat-card style="background-image:linear-gradient(to right, rgb(20,183,216) ,rgb(38,207,204));">
+      <mat-card-title fxLayoutAlign="start center">
+        <small style="color: white; font-size: 15px;">Total Flats</small>
+        <span fxFlex></span>
+        <mat-chip
+        class="icon-chip" 
+        color="primary" 
+        selected="true"><mat-icon>trending_up</mat-icon>20%</mat-chip>
+      </mat-card-title>
+      <mat-card-content>
+        <h3 style="color: white; font-size: 15px;">22,450</h3>
+      </mat-card-content>
+    </mat-card>
   </div>
-</mat-card>
+
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+    <mat-card style="background-image:linear-gradient(to right,#fa646e, #fc9da3)">
+      <mat-card-title>
+        <small style="color: white; font-size: 15px;">Recharge</small>
+        <span fxFlex></span>
+        <mat-chip
+        class="icon-chip" 
+        color="accent" 
+        selected="true"><mat-icon>trending_up</mat-icon>10%</mat-chip>
+      </mat-card-title>
+      <mat-card-content>
+        <h3 style="color: white; font-size: 15px;">377,670</h3>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+    <mat-card style="background-image:linear-gradient(to right,#f79d60, #f7c29e)">
+      <mat-card-title>
+        <small style="color: white; font-size: 15px;">Daily Consumption</small>
+        <span fxFlex></span>
+        <mat-chip
+        class="icon-chip" 
+        color="accent" 
+        selected="true"><mat-icon>trending_up</mat-icon>9%</mat-chip>
+      </mat-card-title>
+      <mat-card-content>
+        <h3 style="color: white; font-size: 15px;">54,845</h3>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+    <mat-card style="background-image:linear-gradient(to right, rgba(118,138,146), rgba(169,182,186))">
+      <mat-card-title>
+        <small style="color: white; font-size: 15px; border: gray;">Monthly Consumption</small>
+        <span fxFlex></span>
+        <mat-chip
+        class="icon-chip" 
+        color="warn" 
+        selected="true"><mat-icon>trending_down</mat-icon>2%</mat-chip>
+      </mat-card-title>
+      <mat-card-content>
+        <h3 style="color: white; font-size: 15px;">245</h3>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
 <!--/ End first row -->
 
 <!-- 2nd, 3rd row -->
-<div fxLayout="row wrap">
-  <div
-    fxFlex="100"
-    fxFlex.gt-sm="66.67"
-    fxFlex.sm="50"
-    [@animate]="{ value: '*', params: { y: '50px', delay: '600ms' } }"
-  >
-    <mat-card class="p-0 ">
-      <mat-tab-group>
-        <mat-tab label="Traffic Vs Sales">
-          <div
-            echarts
-            [options]="trafficVsSaleOptions"
-            [merge]="trafficVsSale"
-            [autoResize]="true"
-            style="height: 255px;"
-          ></div>
-        </mat-tab>
-        <mat-tab label="Sessions">
-          <div
-            echarts
-            [options]="sessionOptions"
-            [merge]="sessions"
-            [autoResize]="true"
-            style="height: 255px;"
-          ></div>
-        </mat-tab>
-      </mat-tab-group>
-    </mat-card>
-  </div>
-  <!--/ End tab -->
+<div fxLayout="row wrap"  [@animate]="{value:'*',params:{y:'25px',delay:'300ms'}}">
+    <div
+      fxFlex="100"
+      fxFlex.gt-sm="66.67"
+      fxFlex.sm="50"
+      [@animate]="{ value: '*', params: { y: '50px', delay: '600ms' } }"
+    >
+      <mat-card class="p-0 ">
+        <mat-tab-group>
+          <mat-tab label="Water Consumption" style = "color:rgb(89, 177, 250);">
+            <span fxflex style="width: 100%;">
+            <highcharts-chart
+              [Highcharts] = "highcharts" 
+              [options] = "barchartOptions" 
+              style = "height: 295px;  display: inline-flex;">
+            </highcharts-chart></span>
+          </mat-tab>
+          <mat-tab label="DG/Grid Consumption">
+            <span fxflex>
+              <highcharts-chart
+                [Highcharts] = "highcharts" 
+                [options] = "linechartOptions" 
+                style = "height: 295px; width: 700px; display: inline-flex;">
+              </highcharts-chart></span>
+         </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+    </div>
 
-  <!-- Donut chart -->
-  <div
-    fxFlex="100"
-    fxFlex.gt-sm="33.33"
-    fxFlex.sm="50"
-    [@animate]="{ value: '*', params: { y: '50px', delay: '400ms' } }"
-  >
-    <mat-card class="p-0 ">
-      <p class=" ml-1 mt-1">TRAFFIC SOURCES</p>
-      <div
-        echarts
-        [options]="trafficSourcesChart"
-        [autoResize]="true"
-        style="height: 250px;"
-      ></div>
-    </mat-card>
-  </div>
+    <!-- Donut chart -->
+    <div
+      fxFlex="100"
+      fxFlex.gt-sm="33.33"
+      fxFlex.sm="50"
+      [@animate]="{ value: '*', params: { y: '50px', delay: '600ms' } }"
+    >
+      <mat-card class="p-0 ">
+          <mat-card-title class="">
+              <div class="card-title-text" style="height:20px; line-height: 4px; margin-top: 10px;">
+                  <span style="color:rgb(89, 177, 250); font-weight: bold; border: 1px black;">Current Load Status</span>
+                  <span fxFlex></span>
+              </div>
+              </mat-card-title>
+              <div style="align-content: center; margin-left: 30px;"><span fxflex></span>
+            <highcharts-chart
+            [Highcharts] = "highcharts" 
+            [options] = "chartOptions" 
+            style = "height: 300px; width : 250px;display: flex;">
+         </highcharts-chart></div>
+      </mat-card>
+    </div>
   <!--/ End donut chart -->
   <!--/ End 2nd row -->
+    <!--/ End tab -->
+
+    <div fxLayout="row wrap"  [@animate]="{value:'*',params:{y:'25px',delay:'300ms'}}">
+      <div fxFlex="33.33">
+        <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+          <mat-card-title class="">
+          <div class="card-title-text" style="height:20px; line-height: 4px;  margin-top: 10px;">
+              <span fxFlex style="color:rgb(89, 177, 250); font-weight: bold;">AMR Dashboard</span>
+          </div>
+        </mat-card-title>
+         <div style="align-content: center; margin-left: 30px;">
+            <highcharts-chart
+            [Highcharts] = "highcharts" 
+            [options] = "doughnutChartOptions" 
+            style = "height: 280px; width: 300px; display: flex;">
+            </highcharts-chart>
+        </div>
+      </mat-card>
+      </div>
+      
+      
+  <div fxFlex="33.33">
+    <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+      <mat-card-title class="">
+      <div class="card-title-text" style="height:20px; line-height: 4px;  margin-top: 10px;">
+          <span fxFlex style="color:rgb(89, 177, 250); font-weight: bold;">Air Quality Check</span>
+      </div>
+    </mat-card-title>
+    
+    <div style="align-content: center; margin-left: 30px;">
+          <highcharts-chart
+          [Highcharts] = "highcharts" 
+          [options] = "gaugeChartOptions" 
+          style = "height: 280px; width: 250px; display: flex;">
+       </highcharts-chart>
+   
+    </div>
+  </mat-card>
+  </div>
+  <div fxFlex="33.33">
+    <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+      <mat-card-title class="">
+      <div class="card-title-text" style="height:20px; line-height: 4px; margin-top: 10px;">
+          <span style="color:rgb(89, 177, 250); font-weight: bold;">DG Fuel Level</span>
+      </div>
+    </mat-card-title>
+    
+      <div style="align-content: center; margin-left: 30px;">
+       <highcharts-chart
+          [Highcharts] = "highcharts" 
+          [options] = "solidgaugechartOptions" 
+          style = "height: 280px; width: 250px; display: flex;">
+       </highcharts-chart></div>
+      
+  </mat-card>
+  </div>
+    
 
   <!-- 3rd row, 1st column -->
   <div
@@ -123,22 +184,12 @@
     fxFlex.sm="50"
     [@animate]="{ value: '*', params: { y: '50px', delay: '800ms' } }"
   >
-    <mat-card class="">
-      <p class="">7 DAY TRAFFIC</p>
-      <div
-        echarts
-        [options]="dailyTrafficChartBar"
-        [autoResize]="true"
-        style="height: 250px;"
-      ></div>
-    </mat-card>
-
     <mat-card
       class="p-0"
     >
       <mat-card-title class="mb-1">
         <div class="card-title-text">
-          <span class="font-weight-normal">Top Campaign Performance</span>
+          <span class="font-weight-normal" style = "color:rgb(89, 177, 250); font-weight: bold;">Low Balance Alert</span>
 
           <span fxFlex></span>
           <button
@@ -168,7 +219,7 @@
       <mat-card-content>
         <div class="mb-1">
           <p class="m-0">
-            Facebook <span class="text-muted">| 9.8 | 90%</span>
+            Tower 1 <span class="text-muted">| 9.8 | 90%</span>
           </p>
           <mat-progress-bar
             color="warn"
@@ -181,7 +232,7 @@
         </div>
         <div class="mb-1">
           <p class="m-0 text-13">
-            Google AdSense <span class="text-muted">| 8.3 | 80%</span>
+            Tower 2 <span class="text-muted">| 8.3 | 80%</span>
           </p>
           <mat-progress-bar
             class=""
@@ -195,7 +246,7 @@
         </div>
         <div class="mb-1">
           <p class="m-0 text-13">
-            Twitter <span class="text-muted">| 5.8 | 60%</span>
+            Tower 3 <span class="text-muted">| 5.8 | 60%</span>
           </p>
           <mat-progress-bar
             class=""
@@ -207,9 +258,9 @@
           >
           </mat-progress-bar>
         </div>
-        <div class="">
+        <!--<div class="">
           <p class="m-0 text-13">
-            LinkedIn <span class="text-muted">| 4.8 | 40%</span>
+            Tower 4 <span class="text-muted">| 4.8 | 40%</span>
           </p>
           <mat-progress-bar
             class=""
@@ -220,7 +271,7 @@
             style="height: 6px"
           >
           </mat-progress-bar>
-        </div>
+        </div>-->
       </mat-card-content>
     </mat-card>
   </div>
@@ -239,7 +290,7 @@
         <mat-card class="p-0">
           <div fxLayout="row wrap">
             <div fxFlex="40" class="p-1">
-              <p class="">TRAFFIC</p>
+              <p class="" style = "color:rgb(89, 177, 250); font-weight: bold;">Recharge Status</p>
               <p class="text-24 text-green font-weight-bold mb-0">
                 27% <span class="material-icons">arrow_drop_up</span>
               </p>
@@ -250,7 +301,7 @@
                 echarts
                 [options]="trafficGrowthChart"
                 [autoResize]="true"
-                style="height: 150px; right: -1px"
+                style="height: 220px; right: -1px"
               ></div>
             </div>
           </div>
@@ -261,7 +312,7 @@
         <mat-card class="p-0">
           <div fxLayout="row wrap">
             <div fxFlex="40" class="p-1">
-              <p class="">Bounce Rate</p>
+              <p class="" style = "color:rgb(89, 177, 250); font-weight: bold;">Debit/Credit Status</p>
               <p class="text-24 text-red font-weight-bold mb-0">
                 20% <span class="material-icons">arrow_drop_up</span>
               </p>
@@ -272,96 +323,159 @@
                 echarts
                 [options]="bounceRateGrowthChart"
                 [autoResize]="true"
-                style="height: 150px; right: -1px"
+                style="height: 220px; right: -1px"
               ></div>
             </div>
           </div>
         </mat-card>
       </div>
     </div>
+  </div>
+        <div
+        fxFlex="100"
+        fxFlex.gt-sm="33.33"
+        fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '1000ms' } }"
+      >
+    <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+        <mat-card-title class="">
+        <div class="card-title-text" style="height:20px; line-height: 4px; background-image:linear-gradient(to right, rgba(118,138,146), rgba(169,182,186))">
+            <span style="color:#fff; ">Tower 1</span>
+            <span fxFlex></span>
+        </div>
+        </mat-card-title>
+        </mat-card>
 
-    <mat-card
-      class="p-0 "
-      [@animate]="{ value: '*', params: { scale: '.9', delay: '300ms' } }"
-    >
       <mat-table [dataSource]="countryTrafficStats" matSort>
         <ng-container matColumnDef="country">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Country
+          <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 50px;">
+            Device Name
           </mat-header-cell>
-          <mat-cell *matCellDef="let row" data-label="id">
-            <span class="flag-icon {{ row.flag }}"></span>
+          <mat-cell *matCellDef="let row" data-label="id" style="padding-right: 50px;">
             {{ row.country }}
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="visitor">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Visitor
+       <ng-container matColumnDef="Status">
+          <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 30px;">
+            Status
           </mat-header-cell>
-          <mat-cell *matCellDef="let row" data-label="progress">
-            {{ row.visitor }}
-          </mat-cell>
+          <mat-cell *matCellDef="let row" data-label="color" style="padding-right: 30px;">
+              <ng-template [ngIf]="row.Status">
+                  <div>
+                   <img src="assets/images/greendot.png">
+                  </div>
+                 </ng-template>
+         </mat-cell>
         </ng-container>
-
-        <ng-container matColumnDef="pageView">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Page View
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row" data-label="name">
-            {{ row.pageView }}
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="download">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Download
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row" data-label="color">
-            {{ row.download }}
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="bounceRate">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Bounce Rate
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row" data-label="color">
-            {{ row.bounceRate }}
-          </mat-cell>
-        </ng-container>
-
-        <!-- <ng-container matColumnDef="action">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-            <mat-cell *matCellDef="let row"> 
-              <button mat-button><mat-icon>keyboard_arrow_right</mat-icon></button>
-            </mat-cell>
-          </ng-container> -->
 
         <mat-header-row
-          *matHeaderRowDef="[
-            'country',
-            'visitor',
-            'pageView',
-            'download',
-            'bounceRate'
-          ]"
+          *matHeaderRowDef="['country','Status']"
         ></mat-header-row>
         <mat-row
-          *matRowDef="
-            let row;
-            columns: [
-              'country',
-              'visitor',
-              'pageView',
-              'download',
-              'bounceRate'
-            ]
-          "
+          *matRowDef="let row; columns: ['country','Status']"
         >
         </mat-row>
       </mat-table>
-    </mat-card>
   </div>
+
+  <div
+        fxFlex="100"
+        fxFlex.gt-sm="33.33"
+        fxFlex.sm="50"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '1000ms' } }"
+      >
+      <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+          <mat-card-title class="">
+          <div class="card-title-text" style="height:20px; line-height: 4px; background-image:linear-gradient(to right, rgba(118,138,146), rgba(169,182,186))">
+              <span style="color:#fff; ">Tower 2</span>
+              <span fxFlex></span>
+          </div>
+          </mat-card-title>
+          </mat-card>
+  
+        <mat-table [dataSource]="countryTrafficStats" matSort>
+          <ng-container matColumnDef="country">
+            <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 50px;">
+              Device Name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="id" style="padding-right: 50px;">
+              {{ row.country }}
+            </mat-cell>
+          </ng-container>
+  
+         <ng-container matColumnDef="Status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 30px;">
+              Status
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="color" style="padding-right: 30px;">
+                <ng-template [ngIf]="row.Status">
+                    <div>
+                     <img src="assets/images/greendot.png">
+                    </div>
+                   </ng-template>
+           </mat-cell>
+          </ng-container>
+  
+          <mat-header-row
+            *matHeaderRowDef="['country','Status']"
+          ></mat-header-row>
+          <mat-row
+            *matRowDef="let row; columns: ['country','Status']"
+          >
+          </mat-row>
+        </mat-table>
+    </div>
+
+    <div
+    fxFlex="100"
+    fxFlex.gt-sm="33.33"
+    fxFlex.sm="50"
+    [@animate]="{ value: '*', params: { y: '50px', delay: '1000ms' } }"
+  >
+     
+      <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+          <mat-card-title class="">
+          <div class="card-title-text" style="height:20px; line-height: 4px; background-image:linear-gradient(to right, rgba(118,138,146), rgba(169,182,186))">
+              <span style="color:#fff;">Tower 3</span>
+              <span fxFlex></span>
+          </div>
+          </mat-card-title>
+          </mat-card>
+  
+        <mat-table [dataSource]="countryTrafficStats" matSort>
+          <ng-container matColumnDef="country">
+            <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 50px;">
+              Device Name
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="id" style="padding-right: 50px;">
+              {{ row.country }}
+            </mat-cell>
+          </ng-container>
+  
+         <ng-container matColumnDef="Status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 30px;">
+              Status
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row" data-label="color" style="padding-right: 30px;">
+                <ng-template [ngIf]="row.Status">
+                    <div>
+                     <img src="assets/images/greendot.png">
+                    </div>
+                   </ng-template>
+           </mat-cell>
+          </ng-container>
+  
+          <mat-header-row
+            *matHeaderRowDef="['country','Status']"
+          ></mat-header-row>
+          <mat-row
+            *matRowDef="let row; columns: ['country','Status']"
+          >
+          </mat-row>
+        </mat-table>
+
+  </div>
+</div>
   <!--/ End 3rd row, 2nd column -->
 </div>
