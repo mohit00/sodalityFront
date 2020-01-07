@@ -11,9 +11,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {
    MatTableDataSource 
  } from '@angular/material';
+ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
  import { MaterialTableComponent } from '../../views/material-table/material-table.component';
 
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { SocietyAddComponent } from './society-add/society-add.component';
 @NgModule({
   declarations: [SocietyComponent,MaterialTableComponent, SocietyAddComponent],

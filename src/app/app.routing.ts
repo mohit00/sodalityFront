@@ -30,6 +30,10 @@ export const rootRouterConfig: Routes = [
         path: 'dashboard', 
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule), 
         data: { title: 'Dashboard', breadcrumb: 'DASHBOARD'}
+      },{ 
+        path: 'Group', 
+        loadChildren: () => import('./views/group/group.module').then(m => m.GroupModule), 
+        data: { title: 'Group', breadcrumb: 'Group'}
       } , {
         path: 'search', 
         loadChildren: () => import('./views/search-view/search-view.module').then(m => m.SearchViewModule)

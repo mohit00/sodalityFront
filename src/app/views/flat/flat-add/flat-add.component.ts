@@ -115,7 +115,7 @@ export class FlatAddComponent implements OnInit {
         Validators.required
       ]],UOM: [data.uom, [
         Validators.required
-      ]],unit_remark: [data.unit_remark, [
+      ]],unit_remark: [data.unit_remark.uuid, [
          
       ]],pipeGas: [data.pipeGas, [
          

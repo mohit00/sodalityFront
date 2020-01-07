@@ -155,13 +155,17 @@ export class ResidentAddComponent implements OnInit {
     // }
     // this.fruits = data.flatOwned;
     this.firstFormGroup = this.fb.group({
+      id: [data.id, [
+        Validators.required 
+       ]],
+       detailId:[data.residentDetail.id],
       email: [data.email, [
         Validators.required,
         Validators.email
       ]], alternateEmailId: ['', [
 
         Validators.email
-      ]], password: [data.email, [
+      ]], password: [data.password, [
         Validators.required
       ]],
       firstName: [data.residentDetail.firstName, [
@@ -172,15 +176,16 @@ export class ResidentAddComponent implements OnInit {
       lastName: [data.residentDetail.lastName, [
         Validators.required,
       ]],
-      mobileNumber: [data.residentDetail.mobileNumber, [
+      mobileNumber: [parseInt(data.residentDetail.mobileNumber), [
         Validators.required
       ]],
 
-      alternateMobileNumber: [data.residentDetail.alternateMobileNumber]
+      alternateMobileNumber: [parseInt(data.residentDetail.alternateMobileNumber)]
     });
+     
     this.secondFormGroup = this.fb.group({
-      landLine: [data.residentDetail.landLine],
-      intercom: [data.residentDetail.intercom, [
+      landLine: [parseInt(data.residentDetail.landLine)],
+      intercom: [parseInt(data.residentDetail.intercom), [
         Validators.required,
       ]],
       flatOwned: data.flatOwned,
@@ -218,15 +223,15 @@ export class ResidentAddComponent implements OnInit {
       lastName: ['', [
         Validators.required,
       ]],
-      mobileNumber: ['', [
+      mobileNumber: [, [
         Validators.required
       ]],
 
-      alternateMobileNumber: ['']
+      alternateMobileNumber: [""]
     });
     this.secondFormGroup = this.fb.group({
-      landLine: [''],
-      intercom: ['', [
+      landLine: [],
+      intercom: [, [
         Validators.required,
       ]],
       flatOwned: [],
@@ -317,10 +322,10 @@ export class ResidentAddComponent implements OnInit {
         "lastName": this.firstFormGroup.value.lastName,
         "clubMembership": this.secondFormGroup.value.clubMembership,
         "mobileNumber": this.firstFormGroup.value.mobileNumber,
-        "alternateMobileNumber": (this.firstFormGroup.value.alternateMobileNumber),
+        "alternateMobileNumber": parseInt(this.firstFormGroup.value.alternateMobileNumber),
         "alternateEmailId": this.firstFormGroup.value.alternateEmailId,
-        "landLine": this.secondFormGroup.value.landLine,
-        "intercom": (this.secondFormGroup.value.intercom),
+        "landLine": parseInt(this.secondFormGroup.value.landLine),
+        "intercom": parseInt(this.secondFormGroup.value.intercom),
         residentType: this.secondFormGroup.value.residentType,
         "occupation": this.secondFormGroup.value.occupation,
         "accessCardNumber": this.secondFormGroup.value.accessCardNumber,
@@ -339,7 +344,7 @@ export class ResidentAddComponent implements OnInit {
       this.AppLoaderService.close();
       let dataJson = {
         title: 'success',
-        message: 'resident Successfully Created'
+        message: 'Resident Successfully Created'
       }
       this.dialog.success(dataJson);
       this.Router.navigate(['Resident/List']);
@@ -347,6 +352,11 @@ export class ResidentAddComponent implements OnInit {
   }
 
   updateResident() {
+    this.secondFormGroup.value.flatOwned = [];
+
+    for (var i = 0; i < this.fruits.length; i++) {
+      this.secondFormGroup.value.flatOwned.push(this.fruits[i].uuid);
+    }
     this.fd = new FormData();
     if (this.pic.length > 0) {
       for (var i = 0; i < this.pic.length; i++) {
@@ -355,26 +365,30 @@ export class ResidentAddComponent implements OnInit {
     } else {
       this.fd.append("pic", "");
     }
+    console.log(JSON.stringify(this.firstFormGroup.getRawValue().id));
     let dataJson = {
-      id: this.firstFormGroup.value.id,
-      email: this.firstFormGroup.value.email,
-      password: this.firstFormGroup.value.password,
+      id: this.firstFormGroup.getRawValue().id,
+      email: this.firstFormGroup.getRawValue().email,
+      password: this.firstFormGroup.getRawValue().password,
+      "flatOwned": this.secondFormGroup.value.flatOwned,
+
       userDetail: {
-        id: this.firstFormGroup.value.residentDetailId,
-        name: this.firstFormGroup.value.name,
-        employeeId: this.firstFormGroup.value.employeeId,
-        mobileNumber: parseInt(this.firstFormGroup.value.mobileNumber),
-        designation: this.firstFormGroup.value.designation,
-        categoryId: this.firstFormGroup.value.categoryId,
-        dateOfBirth: this.firstFormGroup.value.dateOfBirth,
-        address: this.firstFormGroup.value.address,
-        dateOfCardIssue: this.secondFormGroup.value.dateOfCardIssue,
-        validUpto: this.secondFormGroup.value.validUpto,
-        from: this.secondFormGroup.value.from,
-        to: this.secondFormGroup.value.to,
-        aadharNo: this.secondFormGroup.value.aadharNo,
-        chooseStaffWorkArea: this.secondFormGroup.value.chooseStaffWorkArea,
-        policeVerification: this.secondFormGroup.value.policeVerification,
+        id:this.firstFormGroup.value.detailId,
+        "firstName": this.firstFormGroup.value.firstName,
+        "middleName": this.firstFormGroup.value.middleName,
+        "lastName": this.firstFormGroup.value.lastName,
+        "clubMembership": this.secondFormGroup.value.clubMembership,
+        "mobileNumber": this.firstFormGroup.value.mobileNumber,
+        "alternateMobileNumber": this.firstFormGroup.value.alternateMobileNumber,
+        "alternateEmailId": this.firstFormGroup.value.alternateEmailId,
+        "landLine": this.secondFormGroup.value.landLine,
+        "intercom": (this.secondFormGroup.value.intercom),
+        residentType: this.secondFormGroup.value.residentType,
+        "occupation": this.secondFormGroup.value.occupation,
+        "accessCardNumber": this.secondFormGroup.value.accessCardNumber,
+        "residentResiding": this.secondFormGroup.value.residentResiding,
+        "possesionDate": this.secondFormGroup.value.possesionDate,
+        "serviceStartDate": this.secondFormGroup.value.serviceStartDate,
       }
     }
     console.log(JSON.stringify(dataJson));

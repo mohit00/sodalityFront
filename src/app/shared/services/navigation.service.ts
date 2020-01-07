@@ -300,9 +300,12 @@ export class NavigationService {
   // different user type.
   publishNavigationChange(menuType: string) {
     switch (menuType) {
-      case "Admin":
+      case "SuperAdmin":
         this.menuItems.next(this.AdminDash);
         break;
+        case "Admin":
+          this.menuItems.next(this.GroupDash);
+          break;
       case "Society":
         this.menuItems.next(this.societyDash);
         break;

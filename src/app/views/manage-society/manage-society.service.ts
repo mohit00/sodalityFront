@@ -82,10 +82,74 @@ COMPLAIN_STAFF_LIST  = 'Complain/get/Staff/Complain/List'
 //Comment
 COMMENT_ADD ='ComplainComment/Add'
 COMMENT_GET ="ComplainComment/Get"
+//Group 
+GROUP_GET="user/get/Group";
+GROUP_ADD="user/Save/Group";
+GROUP_UPDATE="user/Group/Update";
+GROUP_GET_DETAIL ="user/get/Group/";
    constructor(private _http: HttpClient, private router: Router
     // tslint:disable-next-line: no-shadowed-variable
   ) {
 
+  }
+
+  groupGet(data): Observable<any>{
+    let dataJson = {
+      parentId:data
+    }
+    return this._http.post(this.BASE_URL + this.GROUP_GET , dataJson).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  groupSave(data): Observable<any>{
+     
+    return this._http.post(this.BASE_URL + this.GROUP_ADD , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  groupUpdate(data): Observable<any>{
+    
+    return this._http.put(this.BASE_URL + this.GROUP_UPDATE , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  groupGetDetail(data): Observable<any>{
+    
+    return this._http.get(this.BASE_URL + this.GROUP_GET_DETAIL+data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
   }
   commentGet(data): Observable<any>{
     return this._http.post(this.BASE_URL + this.COMMENT_GET , data).pipe(

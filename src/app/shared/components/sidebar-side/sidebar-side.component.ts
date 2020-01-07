@@ -62,8 +62,14 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit() {
 
     this.userData = JSON.parse(sessionStorage.getItem('data'))
-    if (this.userData.data.user_type != 'Admin') {
+    if (this.userData.data.user_type != 'SuperAdmin') {
       setTimeout(()=>{
+        if(this.userData.data.user_type == 'Admin'){
+          this.imageUrl = environment.LOCAL_BASE+this.userData.data.userDetail.profileImage;
+          this.userName = this.userData.data.userDetail.name;
+          this.showImage = true
+
+        }
         if(this.userData.data.user_type == 'Society'){
           this.imageUrl = environment.LOCAL_BASE+this.userData.data.societyDetail.societyLogo;
           this.userName = this.userData.data.societyDetail.societyDisplayName;
