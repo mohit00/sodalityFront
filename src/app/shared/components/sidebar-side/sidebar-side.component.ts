@@ -106,7 +106,8 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
     } else {
-       
+      sessionStorage.setItem('uuId', this.userData.data.uuid)
+
       this.navService.publishNavigationChange(this.userData.data.user_type);
 
     }
