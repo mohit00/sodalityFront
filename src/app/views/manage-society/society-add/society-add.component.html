@@ -6,97 +6,142 @@
   <mat-card-content>
     <mat-horizontal-stepper [linear]="true">
       <mat-step [stepControl]="firstFormGroup">
-   
+
         <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Society Info</ng-template>
-          
-          <div fxLayout="row wrap">
-              <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
 
-          <mat-form-field appearance="outline">
-              <mat-label>Society Name</mat-label>
-              <input matInput placeholder="Placeholder" formControlName="name" required  >
-              <mat-error *ngIf="hasfirstError('name','required')">
-									This field <strong>required</strong>
-								</mat-error>
-             </mat-form-field>
+          <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Society Name</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="name" required>
+                <mat-error *ngIf="hasfirstError('name','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
             </div>
             <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
 
-                <mat-form-field appearance="outline">
-                    <mat-label>Society Display</mat-label>
-                    <input matInput placeholder="Placeholder" formControlName="societyDisplayName" required  >
-                    <mat-error *ngIf="hasfirstError('societyDisplayName','required')">
-                        This field <strong>required</strong>
-                      </mat-error>
+              <mat-form-field appearance="outline">
+                <mat-label>Society Display</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="societyDisplayName" required>
+                <mat-error *ngIf="hasfirstError('societyDisplayName','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Email Id</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="email" required>
+                <mat-error *ngIf="hasfirstError('email','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="hasfirstError('email','email')">
+                  Invalid <strong>Email Id</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="password" required>
+                <mat-error *ngIf="hasfirstError('password','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="hasfirstError('password','minLength')">
+                  Must Be <strong> greator than 6 character</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Contact Number</mat-label>
+                <input matInput type="number" placeholder="Placeholder" formControlName="contactNumber" required>
+                <mat-error *ngIf="hasfirstError('contactNumber','required')">
+                  This field <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="hasfirstError('contactNumber','minLength')">
+                  Must Be <strong> greator than 6 character</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Contact Email</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="contactEmail">
+                <mat-error *ngIf="hasfirstError('contactEmail','email')">
+                  Invalid <strong>Email Id</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+
+              <mat-checkbox formControlName="amrAccess">AMR Access Included</mat-checkbox>
+              <div fxLayout="row wrap" *ngIf ="firstFormGroup.value.amrAccess">
+                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                  <mat-form-field appearance="outline">
+                    <mat-label>AMR User Name</mat-label>
+                    <input matInput type="text" placeholder="Placeholder" formControlName="amrUserName"  >
+                 
                     
-                   </mat-form-field>
-                  </div>
-                  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+                  </mat-form-field>
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                  <mat-form-field appearance="outline">
+                    <mat-label>AME Password</mat-label>
+                    <input matInput type="password" placeholder="Placeholder" formControlName="amrpassword">
+                 
+                    
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
 
-                      <mat-form-field appearance="outline">
-                          <mat-label>Email Id</mat-label>
-                          <input matInput placeholder="Placeholder"  formControlName="email" required  >
-                          <mat-error *ngIf="hasfirstError('email','required')">
-                              This field <strong>required</strong>
-                            </mat-error>
-                            <mat-error *ngIf="hasfirstError('email','email')">
-                                Invalid <strong>Email Id</strong>
-                              </mat-error>
-                         </mat-form-field>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+              <mat-checkbox formControlName="ibmsAccess">IBMS Access Included</mat-checkbox>
+              <div fxLayout="row wrap" *ngIf ="firstFormGroup.value.ibmsAccess">
+                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                  <mat-form-field appearance="outline">
+                    <mat-label>IBMS User Name</mat-label>
+                    <input matInput type="text" placeholder="Placeholder" formControlName="ibmsUserName"  >
+                 
+                    
+                  </mat-form-field>
+                </div>
+                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+                  <mat-form-field appearance="outline">
+                    <mat-label>IBMS Password</mat-label>
+                    <input matInput type="password" placeholder="Placeholder" formControlName="ibmspassword"  >
+                 
+                    
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+             
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="100">
 
-                            <mat-form-field appearance="outline">
-                                <mat-label>Password</mat-label>
-                                <input matInput placeholder="Placeholder" formControlName="password" required >
-                                <mat-error *ngIf="hasfirstError('password','required')">
-                                    This field <strong>required</strong>
-                                  </mat-error>
-                                   <mat-error *ngIf="hasfirstError('password','minLength')">
-                                      Must Be <strong> greator than 6 character</strong>
-                                    </mat-error>
-                               </mat-form-field>
-                              </div>
-                              <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+              <mat-form-field appearance="outline" class="textareaForm">
+                <mat-label>Address</mat-label>
+                <textarea matInput placeholder="Leave a comment" formControlName="registeredAddress"></textarea>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="100">
 
-                                  <mat-form-field appearance="outline">
-                                      <mat-label>Contact Number</mat-label>
-                                      <input matInput  type ="number" placeholder="Placeholder" formControlName="contactNumber" required  >
-                                      <mat-error *ngIf="hasfirstError('contactNumber','required')">
-                                        This field <strong>required</strong>
-                                      </mat-error>
-                                       <mat-error *ngIf="hasfirstError('contactNumber','minLength')">
-                                          Must Be <strong> greator than 6 character</strong>
-                                        </mat-error>
-                                     </mat-form-field>
-                                    </div>
-                                    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
-
-                                        <mat-form-field appearance="outline">
-                                            <mat-label>Contact Email</mat-label>
-                                            <input matInput placeholder="Placeholder" formControlName="contactEmail">
-                                            <mat-error *ngIf="hasfirstError('contactEmail','email')">
-                                                Invalid <strong>Email Id</strong>
-                                              </mat-error>
-                                           </mat-form-field>
-                                          </div>
-                                          <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="100">
-
-                                              <mat-form-field appearance="outline" class="textareaForm">
-                                                  <mat-label>Address</mat-label>
-                                                  <textarea matInput placeholder="Leave a comment" formControlName="registeredAddress" ></textarea>
-                                                </mat-form-field>
-                                                </div>
-                                          <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="100">
-
-                                              <mat-form-field appearance="outline" class="textareaForm">
-                                                  <mat-label>About Society</mat-label>
-                                                  <textarea matInput placeholder="About Address"  formControlName="aboutSociety"></textarea>
-                                                </mat-form-field>
-                                                </div>
+              <mat-form-field appearance="outline" class="textareaForm">
+                <mat-label>About Society</mat-label>
+                <textarea matInput placeholder="About Address" formControlName="aboutSociety"></textarea>
+              </mat-form-field>
+            </div>
           </div>
- 
+
           <div>
             <button mat-raised-button color="primary" matStepperNext>Next</button>
           </div>
@@ -104,111 +149,104 @@
       </mat-step>
       <mat-step [stepControl]="secondFormGroup">
         <form [formGroup]="secondFormGroup">
-         
+
           <ng-template matStepLabel>Bill Address</ng-template>
 
-            
+
           <div fxLayout="row wrap">
-              <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
 
-          <mat-form-field appearance="outline">
-              <mat-label>Bill Name</mat-label>
-              <input matInput placeholder="Placeholder" formControlName="BillName">
-             </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Bill Name</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="BillName">
+              </mat-form-field>
             </div>
-        
-                  <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
 
-                      <mat-form-field appearance="outline">
-                          <mat-label>Registration</mat-label>
-                          <input matInput placeholder="Placeholder" formControlName="Registration">
-                         </mat-form-field>
-                        </div>
-                        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
 
-                            <mat-form-field appearance="outline">
-                                <mat-label>GSTINT</mat-label>
-                                <input matInput placeholder="Placeholder"  formControlName="GSTINT">
-                               </mat-form-field>
-                              </div>
-                              <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" >
-
-                                  <mat-form-field appearance="outline">
-                                      <mat-label>PAN</mat-label>
-                                      <input matInput placeholder="Placeholder" formControlName="PAN">
-                                     </mat-form-field>
-                                    </div>
-                                    <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
-
-                                        <mat-form-field appearance="outline">
-                                            <mat-label>TAN</mat-label>
-                                            <input matInput placeholder="Placeholder" formControlName="TAN">
-                                           </mat-form-field>
-                                          </div>
-                                          <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
-
-                                              <mat-form-field appearance="outline">
-                                                  <mat-label>Service Tax</mat-label>
-                                                  <input matInput placeholder="Placeholder"  formControlName="serviceTax">
-                                                 </mat-form-field>
-                                                </div>
-                                                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="100">
-
-                                                    <mat-form-field appearance="outline" class="textareaForm">
-                                                        <mat-label>Bill Address</mat-label>
-                                                        <textarea matInput placeholder="Leave a comment"  formControlName="BillAddress" ></textarea>
-                                                      </mat-form-field>
-                                                      </div>
-                                                      <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="100">
-
-                                                               <mat-label >Bill Logo</mat-label>
-
-                                                               <div class="upload-btn-wrapper" style="width: 100%;">
-                                                                  <button mat-icon-button  aria-label="Example icon-button with a heart icon">
-                                                                      <mat-icon style ="font-size: 44px;">cloud_upload</mat-icon>
-                                                                    </button>
-                                                                  <input  style="width:100%" type="file"    accept="image/*" (change)="handleFileInput($event.target.files,'bill')" />
-                                                                </div>
-                                                              
-                                                             </div>
-                                                             <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100">
-                                                               <table class="default-table mat-box-shadow mb-24" style="width: 100%">
-                                                                  <thead>
-                                                                  <tr>
-                                                                      <th width="30%"> File Name</th>
-                                                                      <th>Size</th>
-                                                                       <th>Actions</th>
-                                                                  </tr>
-                                                                  </thead>
-                                                                  <tbody *ngIf="billLogo.length>0; else billLogoNoData">
-                                                                  <tr *ngFor="let item of billLogo;let index = index">
-                                                                      <td>{{ item.name }}</td>
-                                                                      <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
-                                                                    
-                                                                      
-                                                                      <td nowrap>
-                                                                         
-                                                          
-                                                                          <button 
-                                                                          mat-raised-button
-                                                                          color="warn"
-                                                                          class="mx-4"
-                                                                          (click)="remove(index,'bill')">Remove</button>
-                                                                          <button 
-                                                                          mat-raised-button
-                                                                          color="primary"
-                                                                          class="mx-4"
-                                                                          (click)="view(item)">View</button>
-                                                                      </td>
-                                                                  </tr>
-                                                                  </tbody>
-                                                                  <ng-template #billLogoNoData>
-                                                                    <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
-                                                                  </ng-template>
-                                                              </table>
-</div>
+              <mat-form-field appearance="outline">
+                <mat-label>Registration</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="Registration">
+              </mat-form-field>
             </div>
-          
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+
+              <mat-form-field appearance="outline">
+                <mat-label>GSTINT</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="GSTINT">
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+
+              <mat-form-field appearance="outline">
+                <mat-label>PAN</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="PAN">
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+
+              <mat-form-field appearance="outline">
+                <mat-label>TAN</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="TAN">
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50">
+
+              <mat-form-field appearance="outline">
+                <mat-label>Service Tax</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="serviceTax">
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="100">
+
+              <mat-form-field appearance="outline" class="textareaForm">
+                <mat-label>Bill Address</mat-label>
+                <textarea matInput placeholder="Leave a comment" formControlName="BillAddress"></textarea>
+              </mat-form-field>
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="100">
+
+              <mat-label>Bill Logo</mat-label>
+
+              <div class="upload-btn-wrapper" style="width: 100%;">
+                <button mat-icon-button aria-label="Example icon-button with a heart icon">
+                  <mat-icon style="font-size: 44px;">cloud_upload</mat-icon>
+                </button>
+                <input style="width:100%" type="file" accept="image/*"
+                  (change)="handleFileInput($event.target.files,'bill')" />
+              </div>
+
+            </div>
+            <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100">
+              <table class="default-table mat-box-shadow mb-24" style="width: 100%">
+                <thead>
+                  <tr>
+                    <th width="30%"> File Name</th>
+                    <th>Size</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="billLogo.length>0; else billLogoNoData">
+                  <tr *ngFor="let item of billLogo;let index = index">
+                    <td>{{ item.name }}</td>
+                    <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
+
+
+                    <td nowrap>
+
+
+                      <button mat-raised-button color="warn" class="mx-4" (click)="remove(index,'bill')">Remove</button>
+                      <button mat-raised-button color="primary" class="mx-4" (click)="view(item)">View</button>
+                    </td>
+                  </tr>
+                </tbody>
+                <ng-template #billLogoNoData>
+                  <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
+                </ng-template>
+              </table>
+            </div>
+          </div>
+
           <div fxLayout="row">
             <button mat-raised-button color="accent" matStepperPrevious>Back</button>
             <span fxFlex="8px"></span>
@@ -217,153 +255,134 @@
         </form>
       </mat-step>
       <mat-step [stepControl]="secondFormGroup">
-          <form [formGroup]="secondFormGroup">
-            <ng-template matStepLabel>Society Image</ng-template>
-            <div fxLayout="row wrap">
-                <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50"> 
- 
-                        <mat-label >Society Logo</mat-label>
-                        <div class="upload-btn-wrapper" style="width: 100%;">
-                            <button mat-icon-button  aria-label="Example icon-button with a heart icon">
-                                <mat-icon style ="font-size: 44px;">cloud_upload</mat-icon>
-                              </button>
-                            <input  style="width:100%" type="file"    accept="image/*"  (change)="handleFileInput($event.target.files,'logo')" />
-                          </div>
-                        <table class="default-table mat-box-shadow mb-24" style="width: 100%">
-                          <thead>
-                          <tr>
-                              <th width="30%"> Logo Name</th>
-                              <th>Size</th>
-                               <th>Actions</th>
-                          </tr>
-                          </thead>
-                          <tbody *ngIf="societyLogo.length>0; else societyLogoNoData">
-                          <tr *ngFor="let item of societyLogo;let index = index">
-                              <td>{{ item.name }}</td>
-                              <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
-                            
-                              
-                              <td nowrap>
-                                 
-                  
-                                  <button 
-                                  mat-raised-button
-                                  color="warn"
-                                  class="mx-4"
-                                  (click)="remove(index,'logo')">Remove</button>
-                                  <button 
-                                  mat-raised-button
-                                  color="primary"
-                                  class="mx-4"
-                                  (click)="view(item)">View</button>
-                              </td>
-                          </tr>
-                          </tbody>
-                          <ng-template #societyLogoNoData>
-                            <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
-                          </ng-template>
-                      </table>
-                   </div>
-                  
-                   <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50"> 
- 
-                      <mat-label >Ad Image</mat-label>
-                      <div class="upload-btn-wrapper" style="width: 100%;">
-                          <button mat-icon-button  aria-label="Example icon-button with a heart icon">
-                              <mat-icon style ="font-size: 44px;">cloud_upload</mat-icon>
-                            </button>
-                            <input  style="width:100%" type="file"  accept="image/*"  (change)="handleFileInput($event.target.files,'ad')" multiple/>
-                          </div>
-                     <table class="default-table mat-box-shadow mb-24" style="width: 100%">
-                        <thead>
-                        <tr>
-                            <th width="30%"> Ad Name</th>
-                            <th>Size</th>
-                             <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody *ngIf="adImage.length>0; else adImageNoData">
-                        <tr *ngFor="let item of adImage;let index = index">
-                            <td>{{ item.name }}</td>
-                            <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
-                          
-                            
-                            <td nowrap>
-                               
-                
-                                <button 
-                                mat-raised-button
-                                color="warn"
-                                class="mx-4"
-                                (click)="remove(index,'ad')">Remove</button>
-                                <button 
-                                mat-raised-button
-                                color="primary"
-                                class="mx-4"
-                                (click)="view(item)">View</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <ng-template #adImageNoData>
-                          <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
-                        </ng-template>
-                    </table>
-</div>
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Society Image</ng-template>
+          <div fxLayout="row wrap">
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
 
-<div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100"> 
- 
-    <mat-label >Album Image</mat-label>
-    <div class="upload-btn-wrapper" style="width: 100%;">
-        <button mat-icon-button  aria-label="Example icon-button with a heart icon">
-            <mat-icon style ="font-size: 44px;">cloud_upload</mat-icon>
-          </button>
-          <input  style="width:100%" type="file"   accept="image/*" (change)="handleFileInput($event.target.files,'album')" multiple />
-        </div>
-   <table class="default-table mat-box-shadow mb-24" style="width: 100%">
-      <thead>
-      <tr>
-          <th width="30%"> Album Name</th>
-          <th>Size</th>
-           <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody *ngIf="imageList.length>0; else imageListNoData">
-      <tr *ngFor="let item of imageList;let index = index">
-          <td>{{ item.name }}</td>
-          <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
-        
-          
-          <td nowrap>
-             
+              <mat-label>Society Logo</mat-label>
+              <div class="upload-btn-wrapper" style="width: 100%;">
+                <button mat-icon-button aria-label="Example icon-button with a heart icon">
+                  <mat-icon style="font-size: 44px;">cloud_upload</mat-icon>
+                </button>
+                <input style="width:100%" type="file" accept="image/*"
+                  (change)="handleFileInput($event.target.files,'logo')" />
+              </div>
+              <table class="default-table mat-box-shadow mb-24" style="width: 100%">
+                <thead>
+                  <tr>
+                    <th width="30%"> Logo Name</th>
+                    <th>Size</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="societyLogo.length>0; else societyLogoNoData">
+                  <tr *ngFor="let item of societyLogo;let index = index">
+                    <td>{{ item.name }}</td>
+                    <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
 
-              <button 
-              mat-raised-button
-              color="warn"
-              class="mx-4"
-              (click)="remove(index,'album')">Remove</button>
-              <button 
-              mat-raised-button
-              color="primary"
-              class="mx-4"
-              (click)="view(item)">View</button>
-          </td>
-      </tr>
-      </tbody>
-      <ng-template #adImageNoData>
-        <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
-      </ng-template>
-  </table>
-</div>
-                  </div>
-                  <div fxLayout="row">
-                      <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-                      <span fxFlex="8px"></span>
-                      <button mat-raised-button color="primary" matStepperNext>Next</button>
-                    </div>
-            </form></mat-step>
-           
-          <mat-step>
-        <ng-template matStepLabel >Done</ng-template>
+
+                    <td nowrap>
+
+
+                      <button mat-raised-button color="warn" class="mx-4" (click)="remove(index,'logo')">Remove</button>
+                      <button mat-raised-button color="primary" class="mx-4" (click)="view(item)">View</button>
+                    </td>
+                  </tr>
+                </tbody>
+                <ng-template #societyLogoNoData>
+                  <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
+                </ng-template>
+              </table>
+            </div>
+
+            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="50">
+
+              <mat-label>Ad Image</mat-label>
+              <div class="upload-btn-wrapper" style="width: 100%;">
+                <button mat-icon-button aria-label="Example icon-button with a heart icon">
+                  <mat-icon style="font-size: 44px;">cloud_upload</mat-icon>
+                </button>
+                <input style="width:100%" type="file" accept="image/*"
+                  (change)="handleFileInput($event.target.files,'ad')" multiple />
+              </div>
+              <table class="default-table mat-box-shadow mb-24" style="width: 100%">
+                <thead>
+                  <tr>
+                    <th width="30%"> Ad Name</th>
+                    <th>Size</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="adImage.length>0; else adImageNoData">
+                  <tr *ngFor="let item of adImage;let index = index">
+                    <td>{{ item.name }}</td>
+                    <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
+
+
+                    <td nowrap>
+
+
+                      <button mat-raised-button color="warn" class="mx-4" (click)="remove(index,'ad')">Remove</button>
+                      <button mat-raised-button color="primary" class="mx-4" (click)="view(item)">View</button>
+                    </td>
+                  </tr>
+                </tbody>
+                <ng-template #adImageNoData>
+                  <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
+                </ng-template>
+              </table>
+            </div>
+
+            <div fxFlex="100" fxFlex.gt-sm="100" fxFlex.sm="100">
+
+              <mat-label>Album Image</mat-label>
+              <div class="upload-btn-wrapper" style="width: 100%;">
+                <button mat-icon-button aria-label="Example icon-button with a heart icon">
+                  <mat-icon style="font-size: 44px;">cloud_upload</mat-icon>
+                </button>
+                <input style="width:100%" type="file" accept="image/*"
+                  (change)="handleFileInput($event.target.files,'album')" multiple />
+              </div>
+              <table class="default-table mat-box-shadow mb-24" style="width: 100%">
+                <thead>
+                  <tr>
+                    <th width="30%"> Album Name</th>
+                    <th>Size</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="imageList.length>0; else imageListNoData">
+                  <tr *ngFor="let item of imageList;let index = index">
+                    <td>{{ item.name }}</td>
+                    <td nowrap>{{ item.size/1024/1024 | number:'.2' }} MB</td>
+
+
+                    <td nowrap>
+
+
+                      <button mat-raised-button color="warn" class="mx-4"
+                        (click)="remove(index,'album')">Remove</button>
+                      <button mat-raised-button color="primary" class="mx-4" (click)="view(item)">View</button>
+                    </td>
+                  </tr>
+                </tbody>
+                <ng-template #adImageNoData>
+                  <p [ngStyle]="{padding: '0 1.2rem'}">Queue is empty</p>
+                </ng-template>
+              </table>
+            </div>
+          </div>
+          <div fxLayout="row">
+            <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+            <span fxFlex="8px"></span>
+            <button mat-raised-button color="primary" matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
         <div>
           <mat-icon class="pt-1" [style.fontSize]="'36px'">check</mat-icon>
         </div>
@@ -371,12 +390,12 @@
         <div fxLayout="row">
           <button mat-raised-button color="accent" matStepperPrevious>Back</button>
           <span fxFlex="8px"></span>
-          <button mat-raised-button color="primary"(click) ="createSociety();" *ngIf ="pageType == 'Add'">Submit</button>
-          <button mat-raised-button color="primary"(click) ="updateSociety();" *ngIf ="pageType == 'Update'">Update</button>
+          <button mat-raised-button color="primary" (click)="createSociety();" *ngIf="pageType == 'Add'">Submit</button>
+          <button mat-raised-button color="primary" (click)="updateSociety();"
+            *ngIf="pageType == 'Update'">Update</button>
 
         </div>
       </mat-step>
     </mat-horizontal-stepper>
   </mat-card-content>
 </mat-card>
- 

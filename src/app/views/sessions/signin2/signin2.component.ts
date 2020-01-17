@@ -28,7 +28,31 @@ export class Signin2Component implements OnInit {
        this.AuthService.login(this.signupForm.value).subscribe(res=>{
         if(res.status){
           sessionStorage.setItem('data',JSON.stringify(res));
-          this.Router.navigate(['dashboard/default']);
+          if(res.data.user_type == 'SuperAdmin'){
+            
+            this.Router.navigate(['dashboard/Admin']);
+
+          }
+          if(res.data.user_type == 'Admin'){
+            this.Router.navigate(['dashboard/Group']);
+
+          }
+          if(res.data.user_type == 'Resident'){
+            this.Router.navigate(['dashboard/Resident']);
+
+          }
+          if(res.data.user_type == 'Staff'){
+            this.Router.navigate(['dashboard/Staff']);
+
+          }
+          if(res.data.user_type == 'Society'){
+            this.Router.navigate(['dashboard/Society']);
+
+          }
+          if(res.data.user_type == 'FamilyMember'){
+            this.Router.navigate(['dashboard/Resident']);
+
+          }
         }else{
           alert(res.messasge)
         }

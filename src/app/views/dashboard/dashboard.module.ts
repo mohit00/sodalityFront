@@ -31,9 +31,10 @@ import { GroupDashboardComponent } from './group-dashboard/group-dashboard.compo
 import { SocietyDashboardComponent } from './society-dashboard/society-dashboard.component';
 import { ResidentDashboardComponent } from './resident-dashboard/resident-dashboard.component';
 import { StaffDashboardComponent } from './staff-dashboard/staff-dashboard.component';
+import { FlipModule } from 'ngx-flip';
 
 @NgModule({
-  imports: [
+  imports: [FlipModule,
     CommonModule,
     MatIconModule,
     MatCardModule,

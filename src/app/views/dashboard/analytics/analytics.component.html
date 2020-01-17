@@ -1,5 +1,5 @@
 <!-- First row -->
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" *ngIf ="headerCount">
   <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{scale:'.9',delay:'300ms'}}">
     <mat-card style="background-image:linear-gradient(to right, rgb(20,183,216) ,rgb(38,207,204));">
       <mat-card-title fxLayoutAlign="start center">
@@ -11,7 +11,7 @@
         selected="true"><mat-icon>trending_up</mat-icon>20%</mat-chip>
       </mat-card-title>
       <mat-card-content>
-        <h3 style="color: white; font-size: 15px;">22,450</h3>
+        <h3 style="color: white; font-size: 15px;">{{headerCount.flat_count}}</h3>
       </mat-card-content>
     </mat-card>
   </div>
@@ -27,7 +27,7 @@
         selected="true"><mat-icon>trending_up</mat-icon>10%</mat-chip>
       </mat-card-title>
       <mat-card-content>
-        <h3 style="color: white; font-size: 15px;">377,670</h3>
+        <h3 style="color: white; font-size: 15px;">{{headerCount.Recharge}}</h3>
       </mat-card-content>
     </mat-card>
   </div>
@@ -43,7 +43,7 @@
         selected="true"><mat-icon>trending_up</mat-icon>9%</mat-chip>
       </mat-card-title>
       <mat-card-content>
-        <h3 style="color: white; font-size: 15px;">54,845</h3>
+        <h3 style="color: white; font-size: 15px;">{{headerCount.daily_consumption}}</h3>
       </mat-card-content>
     </mat-card>
   </div>
@@ -58,7 +58,7 @@
         selected="true"><mat-icon>trending_down</mat-icon>2%</mat-chip>
       </mat-card-title>
       <mat-card-content>
-        <h3 style="color: white; font-size: 15px;">245</h3>
+        <h3 style="color: white; font-size: 15px;">{{headerCount.monthly_consumption}}</h3>
       </mat-card-content>
     </mat-card>
   </div>
@@ -69,34 +69,36 @@
 <div fxLayout="row wrap"  [@animate]="{value:'*',params:{y:'25px',delay:'300ms'}}">
     <div
       fxFlex="100"
-      fxFlex.gt-sm="66.67"
-      fxFlex.sm="50"
+      fxFlex.gt-sm="100"
+      fxFlex.sm="100"
       [@animate]="{ value: '*', params: { y: '50px', delay: '600ms' } }"
     >
-      <mat-card class="p-0 ">
-        <mat-tab-group>
-          <mat-tab label="Water Consumption" style = "color:rgb(89, 177, 250);">
-            <span fxflex style="width: 100%;">
-            <highcharts-chart
+      <mat-card class="p-0 "  fxFlex="100">
+        <mat-tab-group  fxFlex="100">
+          <mat-tab label="Water Consumption" style = "color:rgb(89, 177, 250);" style="width: 100%"  fxFlex="100">
+             <highcharts-chart
               [Highcharts] = "highcharts" 
-              [options] = "barchartOptions" 
-              style = "height: 295px;  display: inline-flex;">
-            </highcharts-chart></span>
+              [options] = "WaterConsumptionOption" 
+             [callbackFunction]="watercomsumption" [(update)]="waterupdateFlag"
+              [oneToOne]="true" 
+              style="width: 1200px; height: 350px; display: block;">
+            </highcharts-chart> 
           </mat-tab>
           <mat-tab label="DG/Grid Consumption">
-            <span fxflex>
-              <highcharts-chart
+               <highcharts-chart
                 [Highcharts] = "highcharts" 
-                [options] = "linechartOptions" 
-                style = "height: 295px; width: 700px; display: inline-flex;">
-              </highcharts-chart></span>
+                [options] = "linechartOptions"  [callbackFunction]="dgGridcomsumption"
+                 [(update)]="dgFuelGridupdateFlag"
+                [oneToOne]="true"  
+                style="width: 1200px; height: 350px; display: block;">
+              </highcharts-chart> 
          </mat-tab>
         </mat-tab-group>
       </mat-card>
     </div>
 
     <!-- Donut chart -->
-    <div
+    <!-- <div
       fxFlex="100"
       fxFlex.gt-sm="33.33"
       fxFlex.sm="50"
@@ -105,18 +107,82 @@
       <mat-card class="p-0 ">
           <mat-card-title class="">
               <div class="card-title-text" style="height:20px; line-height: 4px; margin-top: 10px;">
-                  <span style="color:rgb(89, 177, 250); font-weight: bold; border: 1px black;">Current Load Status</span>
+                  <span style="color:rgb(89, 177, 250); font-weight: bold; border: 1px black;">Air Quality Status</span>
                   <span fxFlex></span>
               </div>
               </mat-card-title>
-              <div style="align-content: center; margin-left: 30px;"><span fxflex></span>
-            <highcharts-chart
-            [Highcharts] = "highcharts" 
-            [options] = "chartOptions" 
-            style = "height: 300px; width : 250px;display: flex;">
-         </highcharts-chart></div>
+              <mat-divider></mat-divider>
+              <div style="margin-left: 10px; padding-top: 10px;"><span fxflex></span>
+                <p style="margin-left: 5px;"><b>Noida</b>(Uttar Pradesh)    (2020-01-09 05:19:45)</p>
+                <table>
+                  <tr><td style="color:rgb(89, 177, 250)"><b>Weather :</b></td>
+                    <td><img src="assets/images/sunn.png" width="25" style="margin-left: 10px;"></td>
+                      <td><b> 14 ^C</b></td>
+                      <td><img src="assets/images/water.png" width="10" style="margin-left: 18px;">
+                        <b> 66%</b></td>
+                        <td><img src="assets/images/uv.png" width="20"  style="margin-left: 18px;"></td>
+                          <td><b> 2 of 11</b></td>
+                  </tr>
+                </table>
+                  <table><tr>
+                    <tr><td style="font-weight: bold;">PM 2.5</td>
+                      <td style="font-weight: bold; padding-left: 10px;">PM 10</td>
+                      <td style="font-weight: bold;  padding-left: 10px;">NO2</td>
+                      <td style="font-weight: bold;  padding-left: 10px;">O3</td>
+                  </tr>
+                  <tr><td style="font-size: 13px;"><b>106</b> ug/m^3</td>
+                      <td style="font-size: 13px; padding-left: 10px;"><b>158</b> ug/m^3</td>
+                      <td style="font-size: 13px; padding-left: 10px;"><b>32</b> ug/m^3</td>
+                      <td style="font-size: 13px; padding-left: 10px;"><b>22</b> ug/m^3</td>
+                  </tr>
+                  <tr><td>
+                    <mat-progress-bar
+                    class=""
+                    color="accent"
+                    mode="determinate"
+                    [value]="70"
+                    class="rounded"
+                    style="height: 6px"
+                  >
+                  </mat-progress-bar>
+                </td>
+                  <td style="padding-left: 10px;"><mat-progress-bar
+                    color="warn"
+                    mode="determinate"
+                    [value]="20"
+                    class="rounded"
+                    style="height: 6px"
+                  >
+                  </mat-progress-bar></td>
+                  <td style="padding-left: 10px;"><mat-progress-bar
+                    class=""
+                    color="primary"
+                    mode="determinate"
+                    [value]="70"
+                    class="rounded"
+                    style="height: 6px"
+                  >
+                  </mat-progress-bar></td>
+                  <td style="padding-left: 10px;"><mat-progress-bar
+                    color="warn"
+                    mode="determinate"
+                    [value]="20"
+                    class="rounded"
+                    style="height: 6px"
+                  >
+                  </mat-progress-bar></td>
+               </tr>
+            </table>
+                <div style="align-content: center; margin-left: 25px;">
+                <highcharts-chart
+                [Highcharts] = "highcharts" 
+                [options] = "airChartOptions" 
+                style = "height: 155px; width: 300px; display: flex;">
+                </highcharts-chart></div>
+               
+        </div>
       </mat-card>
-    </div>
+    </div> -->
   <!--/ End donut chart -->
   <!--/ End 2nd row -->
     <!--/ End tab -->
@@ -132,8 +198,10 @@
          <div style="align-content: center; margin-left: 30px;">
             <highcharts-chart
             [Highcharts] = "highcharts" 
-            [options] = "doughnutChartOptions" 
-            style = "height: 280px; width: 300px; display: flex;">
+             [options] = "amrChartOptions"  [callbackFunction]="amrGridcomsumption"
+            [(update)]="amrGridupdateFlag"
+           [oneToOne]="true" 
+            style = "height: 280px; width: 100%; display: flex;">
             </highcharts-chart>
         </div>
       </mat-card>
@@ -144,15 +212,17 @@
     <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
       <mat-card-title class="">
       <div class="card-title-text" style="height:20px; line-height: 4px;  margin-top: 10px;">
-          <span fxFlex style="color:rgb(89, 177, 250); font-weight: bold;">Air Quality Check</span>
+          <span fxFlex style="color:rgb(89, 177, 250); font-weight: bold;">Current Load Status</span>
       </div>
     </mat-card-title>
     
     <div style="align-content: center; margin-left: 30px;">
           <highcharts-chart
           [Highcharts] = "highcharts" 
-          [options] = "gaugeChartOptions" 
-          style = "height: 280px; width: 250px; display: flex;">
+          [options] = "currentLoadChartOptions"  [callbackFunction]="currentLoadGridcomsumption"
+          [(update)]="currentLoadGridupdateFlag"
+         [oneToOne]="true" 
+          style = "height: 280px; width: 100%; display: flex;">
        </highcharts-chart>
    
     </div>
@@ -169,8 +239,12 @@
       <div style="align-content: center; margin-left: 30px;">
        <highcharts-chart
           [Highcharts] = "highcharts" 
-          [options] = "solidgaugechartOptions" 
-          style = "height: 280px; width: 250px; display: flex;">
+
+          [options] = "dgFuelchartOptions"  [callbackFunction]="dgFuelGridcomsumption"
+          [(update)]="dgFuelGridupdateFlag"
+         [oneToOne]="true" 
+          style = "height: 280px; width: 70%; display: flex;"
+          >
        </highcharts-chart></div>
       
   </mat-card>
@@ -189,7 +263,7 @@
     >
       <mat-card-title class="mb-1">
         <div class="card-title-text">
-          <span class="font-weight-normal" style = "color:rgb(89, 177, 250); font-weight: bold;">Low Balance Alert</span>
+          <span class="font-weight-normal" style = "color:rgb(89, 177, 250); font-weight: bold;">Meter Status</span>
 
           <span fxFlex></span>
           <button
@@ -216,48 +290,49 @@
         </div>
         <mat-divider></mat-divider>
       </mat-card-title>
-      <mat-card-content>
-        <div class="mb-1">
-          <p class="m-0">
-            Tower 1 <span class="text-muted">| 9.8 | 90%</span>
-          </p>
-          <mat-progress-bar
-            color="warn"
-            mode="determinate"
-            [value]="90"
-            class="rounded"
-            style="height: 6px"
-          >
-          </mat-progress-bar>
-        </div>
+      <mat-card-content *ngIf ="meterStatusData">
         <div class="mb-1">
           <p class="m-0 text-13">
-            Tower 2 <span class="text-muted">| 8.3 | 80%</span>
-          </p>
-          <mat-progress-bar
-            class=""
-            color="primary"
-            mode="determinate"
-            [value]="80"
-            class="rounded"
-            style="height: 6px"
-          >
-          </mat-progress-bar>
-        </div>
-        <div class="mb-1">
-          <p class="m-0 text-13">
-            Tower 3 <span class="text-muted">| 5.8 | 60%</span>
+            Total Meter <span class="text-muted">|{{meterStatusData.total_meter}}| 100%</span>
           </p>
           <mat-progress-bar
             class=""
             color="accent"
             mode="determinate"
-            [value]="60"
+            [value]="150"
             class="rounded"
             style="height: 6px"
           >
           </mat-progress-bar>
         </div>
+        <div class="mb-1">
+          <p class="m-0">
+            Power Cut <span class="text-muted">| {{meterStatusData.power_cut}} | {{(meterStatusData.power_cut /meterStatusData.total_meter) * 100  | number:'1.0-0'}}%</span>
+          </p>
+          <mat-progress-bar
+            color="warn"
+            mode="determinate"
+            [value]="(meterStatusData.power_cut /meterStatusData.total_meter) * 100"
+            class="rounded"
+            style="height: 6px"
+          >
+          </mat-progress-bar>
+        </div>
+        <div class="mb-1">
+          <p class="m-0 text-13">
+            Power Restore <span class="text-muted">| {{meterStatusData.power_restore}} | {{(meterStatusData.power_restore /meterStatusData.total_meter) * 100 | number:'1.0-0'}}%</span>
+          </p>
+          <mat-progress-bar
+            class=""
+            color="primary"
+            mode="determinate"
+            [value]="(meterStatusData.power_restore /meterStatusData.total_meter) * 100"
+            class="rounded"
+            style="height: 6px"
+          >
+          </mat-progress-bar>
+        </div>
+        
         <!--<div class="">
           <p class="m-0 text-13">
             Tower 4 <span class="text-muted">| 4.8 | 40%</span>
@@ -299,7 +374,8 @@
             <div fxFlex="60">
               <div
                 echarts
-                [options]="trafficGrowthChart"
+                [options]="weekChartGrowthChart"
+                (chartInit)="weekChartInit($event)"
                 [autoResize]="true"
                 style="height: 220px; right: -1px"
               ></div>
@@ -309,24 +385,16 @@
       </div>
       <div fxFlex="100"
       fxFlex.gt-sm="50">
-        <mat-card class="p-0">
-          <div fxLayout="row wrap">
-            <div fxFlex="40" class="p-1">
-              <p class="" style = "color:rgb(89, 177, 250); font-weight: bold;">Debit/Credit Status</p>
-              <p class="text-24 text-red font-weight-bold mb-0">
-                20% <span class="material-icons">arrow_drop_up</span>
-              </p>
-              <p class="text-muted m-0">This Week</p>
-            </div>
-            <div fxFlex="60">
-              <div
-                echarts
-                [options]="bounceRateGrowthChart"
-                [autoResize]="true"
-                style="height: 220px; right: -1px"
-              ></div>
-            </div>
-          </div>
+        
+        <mat-card class="">
+          <span class="font-weight-normal" style = "color:rgb(89, 177, 250); font-size: 15px; font-weight: bold;">Low Balance Alert</span>
+          <div
+            echarts
+            [options]="dailyTrafficChartBar"
+            [autoResize]="true"
+            (chartInit)="lowBalanceInit($event)"
+            style="height: 170px;right: -1px"
+          ></div>
         </mat-card>
       </div>
     </div>
@@ -335,24 +403,24 @@
         fxFlex="100"
         fxFlex.gt-sm="33.33"
         fxFlex.sm="50"
-        [@animate]="{ value: '*', params: { y: '50px', delay: '1000ms' } }"
+        [@animate]="{ value: '*', params: { y: '50px', delay: '1000ms' } }" *ngFor ="let list of towerList | slice:current -3: current"
       >
     <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
         <mat-card-title class="">
         <div class="card-title-text" style="height:20px; line-height: 4px; background-image:linear-gradient(to right, rgba(118,138,146), rgba(169,182,186))">
-            <span style="color:#fff; ">Tower 1</span>
+            <span style="color:#fff; ">{{list.tower}}</span>
             <span fxFlex></span>
         </div>
         </mat-card-title>
         </mat-card>
 
-      <mat-table [dataSource]="countryTrafficStats" matSort>
+      <mat-table [dataSource]="list.sensor" matSort>
         <ng-container matColumnDef="country">
           <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 50px;">
             Device Name
           </mat-header-cell>
           <mat-cell *matCellDef="let row" data-label="id" style="padding-right: 50px;">
-            {{ row.country }}
+            {{ row.name }}
           </mat-cell>
         </ng-container>
 
@@ -361,9 +429,11 @@
             Status
           </mat-header-cell>
           <mat-cell *matCellDef="let row" data-label="color" style="padding-right: 30px;">
-              <ng-template [ngIf]="row.Status">
-                  <div>
-                   <img src="assets/images/greendot.png">
+              <ng-template [ngIf]="row.state">
+                  <div> 
+                   <img src="assets/images/greendot.png" *ngIf ="row.state =='Y'">
+                   <img src="assets/images/reddot.png" *ngIf ="row.state =='N'">
+
                   </div>
                  </ng-template>
          </mat-cell>
@@ -379,103 +449,28 @@
       </mat-table>
   </div>
 
-  <div
-        fxFlex="100"
-        fxFlex.gt-sm="33.33"
-        fxFlex.sm="50"
-        [@animate]="{ value: '*', params: { y: '50px', delay: '1000ms' } }"
-      >
-      <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
-          <mat-card-title class="">
-          <div class="card-title-text" style="height:20px; line-height: 4px; background-image:linear-gradient(to right, rgba(118,138,146), rgba(169,182,186))">
-              <span style="color:#fff; ">Tower 2</span>
-              <span fxFlex></span>
-          </div>
-          </mat-card-title>
-          </mat-card>
-  
-        <mat-table [dataSource]="countryTrafficStats" matSort>
-          <ng-container matColumnDef="country">
-            <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 50px;">
-              Device Name
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="id" style="padding-right: 50px;">
-              {{ row.country }}
-            </mat-cell>
-          </ng-container>
-  
-         <ng-container matColumnDef="Status">
-            <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 30px;">
-              Status
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="color" style="padding-right: 30px;">
-                <ng-template [ngIf]="row.Status">
-                    <div>
-                     <img src="assets/images/greendot.png">
-                    </div>
-                   </ng-template>
-           </mat-cell>
-          </ng-container>
-  
-          <mat-header-row
-            *matHeaderRowDef="['country','Status']"
-          ></mat-header-row>
-          <mat-row
-            *matRowDef="let row; columns: ['country','Status']"
-          >
-          </mat-row>
-        </mat-table>
-    </div>
+   
 
-    <div
-    fxFlex="100"
-    fxFlex.gt-sm="33.33"
-    fxFlex.sm="50"
-    [@animate]="{ value: '*', params: { y: '50px', delay: '1000ms' } }"
-  >
      
-      <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
-          <mat-card-title class="">
-          <div class="card-title-text" style="height:20px; line-height: 4px; background-image:linear-gradient(to right, rgba(118,138,146), rgba(169,182,186))">
-              <span style="color:#fff;">Tower 3</span>
-              <span fxFlex></span>
-          </div>
-          </mat-card-title>
-          </mat-card>
-  
-        <mat-table [dataSource]="countryTrafficStats" matSort>
-          <ng-container matColumnDef="country">
-            <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 50px;">
-              Device Name
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="id" style="padding-right: 50px;">
-              {{ row.country }}
-            </mat-cell>
-          </ng-container>
-  
-         <ng-container matColumnDef="Status">
-            <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-right: 30px;">
-              Status
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row" data-label="color" style="padding-right: 30px;">
-                <ng-template [ngIf]="row.Status">
-                    <div>
-                     <img src="assets/images/greendot.png">
-                    </div>
-                   </ng-template>
-           </mat-cell>
-          </ng-container>
-  
-          <mat-header-row
-            *matHeaderRowDef="['country','Status']"
-          ></mat-header-row>
-          <mat-row
-            *matRowDef="let row; columns: ['country','Status']"
-          >
-          </mat-row>
-        </mat-table>
 
-  </div>
+  <div
+  fxFlex="100"
+  fxFlex.gt-sm="100"
+  fxFlex.sm="100"
+  [@animate]="{ value: '*', params: { y: '50px', delay: '1000ms' } }"
+>
+<button style="font-size: 37px;"
+class="card-control" [disabled] = 'current-3 == 0'
+mat-icon-button (click) ="current = current - 3 "
+ >
+<mat-icon>arrow_back</mat-icon>
+</button>     <button
+class="card-control"
+mat-icon-button style="font-size: 37px;" [disabled] = 'current >= towerList.length '  (click) ="current = current +3 "
+ >
+<mat-icon>arrow_forward</mat-icon>
+</button>
+</div>
 </div>
   <!--/ End 3rd row, 2nd column -->
 </div>

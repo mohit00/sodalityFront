@@ -17,7 +17,7 @@ HC_more(Highcharts);
 HC_solidgauge(Highcharts);
 
 highcharts3D(Highcharts);
-
+import { FacilityServiceService } from '../service/facility-service.service'
 @Component({
   selector: "app-analytics",
   templateUrl: "./analytics.component.html",
@@ -29,387 +29,717 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
   trafficVsSale: any;
   trafficData: any;
   saleData: any;
-
+userData:any;
   sessionOptions: any;
   sessions: any;
   sessionsData: any;
 
-  trafficGrowthChart: any;
+   weekChartGrowthChart: any;
   bounceRateGrowthChart: any;
 
   dailyTrafficChartBar: any;
   trafficSourcesChart: any;
   countryTrafficStats: any[];
+  dgGridchart;
+  dgGridcomsumption;
+  dgGridupdateFlag: boolean = false;
+  waterchart;
+  watercomsumption;
+  waterupdateFlag: boolean = false;
+  amrGridchart;
+  amrGridcomsumption;
+  amrGridupdateFlag: boolean = false;
+  currentLoadGridchart;
+  currentLoadGridcomsumption;
+  currentLoadGridupdateFlag: boolean = false;
+  dgFuelGridchart;
+  dgFuelGridcomsumption;
+  dgFuelGridupdateFlag: boolean = false;
+  towerList: any =[];
 
   constructor(
-    private themeService: ThemeService
-  ) {}
+    private themeService: ThemeService,
+    private service: FacilityServiceService
+  ) {
+    this.userData = JSON.parse(sessionStorage.getItem("data"));
+    const self = this;
+
+    this.dgGridcomsumption = dgGridchart => {
+      self.dgGridchart = dgGridchart;
+    };
+    this.watercomsumption = waterchart => {
+      self.waterchart = waterchart;
+    };
+    this.amrGridcomsumption = amrGridchart => {
+      self.amrGridchart = amrGridchart;
+    };
+    this.currentLoadGridcomsumption = currentLoadGridchart => {
+      self.currentLoadGridchart = currentLoadGridchart;
+    };
+    this.dgFuelGridcomsumption = dgFuelGridchart => {
+      self.dgFuelGridchart = dgFuelGridchart;
+    };
+  }
 
   highcharts = Highcharts;
-  chartOptions = {   
-   chart: {
-     type: 'pie',
-     options3d: {
-         enabled: true,
-         alpha: 45
-     }
- },
- title: {
-   text: ''
- },
- subtitle: {
-     text: ''
- },
- plotOptions: {
-     pie: {
-         innerSize: 100,
-         depth: 45
-     }
- },
- series: [{
-     name: 'Load',
-     dataLabels: {
-       enabled: false
-     },
-     data: [
-         ['Tower 1', 8],
-         ['Tower 2', 3],
-         ['Tower 3', 1],
-         ['Tower 4', 6],
-         ['Tower 5', 8],
-         ['Tower 6', 4],
+  currentLoadChartOptions = {
+    chart: {
+      type: 'pie',
+      options3d: {
+        enabled: true,
+        alpha: 45
+      }
+    },
+    title: {
+      text: ''
+    },
+    subtitle: {
+      text: ''
+    },
+    plotOptions: {
+      pie: {
+        innerSize: 100,
+        depth: 45
+      }
+    },
+    series: [{
+      name: 'Load',
+      dataLabels: {
+        enabled: false
+      },
+      data: [
+        ['Tower 1', 8],
+        ['Tower 2', 3],
+        ['Tower 3', 1],
+        ['Tower 4', 6],
+        ['Tower 5', 8],
+        ['Tower 6', 4],
       ]
-   }]
+    }]
   };
 
-  barchartOptions = {      
-   chart: {
-      type: 'column',
-      options3d: {
-         enabled: true,
-         alpha: 7,
-         beta: 18,
-         depth: 70
+  WaterConsumptionOption = {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: ''
+    },
+    xAxis: {
+      categories: [
+
+      ],
+      labels: {
+        step: 1,
+        formatter: function (e) {
+          // var ghours   = Math.floor(parseInt(this.y) / 60);
+          // var gminutestime = Math.floor((parseInt(this.y) - ((ghours * 3600)) / 60));
+          // var gseconds = Math.floor((parseInt(this.y)* 60) - (ghours * 3600) - (gminutestime * 60));
+
+          return e.value.split('@')[0].substring(0, 4) + '...<br>' + e.value.split('@')[1].substring(0, 10);
+        }
+      }, style: {
+        fontSize: '10px'
       }
-   },         
-   title : {
-      text: ''   
-   },
-   yAxis: {
-     title: {
-         text: null
-     }
-   },
-   series : [{
-     name: 'Water level',
-      data: [['T-1',29.9],
-             ['T-2',71.5],
-             ['T-3',106.4],
-             ['T-4',129.2],
-             ['T-4',144.0], 
-             ['T-4',176.0], 
-             ['T-4', 135.6], 
-             ['T-4',148.5]], 
+    },
+    yAxis: [{
+      min: 0,
+      max: 100,
+
+      title: {
+        text: 'Water level'
+      }
+    }, {
+      title: {
+        text: 'Capacity'
+      },
+      opposite: true
+    }],
+    legend: {
+      shadow: false
+    },
+    tooltip: {
+      shared: true
+    },
+    plotOptions: {
+      column: {
+        grouping: false,
+        shadow: false,
+        borderWidth: 0
+      }
+    },
+    series: [{
+      name: '',
+      color: 'rgba(165,170,217,1)',
+      data: [],
+      pointPadding: 0.05,
+      pointPlacement: -0.2
+    }, {
+      name: '',
+      color: 'rgba(126,86,134,.9)',
+      data: [],
+      pointPadding: 0.1,
+      pointPlacement: -0.2
     }]
-};
-
-linechartOptions = {   
-  chart: {
-     type: "spline"
-  },
-  title: {
-     text: ""
-  },
-  subtitle: {
-     text: ""
-  },
-  xAxis:{
-     categories:["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-  },
-  yAxis: {          
-     title:{
-        text:""
-     } 
-  },
-  tooltip: {
-     valueSuffix:" "
-  },
-  series: [{
-     name: 'DG',
-     data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,26.5, 23.3, 18.3, 13.9, 9.6]
-  },
-  {
-     name: 'Grid',
-     data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8,24.1, 20.1, 14.1, 8.6, 2.5]
-  }]
-};
-
-gaugeChartOptions = {      
-chart: {
-  type: 'gauge',
-  plotBackgroundColor: null,
-  plotBackgroundImage: null,
-  plotBorderWidth: 0,
-  plotShadow: false
-},
-
-title: {
-  text: ''
-},
-
-pane: {
-  startAngle: -150,
-  endAngle: 150,
-  background: [{
-      backgroundColor: {
-          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-          stops: [
-              [0, '#FFF'],
-              [1, '#333']
-          ]
-      },
-      borderWidth: 0,
-      outerRadius: '109%'
-  }, {
-      backgroundColor: {
-          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-          stops: [
-              [0, '#333'],
-              [1, '#FFF']
-          ]
-      },
-      borderWidth: 1,
-      outerRadius: '107%'
-  }, {
-      // default background
-  }, {
-      backgroundColor: '#DDD',
-      borderWidth: 0,
-      outerRadius: '105%',
-      innerRadius: '103%'
-  }]
-},
-
-// the value axis
-yAxis: {
-  min: 0,
-  max: 200,
-
-  minorTickInterval: 'auto',
-  minorTickWidth: 1,
-  minorTickLength: 10,
-  minorTickPosition: 'inside',
-  minorTickColor: '#666',
-
-  tickPixelInterval: 30,
-  tickWidth: 2,
-  tickPosition: 'inside',
-  tickLength: 10,
-  tickColor: '#666',
-  labels: {
-      step: 2,
-      rotation: 'auto'
-  },
-  title: {
-      text: 'km/h'
-  },
-  plotBands: [{
-      from: 0,
-      to: 120,
-      color: '#55BF3B' // green
-  }, {
-      from: 120,
-      to: 160,
-      color: '#DDDF0D' // yellow
-  }, {
-      from: 160,
-      to: 200,
-      color: '#DF5353' // red
-  }]
-},
-
-series: [{
-  name: 'Speed',
-  data: [80],
-  tooltip: {
-      valueSuffix: ' km/h'
   }
-}]
-};
 
-solidgaugechartOptions = {      
-  chart: {
-    type: 'solidgauge',
-    height: '110%',
-},
+  linechartOptions = {
+    chart: {
+      type: "spline"
+    },
+    title: {
+      text: ""
+    },
+    subtitle: {
+      text: ""
+    },
+    xAxis: {
+      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    },
+    yAxis: {
+      title: {
+        text: ""
+      }
+    },
+    tooltip: {
+      valueSuffix: " "
+    },
+    series: [{
+      name: 'DG',
+      data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+    },
+    {
+      name: 'Grid',
+      data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+    }]
+  };
 
-title: {
-    text: '',
-    style: {
+  gaugeChartOptions = {
+    chart: {
+      type: 'gauge',
+      plotBackgroundColor: null,
+      plotBackgroundImage: null,
+      plotBorderWidth: 0,
+      plotShadow: false
+    },
+
+    title: {
+      text: ''
+    },
+
+    pane: {
+      startAngle: -150,
+      endAngle: 150,
+      background: [{
+        backgroundColor: {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+            [0, '#FFF'],
+            [1, '#333']
+          ]
+        },
+        borderWidth: 0,
+        outerRadius: '109%'
+      }, {
+        backgroundColor: {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+            [0, '#333'],
+            [1, '#FFF']
+          ]
+        },
+        borderWidth: 1,
+        outerRadius: '107%'
+      }, {
+        // default background
+      }, {
+        backgroundColor: '#DDD',
+        borderWidth: 0,
+        outerRadius: '105%',
+        innerRadius: '103%'
+      }]
+    },
+
+    // the value axis
+    yAxis: {
+      min: 0,
+      max: 200,
+
+      minorTickInterval: 'auto',
+      minorTickWidth: 1,
+      minorTickLength: 10,
+      minorTickPosition: 'inside',
+      minorTickColor: '#666',
+
+      tickPixelInterval: 30,
+      tickWidth: 2,
+      tickPosition: 'inside',
+      tickLength: 10,
+      tickColor: '#666',
+      labels: {
+        step: 2,
+        rotation: 'auto'
+      },
+      title: {
+        text: 'km/h'
+      },
+      plotBands: [{
+        from: 0,
+        to: 120,
+        color: '#55BF3B' // green
+      }, {
+        from: 120,
+        to: 160,
+        color: '#DDDF0D' // yellow
+      }, {
+        from: 160,
+        to: 200,
+        color: '#DF5353' // red
+      }]
+    },
+
+    series: [{
+      name: 'Speed',
+      data: [80],
+      tooltip: {
+        valueSuffix: ' km/h'
+      }
+    }]
+  };
+
+  dgFuelchartOptions = {
+    chart: {
+      type: 'solidgauge',
+      height: '110%',
+    },
+
+    title: {
+      text: '',
+      style: {
         fontSize: '24px'
-    }
-},
-tooltip: {
-  borderWidth: 0,
-  backgroundColor: 'none',
-  shadow: false,
-  style: {
-      fontSize: '16px'
-  },
-  valueSuffix: '%',
-  pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}</span>',
-  positioner: function (labelWidth) {
-      return {
+      }
+    },
+    tooltip: {
+      borderWidth: 0,
+      backgroundColor: 'none',
+      shadow: false,
+      style: {
+        fontSize: '16px'
+      },
+      valueSuffix: '%',
+      pointFormat: '{series.name}<br><span style="font-size:2em; color: {point.color}; font-weight: bold">{point.y}</span>',
+      positioner: function (labelWidth) {
+        return {
           x: (this.chart.chartWidth - labelWidth) / 2,
           y: (this.chart.plotHeight / 2) + 15
-      };
-  }
-},
+        };
+      }
+    },
 
-pane: {
-  startAngle: 0,
-  endAngle: 360,
-  background: [{ // Track for Move
-      outerRadius: '112%',
-      innerRadius: '88%',
-      backgroundColor: new Highcharts.Color(Highcharts.getOptions().colors[0])
+    pane: {
+      startAngle: 0,
+      endAngle: 360,
+      background: [{ // Track for Move
+        outerRadius: '112%',
+        innerRadius: '88%',
+        backgroundColor: new Highcharts.Color(Highcharts.getOptions().colors[0])
           .setOpacity(0.3)
           .get(),
-      borderWidth: 0
-  }, { // Track for Exercise
-      outerRadius: '87%',
-      innerRadius: '63%',
-      backgroundColor: new Highcharts.Color(Highcharts.getOptions().colors[1])
+        borderWidth: 0
+      }, { // Track for Exercise
+        outerRadius: '87%',
+        innerRadius: '63%',
+        backgroundColor: new Highcharts.Color(Highcharts.getOptions().colors[1])
           .setOpacity(0.3)
           .get(),
-      borderWidth: 0
-  }, { // Track for Stand
-      outerRadius: '62%',
-      innerRadius: '38%',
-      backgroundColor: new Highcharts.Color(Highcharts.getOptions().colors[2])
+        borderWidth: 0
+      }, { // Track for Stand
+        outerRadius: '62%',
+        innerRadius: '38%',
+        backgroundColor: new Highcharts.Color(Highcharts.getOptions().colors[2])
           .setOpacity(0.3)
           .get(),
-      borderWidth: 0
-  }]
-},
+        borderWidth: 0
+      }]
+    },
 
-yAxis: {
-  min: 0,
-  max: 100,
-  lineWidth: 0,
-  tickPositions: []
-},
+    yAxis: {
+      min: 0,
+      max: 100,
+      lineWidth: 0,
+      tickPositions: []
+    },
 
-plotOptions: {
-  solidgauge: {
-      dataLabels: {
+    plotOptions: {
+      solidgauge: {
+        dataLabels: {
           enabled: false
-      },
-      linecap: 'round',
-      stickyTracking: false,
-      rounded: true
-  }
-},
+        },
+        linecap: 'round',
+        stickyTracking: false,
+        rounded: true
+      }
+    },
 
-series: [{
-  name: 'Move',
-  data: [{
-      color: Highcharts.getOptions().colors[0],
-      radius: '112%',
-      innerRadius: '88%',
-      y: 80
-  }]
-}, {
-  name: 'Exercise',
-  data: [{
-      color: Highcharts.getOptions().colors[1],
-      radius: '87%',
-      innerRadius: '63%',
-      y: 65
-  }]
-}, {
-  name: 'Stand',
-  data: [{
-      color: Highcharts.getOptions().colors[2],
-      radius: '62%',
-      innerRadius: '38%',
-      y: 50
-  }]
-}]
-};
+    series: [{
+      name: 'Move',
+      data: [{
+        color: Highcharts.getOptions().colors[0],
+        radius: '112%',
+        innerRadius: '88%',
+        y: 80
+      }]
+    }, {
+      name: 'Exercise',
+      data: [{
+        color: Highcharts.getOptions().colors[1],
+        radius: '87%',
+        innerRadius: '63%',
+        y: 65
+      }]
+    }, {
+      name: 'Stand',
+      data: [{
+        color: Highcharts.getOptions().colors[2],
+        radius: '62%',
+        innerRadius: '38%',
+        y: 50
+      }]
+    }]
+  };
 
-doughnutChartOptions = {      
-chart: {
-  renderTo: 'container',
-  type: 'pie'
-},
-title: {
-  text: ''
-},
-yAxis: {
-  title: {
-      text: ''
-  }
-},
-plotOptions: {
-  pie: {
-      shadow: false
-  }
-},
-/*tooltip: {
-  formatter: function() {
-      return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
-  }
-},*/
-series: [{
-  name: 'AMR',
-  data: [["Gateway",6],["DIC",4],["Meter",7]],
-  size: '60%',
-  innerSize: '70%',
-  showInLegend:false,
-  dataLabels: {
-      enabled: false
-  }
-}]
-};
+  amrChartOptions = {   
+    colors: ['#FFD700', '#C0C0C0', '#CD7F32'],
+        chart: {
+            type: 'column',
+            inverted: true,
+            polar: true
+        },
+        title: {
+            text: ''
+        },
+        tooltip: {
+            outside: true
+        },
+        pane: {
+            size: '85%',
+            endAngle: 270
+        },
+        xAxis: {
+            tickInterval: 1,
+            labels: {
+                align: 'right',
+                useHTML: true,
+                allowOverlap: true,
+                step: 1,
+                y: 4,
+                style: {
+                    fontSize: '12px'
+                }
+            },
+            lineWidth: 0,
+            categories: [
+                'AMR <span class="f16">'+
+                '</span></span>'
+               
+            ]
+        },
+        yAxis: {
+            lineWidth: 0,
+            tickInterval: 25,
+            reversedStacks: false,
+            endOnTick: true,
+            showLastLabel: true
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                borderWidth: 0,
+                pointPadding: 0,
+                groupPadding: 0.25
+            }
+        },
+        series: [{
+            name: 'Gateway',
+            data: []
+        }, {
+            name: 'DIC',
+            data: []
+        }, {
+            name: 'Meter',
+            data: []
+        }]
+      }; 
 
 
-doughnutChartColors1: any[] = [{
-  backgroundColor: ['#44ad3e', '#49c7f5',]
-}];
+  doughnutChartColors1: any[] = [{
+    backgroundColor: ['#44ad3e', '#49c7f5',]
+  }];
   doughnutChartColors2: any[] = [{
-  backgroundColor: ['#44ad3e', '#49c7f5',]
-}];
-total1: number = 500;
-data1: number = 200;
-doughnutChartData1: number[] = [this.data1, (this.total1 - this.data1)];
+    backgroundColor: ['#44ad3e', '#49c7f5',]
+  }];
+  total1: number = 500;
+  data1: number = 200;
+  doughnutChartData1: number[] = [this.data1, (this.total1 - this.data1)];
 
-total2: number = 600;
-data2: number = 400;
-doughnutChartData2: number[] = [this.data2, (this.total2 - this.data2)];
-doughnutLabels = ['Activated', 'Connected']
-doughnutChartType = 'doughnut';
-doughnutOptions: any = {
-  cutoutPercentage: 85,
-  responsive: true,
-  legend: {
-    display: false,
-    position: 'bottom'
-  },
-  elements: {
-    arc: {
-      borderWidth: 0,
+  total2: number = 600;
+  data2: number = 400;
+  doughnutChartData2: number[] = [this.data2, (this.total2 - this.data2)];
+  doughnutLabels = ['Activated', 'Connected']
+  doughnutChartType = 'doughnut';
+  doughnutOptions: any = {
+    cutoutPercentage: 85,
+    responsive: true,
+    legend: {
+      display: false,
+      position: 'bottom'
+    },
+    elements: {
+      arc: {
+        borderWidth: 0,
+      }
+    },
+    tooltips: {
+      enabled: true
     }
-  },
-  tooltips: {
-    enabled: true
+  };
+  headerCount: any = {};
+  flatCount() {
+    this.service.flatCount().subscribe(res => {
+      this.headerCount.flat_count = res.flat_count;
+      // alert(JSON.stringify(res))
+      this.reCharge()
+    })
   }
-};
+  reCharge() {
+    this.service.Recharge().subscribe(res => {
+      this.headerCount.Recharge = res.total_recharge;
+      this.dailyConsuption();
+    })
+  }
+  dailyConsuption() {
+    this.service.dailyConsumption().subscribe(res => {
+      this.headerCount.daily_consumption = res.daily_consumption;
+      this.monthlyConsumption();
+    })
+  }
+  monthlyConsumption() {
+    this.service.monthlyConsumption().subscribe(res => {
+      this.headerCount.monthly_consumption = res.monthly_consumption;
+      this.waterConsumption();
+    })
+  }
+  waterConsumption() {
+    this.waterchart.showLoading()
+
+    this.service.waterConsumption().subscribe(res => {
+      this.waterchart.hideLoading()
+      this.waterupdateFlag = true
 
 
-  ngAfterViewInit() {}
+      this.WaterConsumptionOption.series[0].name = "Capacity"
+      this.WaterConsumptionOption.series[0].data = res.resource.capacity
+      this.WaterConsumptionOption.series[1].name = "Level"
+      this.WaterConsumptionOption.series[1].data = res.resource.level;
+      this.WaterConsumptionOption.xAxis.categories = res.resource.name
+      console.log("Water Consumption" + JSON.stringify(res))
+      setTimeout(() => {
+        this.waterchart.hideLoading()
+        this.waterupdateFlag = false
+      }, 200)
+
+      this.dgGridConsumption();
+    })
+  }
+  dgGridConsumption() {
+    this.dgGridchart.showLoading()
+    this.service.dgGridConsumption().subscribe(res => {
+      console.log("DG Grid" + JSON.stringify(res))
+      this.dgGridupdateFlag = true;
+
+      this.linechartOptions.xAxis.categories = res.resource.date
+      this.linechartOptions.series[0].data = res.resource.dg;
+      this.linechartOptions.series[1].data = res.resource.grid
+
+      setTimeout(() => {
+        this.dgGridchart.hideLoading()
+        this.dgGridupdateFlag = false
+      }, 200)
+      this.loadConsumption();
+    })
+  }
+  loadConsumption() {
+    this.currentLoadGridchart.showLoading()
+
+    this.service.loadConsumption().subscribe(res => {
+      console.log(JSON.stringify(res))
+      this.currentLoadGridupdateFlag = true;
+      this.currentLoadChartOptions.series[0].data = res.resource['Tower-Load'];
+
+      setTimeout(() => {
+        this.currentLoadGridchart.hideLoading()
+        this.currentLoadGridupdateFlag = false
+      }, 200)
+      this.armData();
+
+    })
+  }
+  armData() {
+    this.amrGridchart.showLoading()
+
+    this.service.amrDashBoard().subscribe(res => {
+      console.log(JSON.stringify(res))
+      this.amrGridupdateFlag = true;
+      this.amrChartOptions.series[0].name = "Gateway"
+      this.amrChartOptions.series[1].name = "DIC"
+
+      this.amrChartOptions.series[2].name = "Meter"
+
+      this.amrChartOptions.series[0].data  = [res.resource.dl_count]
+
+      this.amrChartOptions.series[1].data = [res.resource.dl_count]
+
+      this.amrChartOptions.series[2].data  = [res.resource.meter_count]
+
+ 
+      setTimeout(() => {
+
+
+        this.amrGridchart.hideLoading()
+        this.amrGridupdateFlag = false
+      }, 200)
+      this.dgFuelLevel();
+    })
+  }
+  dgFuelLevel() {
+    this.dgFuelGridchart.showLoading();
+
+    this.service.dgFuelLevel().subscribe(res => {
+      this.dgFuelGridupdateFlag = true
+
+      let dataJson = {
+        color: '',
+        radius: 113,
+        innerRadius: 0,
+        y: 0
+      }
+      this.dgFuelchartOptions.series = [];
+      for (var i = 0; i < res.resource.length; i++) {
+        res.resource[i].data = [];
+        dataJson.radius = 113;
+
+        dataJson.color = Highcharts.getOptions().colors[i];
+        dataJson.innerRadius = dataJson.radius - ((i + 1) * 24 + (i + 1));
+
+        dataJson.radius = dataJson.radius - (i * 24 + i) - 1
+        dataJson.y = res.resource[i].fuel_level
+
+        res.resource[i].data.push({
+          color: dataJson.color,
+          radius: dataJson.radius +'%',
+          innerRadius: dataJson.innerRadius+'%',
+          y: dataJson.y
+        })
+        console.log(JSON.stringify(res.resource[i]))
+
+        this.dgFuelchartOptions.series.push(res.resource[i]);
+      }
+
+      console.log(JSON.stringify(this.dgFuelchartOptions))
+       setTimeout(() => {
+        this.dgFuelGridchart.hideLoading()
+        this.dgFuelGridupdateFlag = false
+      }, 200)
+      this.townWeekWiseCharge();
+    })
+  }
+  townWeekWiseCharge(){
+    this.service.townWeekWiselLevel().subscribe(res=>{
+      this.weekChartGrowthChart.xAxis.data=res.resource.Date;
+      this.weekChartGrowthChart.series[0].data=res.resource.Amount;
+      // for(var i=0 ;i<res.resource.length ;i++){
+      //   this.weekChartGrowthChart.xAxis.data.push(res.resource[i].Date)
+      //   this.weekChartGrowthChart.series[0].data.push(res.resource[i].Amount)
+      // }
+      this.weekChartInits.setOption(this.weekChartGrowthChart);
+      this.meterStatus();
+    })
+  }
+
+  meterStatusData:any;
+  meterStatus(){
+    this.service.meterStatus().subscribe(res=>{
+      this.meterStatusData = res.resource
+      this.towerLowBalance();
+    })
+  }
+  lowbalanceInit;
+  weekChartInits;
+  weekChartInit(e){
+    this.weekChartInits = e;
+
+  }
+  lowBalanceInit(e){
+    this.lowbalanceInit = e;
+  }
+  towerLowBalance(){
+    this.service.towerLowBalance().subscribe(res=>{
+      let towerName =[]
+      let towerBalance = []
+      for(var i =0 ;i<res.resource.length ;i++){
+        towerName.push(res.resource[i].tower);
+        towerBalance.push(res.resource[i].low_balance)
+      }
+      this.dailyTrafficChartBar.xAxis[0].data =towerName
+
+      this.dailyTrafficChartBar.series[0].data = towerBalance
+      this.lowbalanceInit.setOption(this.dailyTrafficChartBar);
+      this.towerPowerStatus();
+    })
+  }
+  current:number = 3;
+  towerPowerStatus(){
+    this.towerList = [] 
+    this.service.towerPowerStatus().subscribe(res=>{
+       for(var i=0 ;i<res.resource.length ;i++){
+        if(res.resource[i].sensor.length > 0){
+          this.towerList.push(res.resource[i])
+        }
+      }
+      console.log(JSON.stringify(this.towerList))
+    })
+  }
+  ngAfterViewInit() { }
   ngOnInit() {
+    setTimeout(() => {
+      this.waterupdateFlag = true;
+      this.waterchart.reflow();
+      this.amrGridupdateFlag = true;
+      this.amrGridchart.reflow()
+      this.currentLoadGridupdateFlag = true;
+      this.currentLoadGridchart.reflow()
+      this.dgGridupdateFlag = true
+      this.dgFuelGridchart.reflow();
+      this.waterchart.showLoading();
+      this.amrGridchart.showLoading();
+      this.currentLoadGridchart.showLoading();
+      this.dgFuelGridchart.showLoading();
+
+    }, 100);
+     if(this.userData.data.societyDetail.amrAccess){
+      this.service.login(this.userData.data.societyDetail.amrUserName, this.userData.data.societyDetail.amrpassword).subscribe(res => {
+        this.service.setTokenId(res.token_id);
+        this.flatCount();
+      })
+    }
+    if(this.userData.data.societyDetail.ibmsAccess){
+
+    this.service.login(this.userData.data.societyDetail.ibmsUserName, this.userData.data.societyDetail.ibmspassword).subscribe(res => {
+
+      this.service.setIBMSTOKEN(res.token_id);
+    })
+  }
     this.themeService.onThemeChange.subscribe(activeTheme => {
       this.initTrafficVsSaleChart(activeTheme);
       this.initSessionsChart(activeTheme);
@@ -455,7 +785,7 @@ doughnutOptions: any = {
       }
     ];
 
-    
+
     this.bounceRateGrowthChart = {
       tooltip: {
         trigger: "axis",
@@ -643,7 +973,7 @@ doughnutOptions: any = {
         }
       ]
     };
-    
+
     this.trafficData = [
       1400,
       1350,
@@ -961,7 +1291,7 @@ doughnutOptions: any = {
         {
           type: "category",
           // data: ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-          data: ["1", "2", "3", "4", "5", "6", "7"],
+          data: [],
           axisTick: {
             show: false
           },
@@ -984,8 +1314,7 @@ doughnutOptions: any = {
             formatter: "${value}"
           },
           min: 0,
-          max: 100000,
-          interval: 25000,
+           interval: 25000,
           axisTick: {
             show: false
           },
@@ -1001,8 +1330,8 @@ doughnutOptions: any = {
 
       series: [
         {
-          name: "Online",
-          data: [35000, 69000, 22500, 60000, 50000, 50000, 30000],
+          name: "Tower Balance",
+          data: [],
           label: { show: true, color: tinyColor(theme.baseColor).toString(), position: "top" },
           type: "bar",
           barWidth: "12",
@@ -1017,7 +1346,7 @@ doughnutOptions: any = {
   }
 
   initTrafficGrowthChart(theme) {
-    this.trafficGrowthChart = {
+    this.weekChartGrowthChart = {
       tooltip: {
         trigger: "axis",
 
@@ -1034,7 +1363,7 @@ doughnutOptions: any = {
       xAxis: {
         type: "category",
         boundaryGap: false,
-        data: ["0", "1", "2", "3", "4"],
+        data: [],
         axisLabel: {
           show: false
         },
@@ -1052,9 +1381,7 @@ doughnutOptions: any = {
       },
       yAxis: {
         type: "value",
-        min: 0,
-        max: 200,
-        interval: 50,
+          interval: 50,
         axisLabel: {
           show: false
         },
@@ -1070,10 +1397,10 @@ doughnutOptions: any = {
       },
       series: [
         {
-          name: "Visit",
+          name: "Amount",
           type: "line",
           smooth: false,
-          data: [0, 40, 140, 90, 160],
+          data: [],
           symbolSize: 8,
           showSymbol: false,
           lineStyle: {

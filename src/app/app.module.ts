@@ -21,7 +21,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
-
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -34,7 +35,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 @NgModule({
   imports: [
-    BrowserModule,
+    BrowserModule,LoadingBarHttpClientModule,LoadingBarRouterModule,
     BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,

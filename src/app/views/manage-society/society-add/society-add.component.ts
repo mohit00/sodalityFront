@@ -98,6 +98,8 @@ export class SocietyAddComponent implements OnInit {
       societyDisplayName: [data.societyDetail.societyDisplayName, [
         Validators.required
       ]],
+      amrAccess:[data.societyDetail.amrAccess],
+      ibmsAccess:[data.societyDetail.ibmsAccess],
       email: [{value:data.email,   disabled: true} ,[
         Validators.required,
         Validators.email
@@ -112,6 +114,10 @@ export class SocietyAddComponent implements OnInit {
       ]],
       registeredAddress: [data.societyDetail.registeredAddress],
       aboutSociety: [data.societyDetail.aboutSociety],
+      amrUserName:[data.societyDetail.amrUserName],
+      amrpassword:[data.societyDetail.amrpassword],
+      ibmsUserName:[data.societyDetail.ibmsUserName],
+      ibmspassword:[data.societyDetail.ibmspassword],
     });
     this.secondFormGroup = this.fb.group({
       BillName: [data.societyDetail.billName],
@@ -129,14 +135,26 @@ export class SocietyAddComponent implements OnInit {
       albumImage: [''],
     })
    }
+
+  //  private String amrUserName;
+	// private String amrpassword;
+	
+	// private String ibmsUserName;
+	// private String ibmspassword;
   createForm(){
     this.firstFormGroup = this.fb.group({
       name: ['', [
         Validators.required
       ]],
+      amrUserName:[],
+      amrpassword:[],
+      ibmsUserName:[],
+      ibmspassword:[],
       societyDisplayName: ['', [
         Validators.required
       ]],
+      amrAccess:[false],
+      ibmsAccess:[false],
       email: ['', [
         Validators.required,
         Validators.email
@@ -273,7 +291,13 @@ view(bill) {
         serviceTax: this.secondFormGroup.value.serviceTax,
         contactNumber: this.firstFormGroup.value.contactNumber,
         contactEmail: this.firstFormGroup.value.contactEmail,
-        aboutSociety: this.firstFormGroup.value.aboutSociety
+        aboutSociety: this.firstFormGroup.value.aboutSociety,
+        amrAccess: this.firstFormGroup.value.amrAccess,
+        amrUserName: this.firstFormGroup.value.amrUserName,
+        amrpassword: this.firstFormGroup.value.amrpassword,
+        ibmsAccess: this.firstFormGroup.value.ibmsAccess,
+        ibmsUserName: this.firstFormGroup.value.ibmsUserName,
+        ibmspassword: this.firstFormGroup.value.ibmspassword,
       }
 
     }
@@ -392,7 +416,13 @@ let societyLogoArray=[];
         societyLogoArray:societyLogoArray[0],
         adImageArray:adImageArray,
         albumId:this.dataDetail.societyDetail.imageList.id.toString(),
-        adId:this.dataDetail.societyDetail.adImage.id.toString() 
+        adId:this.dataDetail.societyDetail.adImage.id.toString() ,
+        amrAccess: this.firstFormGroup.value.amrAccess,
+        amrUserName: this.firstFormGroup.value.amrUserName,
+        amrpassword: this.firstFormGroup.value.amrpassword,
+        ibmsAccess: this.firstFormGroup.value.ibmsAccess,
+        ibmsUserName: this.firstFormGroup.value.ibmsUserName,
+        ibmspassword: this.firstFormGroup.value.ibmspassword,
 
 
       } 

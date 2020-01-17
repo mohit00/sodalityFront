@@ -1,48 +1,136 @@
 <!-- Dashboard card row -->
 <div fxLayout="row wrap">
-  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{scale:'.9',delay:'300ms'}}">
-    <mat-card>
-      <mat-card-title fxLayoutAlign="start center">
-        <small class="text-muted">Total Sales</small>
-        <span fxFlex></span>
-        <mat-chip
-        class="icon-chip" 
-        color="primary" 
-        selected="true"><mat-icon>trending_up</mat-icon>20%</mat-chip>
-      </mat-card-title>
-      <mat-card-content>
-        <h3 class="m-0 font-normal">22,450</h3>
-        <small class="text-muted">Monthly</small>
-      </mat-card-content>
-    </mat-card>
+  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" [@animate]="{value:'*',params:{scale:'.9',delay:'300ms'}}">
+
+    <ngx-flip [flip]="flipDiv" (mouseover)="flipDiv=true" (mouseout)="flipDiv=false">
+      <div front>
+        <mat-card class='' style="min-height: 100px; border: 1px solid #8d8dd0;">
+          <mat-card-title>
+            <small class="text-muted">No. Of Owner<span style="font-size: 10px; "> (With Family Member)</span></small>
+
+          </mat-card-title>
+          <mat-card-content>
+            <h3 class="m-0 font-normal">233</h3>
+            <small class="text-muted">Total User : - 400</small>
+
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+      <div back>
+        <mat-card class='back' style="min-height: 100px; border: 1px solid #8d8dd0;">
+          <mat-card-title>
+            <small class="text-muted">User </small>
+            <span fxFlex></span>
+
+          </mat-card-title>
+          <mat-card-content>
+            <h5> No. Of Owner:- <h4 class="m-0 font-normal" style="float: right;">377,670</h4>
+            </h5>
+            <h5> No. Of Tentent:- <h4 class="m-0 font-normal" style="float: right;">377,670</h4>
+            </h5>
+            <small class="text-muted">Total User : - 231</small>
+
+
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </ngx-flip>
   </div>
 
-  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
-    <mat-card>
+  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+    <ngx-flip [flip]="flipDiv2" (mouseover)="flipDiv2=true" (mouseout)="flipDiv2=false">
+      <div front>
+        <mat-card style="min-height: 100px;    border: 1px solid red;">
+          <mat-card-title>
+            <small class="text-muted">Total Unit</small>
+            <span fxFlex></span>
+            <mat-chip class="icon-chip" color="accent" selected="true">
+              <mat-icon>trending_up</mat-icon>10%
+            </mat-chip>
+          </mat-card-title>
+          <mat-card-content>
+            <h3 class="m-0 font-normal">377,670</h3>
+            <!-- <small class="text-muted">Monthly</small> -->
+          </mat-card-content>
+        </mat-card>
+
+      </div>
+      <div back>
+        <mat-card style="min-height: 100px;    border: 1px solid red;">
+          <mat-card-title>
+            <small class="text-muted">Unit</small>
+            <span fxFlex></span>
+            <mat-chip class="icon-chip" color="accent" selected="true">
+              <mat-icon>trending_up</mat-icon>10%
+            </mat-chip>
+          </mat-card-title>
+          <mat-card-content>
+            <h5> Sold Unit:- <h4 class="m-0 font-normal" style="float: right;">377,670</h4>
+            </h5>
+            <h5> Un Sold Unit:- <h4 class="m-0 font-normal" style="float: right;">377,670</h4>
+            </h5>
+            <small class="text-muted">Total Unit : - 231</small>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </ngx-flip>
+
+
+
+  </div>
+
+  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+
+    <ngx-flip [flip]="flipDiv3" (mouseover)="flipDiv3=true" (mouseout)="flipDiv3=false">
+      <div front>
+        <mat-card style="min-height: 100px;     border: 1px solid yellow;">
+          <mat-card-title>
+            <small class="text-muted">Staff</small>
+            <span fxFlex></span>
+            <mat-chip class="icon-chip" color="accent" selected="true">
+              <mat-icon>trending_up</mat-icon>9%
+            </mat-chip>
+          </mat-card-title>
+          <mat-card-content>
+            <h3 class="m-0 font-normal">54,845</h3>
+            <small class="text-muted">Total</small>
+          </mat-card-content>
+        </mat-card>
+
+
+      </div>
+      <div back>
+        <mat-card style="min-height: 100px;     border: 1px solid yellow;">
+          <mat-card-title>
+            <small class="text-muted">Staff</small>
+            <span fxFlex></span>
+            <mat-chip class="icon-chip" color="accent" selected="true">
+              <mat-icon>trending_up</mat-icon>9%
+            </mat-chip>
+          </mat-card-title>
+          <mat-card-content>
+            <h5> Present:- <h4 class="m-0 font-normal" style="float: right;">1</h4>
+            </h5>
+            <h5> Absent:- <h4 class="m-0 font-normal" style="float: right;">2</h4>
+            </h5>
+            <small class="text-muted">Daily</small>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </ngx-flip>
+  </div>
+  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+
+
+
+    <mat-card style="min-height: 100px;     border: 1px solid yellow;">
       <mat-card-title>
         <small class="text-muted">Revenue</small>
         <span fxFlex></span>
-        <mat-chip
-        class="icon-chip" 
-        color="accent" 
-        selected="true"><mat-icon>trending_up</mat-icon>10%</mat-chip>
-      </mat-card-title>
-      <mat-card-content>
-        <h3 class="m-0 font-normal">377,670</h3>
-        <small class="text-muted">Monthly</small>
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
-    <mat-card>
-      <mat-card-title>
-        <small class="text-muted">Traffic</small>
-        <span fxFlex></span>
-        <mat-chip
-        class="icon-chip" 
-        color="accent" 
-        selected="true"><mat-icon>trending_up</mat-icon>9%</mat-chip>
+        <mat-chip class="icon-chip" color="accent" selected="true">
+          <mat-icon>trending_up</mat-icon>9%
+        </mat-chip>
       </mat-card-title>
       <mat-card-content>
         <h3 class="m-0 font-normal">54,845</h3>
@@ -50,22 +138,74 @@
       </mat-card-content>
     </mat-card>
   </div>
-  <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
-    <mat-card>
-      <mat-card-title>
-        <small class="text-muted">New User</small>
-        <span fxFlex></span>
-        <mat-chip
-        class="icon-chip" 
-        color="warn" 
-        selected="true"><mat-icon>trending_down</mat-icon>2%</mat-chip>
-      </mat-card-title>
-      <mat-card-content>
-        <h3 class="m-0 font-normal">245</h3>
-        <small class="text-muted">Monthly</small>
-      </mat-card-content>
-    </mat-card>
+  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+
+    <ngx-flip [flip]="flipDiv4" (mouseover)="flipDiv4=true" (mouseout)="flipDiv4=false">
+      <div front>
+        <mat-card style="min-height: 100px;     border: 1px solid black;">
+          <mat-card-title>
+            <small class="text-muted">Complaint</small>
+            <span fxFlex></span>
+            <mat-chip class="icon-chip" color="accent" selected="true">
+              <mat-icon>trending_up</mat-icon>9%
+            </mat-chip>
+          </mat-card-title>
+          <mat-card-content>
+            <h3 class="m-0 font-normal">54,845</h3>
+            <small class="text-muted">Total</small>
+          </mat-card-content>
+        </mat-card>
+
+
+      </div>
+      <div back>
+        <mat-card style="min-height: 100px;    border: 1px solid black;">
+          <mat-card-title>
+            <small class="text-muted">Complaint</small>
+            <span fxFlex></span>
+            <mat-chip class="icon-chip" color="accent" selected="true">
+              <mat-icon>trending_up</mat-icon>9%
+            </mat-chip>
+          </mat-card-title>
+          <mat-card-content>
+            <span style="width: 47%; float: left;">
+              <h5> New :- <h4 class="m-0 font-normal" style="float: right;">1</h4>
+              </h5>
+            </span>
+            <span style="width: 52%; float: right; ">
+              <h5> Assigned :- <h4 class="m-0 font-normal" style="float: right;">1</h4>
+              </h5>
+            </span>
+
+            <span style="width: 47%; float: left;">
+              <h5> In Progress :- <h4 class="m-0 font-normal" style="float: right;">1</h4>
+              </h5>
+            </span>
+            <span style="width: 52%; float: right;  ">
+              <h5> Pending :- <h4 class="m-0 font-normal" style="float: right;">1</h4>
+              </h5>
+            </span>
+
+
+            <span style="width: 47%; float: left;">
+              <h5> Reopen :- <h4 class="m-0 font-normal" style="float: right;">1</h4>
+              </h5>
+            </span>
+            <span style="width: 52%; float: right;  ">
+              <h5> Close :- <h4 class="m-0 font-normal" style="float: right;">1</h4>
+              </h5>
+            </span>
+
+
+
+
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </ngx-flip>
   </div>
+
+
 </div>
 
 <!-- Fullwidth chart -->
@@ -73,21 +213,17 @@
   <div fxFlex="100">
     <mat-card class="default">
       <mat-card-title class="">
-        <span>Orders</span>
+        <span>Revenue</span>
         <span fxFlex></span>
       </mat-card-title>
-      <mat-card-subtitle>Orders vs New user registrations</mat-card-subtitle>
-      <mat-card-content class="p-0" [style.height]="'240px'">
-        <canvas 
-          height="240"
-          baseChart 
-          class="chart m-0"
-          [datasets]="lineChartSteppedData"
-          [labels]="lineChartLabels"
-          [options]="lineChartOptions"
-          [colors]="lineChartColors"
-          [legend]="lineChartLegend"
-          [chartType]="lineChartType"></canvas>
+      <mat-card-content class="p-0" >
+        <highcharts-chart
+        [Highcharts] = "highcharts" 
+        [options] = "revenueChartOption"               
+         [callbackFunction]="societyRevenue" [(update)]="RevenueupdateFlag"
+         style="width: 100%; height: 400px; display: block;"
+        >
+      </highcharts-chart>
       </mat-card-content>
     </mat-card>
   </div>
@@ -98,61 +234,33 @@
   <div fxFlex="100" fxFlex.gt-sm="33.33" fxLayout="column">
     <mat-card class="p-0" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
       <div fxLayout="row wrap" class="doughnut-grid text-center">
-          <div fxFlex="50" class="doughnut-grid-item light-mat-gray">
-            <canvas 
-            height="120"
-            baseChart
-            class="chart"
-            [data]="doughnutChartData1"
-            [options]="doughnutOptions"
-            [labels]="doughnutLabels"
-            [colors]="doughnutChartColors1"
-            [chartType]="doughnutChartType"></canvas>
-            <small>Space: {{data1}}/{{total1}} GB</small>
+        <div fxFlex="50" class="doughnut-grid-item light-mat-gray">
+          <canvas height="120" baseChart class="chart" [data]="doughnutChartData1" [options]="doughnutOptions"
+            [labels]="doughnutLabels" [colors]="doughnutChartColors1" [chartType]="doughnutChartType"></canvas>
+          <small>New: {{data1}}/{{total1}} GB</small>
         </div>
         <div fxFlex="50" class="doughnut-grid-item">
-          <canvas 
-            height="120" 
-            baseChart 
-            class="chart"
-            [data]="doughnutChartData2"
-            [options]="doughnutOptions"
-            [labels]="doughnutLabels"
-            [colors]="doughnutChartColors2"
-            [chartType]="doughnutChartType"></canvas>
-            <small>Tasks: 8/12</small>
+          <canvas height="120" baseChart class="chart" [data]="doughnutChartData2" [options]="doughnutOptions"
+            [labels]="doughnutLabels" [colors]="doughnutChartColors2" [chartType]="doughnutChartType"></canvas>
+          <small>In Progress: 8/12</small>
+        </div>
+        <div fxFlex="50" class="doughnut-grid-item">
+          <canvas height="120" baseChart class="chart" [data]="doughnutChartData1" [options]="doughnutOptions"
+            [labels]="doughnutLabels" [colors]="doughnutChartColors2" [chartType]="doughnutChartType"></canvas>
+          <small>Reopen: 15/40</small>
+        </div>
+        <div fxFlex="50" class="doughnut-grid-item light-mat-gray">
+          <canvas height="120" baseChart class="chart" [data]="doughnutChartData2" [options]="doughnutOptions"
+            [labels]="doughnutLabels" [colors]="doughnutChartColors1" [chartType]="doughnutChartType"></canvas>
+          <small>Close: 1600/2000</small>
+        </div>
       </div>
-      <div fxFlex="50" class="doughnut-grid-item">
-        <canvas 
-          height="120" 
-          baseChart 
-          class="chart"
-          [data]="doughnutChartData1"
-          [options]="doughnutOptions"
-          [labels]="doughnutLabels"
-          [colors]="doughnutChartColors2"
-          [chartType]="doughnutChartType"></canvas>
-          <small>Tickets: 15/40</small>
-      </div>
-      <div fxFlex="50" class="doughnut-grid-item light-mat-gray">
-        <canvas 
-        height="120" 
-        baseChart 
-        class="chart"
-        [data]="doughnutChartData2"
-        [options]="doughnutOptions"
-        [labels]="doughnutLabels"
-        [colors]="doughnutChartColors1"
-        [chartType]="doughnutChartType"></canvas>
-        <small>Stock: 1600/2000</small>
-      </div>
-    </div>
     </mat-card>
 
     <mat-card class="p-0" [@animate]="{value:'*',params:{scale:'.9',delay:'300ms'}}">
       <mat-card-title class="">
         <div class="card-title-text">
-          <span>Top Campaign Performance</span>
+          <span>Top Staff Performance</span>
           <span fxFlex></span>
           <button class="card-control" mat-icon-button [matMenuTriggerFor]="menu2">
             <mat-icon>more_vert</mat-icon>
@@ -175,70 +283,30 @@
         <mat-divider></mat-divider>
       </mat-card-title>
       <mat-card-content>
-       <div class="mb-1">
-        <p class="mb-05 text-muted">Facebook Campaign</p>
-        <mat-progress-bar
-        class=""
-        color="primary"
-        mode="determinate"
-        [value]="90">
-        </mat-progress-bar>
-       </div>
-       <div class="mb-1">
-        <p class="mb-05 text-muted">Google AdSense</p>
-        <mat-progress-bar
-        class=""
-        color="primary"
-        mode="determinate"
-        [value]="80">
-        </mat-progress-bar>
-       </div>
-       <div class="mb-1">
-        <p class="mb-05 text-muted">Twitter Campaign</p>
-        <mat-progress-bar
-        class=""
-        color="accent"
-        mode="determinate"
-        [value]="60">
-        </mat-progress-bar>
-       </div>
-       <div class="mb-1">
-        <p class="mb-05 text-muted">LinkedIn Campaign</p>
-        <mat-progress-bar
-        class=""
-        color="warn"
-        mode="determinate"
-        [value]="40">
-        </mat-progress-bar>
-       </div>
+        <div class="mb-1">
+          <p class="mb-05 text-muted">Facebook Campaign</p>
+          <mat-progress-bar class="" color="primary" mode="determinate" [value]="90">
+          </mat-progress-bar>
+        </div>
+        <div class="mb-1">
+          <p class="mb-05 text-muted">Google AdSense</p>
+          <mat-progress-bar class="" color="primary" mode="determinate" [value]="80">
+          </mat-progress-bar>
+        </div>
+        <div class="mb-1">
+          <p class="mb-05 text-muted">Twitter Campaign</p>
+          <mat-progress-bar class="" color="accent" mode="determinate" [value]="60">
+          </mat-progress-bar>
+        </div>
+        <div class="mb-1">
+          <p class="mb-05 text-muted">LinkedIn Campaign</p>
+          <mat-progress-bar class="" color="warn" mode="determinate" [value]="40">
+          </mat-progress-bar>
+        </div>
       </mat-card-content>
     </mat-card>
 
-    <mat-card class="default">
-      <mat-card-content class="p-0">
-        <mat-grid-list cols="3" rowHeight="1:1" class="app-gallery">
-          <!-- Gallery item -->
-          <mat-grid-tile *ngFor="let photo of photos">
-            <img [src]="photo.url" alt="">
-            <!-- item detail, show on hover -->
-            <div class="gallery-control-wrap">
-              <div class="gallery-control">
-                <h4 class="photo-detail fz-1" [fxHide.lt-sm]="true">{{photo.name}}</h4>
-                <span fxFlex></span>
-                <button mat-icon-button [matMenuTriggerFor]="photoMenu" class="">
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #photoMenu="matMenu">
-                  <button mat-menu-item><mat-icon>send</mat-icon>Send as attachment</button>
-                  <button mat-menu-item><mat-icon>favorite</mat-icon>Favorite</button>
-                  <button mat-menu-item><mat-icon>delete</mat-icon>Delete</button>
-                </mat-menu>
-              </div>
-            </div>
-          </mat-grid-tile>
-        </mat-grid-list>
-      </mat-card-content>
-    </mat-card>
+    
   </div>
 
   <!-- ticket and project table column -->
@@ -264,49 +332,11 @@
         </div>
       </mat-card-content>
     </mat-card>
-
-    <mat-card class="p-0" [@animate]="{value:'*',params:{y:'50px',delay:'300ms'}}">
-      <mat-card-content class="p-0">
-        <ngx-datatable
-          class="material ml-0 mr-0"
-          [rows]="projects"
-          [columnMode]="'flex'"
-          [headerHeight]="50"
-          [footerHeight]="0"
-          [rowHeight]="'auto'">
-          <ngx-datatable-column name="Sprints" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{ row?.name }}
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Manager" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{ row?.user }}
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Progress" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              <mat-progress-bar
-                class=""
-                color="primary"
-                mode="determinate"
-                [value]="row.progress">
-              </mat-progress-bar>
-            </ng-template>
-          </ngx-datatable-column>
-        </ngx-datatable>
-        <div class="text-center">
-          <button mat-button class="full-width">View all</button>
-        </div>
-      </mat-card-content>
-    </mat-card>
+ 
 
     <!-- Users Row -->
     <div fxLayout="row wrap">
-      <div
-      *ngFor="let user of users" 
-      fxFlex="100"
-      fxFlex.gt-sm="50">
+      <div *ngFor="let user of users" fxFlex="100" fxFlex.gt-sm="50">
         <mat-card class="user-card p-0">
           <mat-card-title class="mat-bg-primary">
             <div class="card-title-text">
@@ -314,13 +344,13 @@
               <span>{{user.name}}</span>
               <span fxFlex></span>
               <button mat-icon-button [matMenuTriggerFor]="userMenu" class="">
-                  <mat-icon class="">more_vert</mat-icon>
+                <mat-icon class="">more_vert</mat-icon>
               </button>
               <mat-menu #userMenu="matMenu">
-                  <button mat-menu-item>Follow</button>
-                  <button mat-menu-item>Message</button>
-                  <button mat-menu-item>Block</button>
-                  <button mat-menu-item>Delete</button>
+                <button mat-menu-item>Follow</button>
+                <button mat-menu-item>Message</button>
+                <button mat-menu-item>Block</button>
+                <button mat-menu-item>Delete</button>
               </mat-menu>
             </div>
             <mat-divider></mat-divider>
@@ -328,9 +358,18 @@
           <mat-card-content>
             <!-- user detail lines-->
             <div class="user-details">
-              <p><mat-icon class="text-muted">card_membership</mat-icon>{{user.membership}}</p>
-              <p><mat-icon class="text-muted">date_range</mat-icon>Member since {{user.registered | date}}</p>
-              <p><mat-icon class="text-muted">location_on</mat-icon>{{user.address}}</p>
+              <p>
+                <mat-icon class="text-muted">card_membership</mat-icon>{{user.membership}}
+              </p>
+              <p>
+                <mat-icon class="text-muted">date_range</mat-icon>Member since {{user.registered | date}}
+              </p>
+              <p>
+                <mat-icon class="text-muted">location_on</mat-icon>{{user.address}}
+              </p>
+            </div>
+            <div class="text-center">
+              <button mat-button class="full-width">View all</button>
             </div>
           </mat-card-content>
         </mat-card>
@@ -338,5 +377,40 @@
     </div>
     <!-- End Users Row -->
   </div>
+  <div fxFlex="100">
+
+
+    <mat-card class="default">
+      <mat-card-content class="p-1">
+        <mat-grid-list cols="3" rowHeight="1:1" class="app-gallery">
+          <!-- Gallery item -->
+          <mat-grid-tile *ngFor="let photo of photos">
+            <img [src]="photo.url" alt="">
+            <!-- item detail, show on hover -->
+            <div class="gallery-control-wrap">
+              <div class="gallery-control">
+                <h4 class="photo-detail fz-1" [fxHide.lt-sm]="true">{{photo.name}}</h4>
+                <span fxFlex></span>
+                <button mat-icon-button [matMenuTriggerFor]="photoMenu" class="">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #photoMenu="matMenu">
+                  <button mat-menu-item>
+                    <mat-icon>send</mat-icon>Send as attachment
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>favorite</mat-icon>Favorite
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>delete</mat-icon>Delete
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+    </div>
   <!-- End tables and users column -->
 </div>

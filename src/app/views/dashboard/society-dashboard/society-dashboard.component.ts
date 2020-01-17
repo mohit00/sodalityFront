@@ -3,7 +3,16 @@ import { egretAnimations } from 'app/shared/animations/egret-animations';
 import { ThemeService } from 'app/shared/services/theme.service';
 import tinyColor from 'tinycolor2';
 import { NavigationService } from 'app/shared/services/navigation.service';
- 
+import * as Highcharts from 'highcharts';
+ import HC_solidgauge from 'highcharts/modules/solid-gauge';
+import HC_more from 'highcharts/highcharts-more';
+import HC_exporting from 'highcharts/modules/exporting';
+import Drilldown from 'highcharts/modules/drilldown';
+Drilldown(Highcharts);
+
+HC_exporting(Highcharts);
+HC_more(Highcharts);
+HC_solidgauge(Highcharts);
 @Component({
   selector: 'app-society-dashboard',
   templateUrl: './society-dashboard.component.html',
@@ -186,12 +195,23 @@ export class SocietyDashboardComponent implements OnInit {
     leader: 'Robert Middleton'
   }]
 userData:any;
+societyRevenuechart;
+societyRevenue;
+RevenueupdateFlag:boolean = false;
   constructor(
     private themeService: ThemeService
   ,private navService:NavigationService) { 
-    
+    const self = this;
+
+    this.societyRevenue = societyRevenuechart => {
+      self.societyRevenuechart = societyRevenuechart;
+    };
   }
   ngOnInit() {
+    setTimeout(() => {
+      this.RevenueupdateFlag = true;
+      this.societyRevenuechart.reflow();
+    }, 1000);
     this.themeService.onThemeChange.subscribe(activeTheme => {
       this.setChartColor(activeTheme);
     });
@@ -214,4 +234,83 @@ userData:any;
       pointHoverBorderColor: 'rgba(0, 0, 0, 0)'
     }]    
   }
+  highcharts = Highcharts;
+
+  revenueChartOption = {chart: {
+    type: 'column'
+},
+title: {
+    text: ''
+},
+subtitle: {
+    text: 'Revenue per Tower/Month'
+},
+accessibility: {
+    announceNewData: {
+        enabled: true
+    }
+},
+xAxis: {
+    type: 'category'
+},
+yAxis: {
+    title: {
+        text: 'Total percent market share'
+    }
+
+},
+legend: {
+    enabled: false
+},
+plotOptions: {
+    series: {
+        borderWidth: 0,
+        dataLabels: {
+            enabled: true,
+            format: '{point.y:.1f}%'
+        }
+    }
+},
+
+tooltip: {
+    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+},
+
+series: [
+    {
+        name: "Browsers",
+        colorByPoint: true,
+        data: [
+            {
+                name: "Tower 1",
+                y: 62.74,
+             },
+            {
+                name: "Tower 2",
+                y: 10.57,
+             },
+            {
+                name: "Tower 3",
+                y: 7.23,
+             },
+            {
+                name: "Tower 4",
+                y: 5.58,
+             },
+            {
+                name: "Tower 5",
+                y: 4.02,
+             },
+            {
+                name: "Tower 6",
+                y: 1.92,
+             },
+            {
+                name: "Tower 7",
+                y: 7.62,
+             }
+        ]
+    }
+] }
 }
