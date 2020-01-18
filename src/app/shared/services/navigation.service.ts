@@ -171,7 +171,7 @@ export class NavigationService {
         { name: "Complain", state: "SocietyComplain" },
 
        ]
-    }
+    }   
     // {
     //   name: "CHARTS",
     //   type: "link",
@@ -299,7 +299,7 @@ export class NavigationService {
   // Or you can customize this method to supply different menu for
   // different user type.
   publishNavigationChange(menuType: string) {
-    switch (menuType) {
+     switch (menuType) {
       case "SuperAdmin":
         this.menuItems.next(this.AdminDash);
         break;
@@ -316,7 +316,7 @@ export class NavigationService {
         this.menuItems.next(this.staffDash);
         break;
       default:
-        this.menuItems.next(this.AdminDash);
+        // this.menuItems.next(this.AdminDash);
     }
   }
 }

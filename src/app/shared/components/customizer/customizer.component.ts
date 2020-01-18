@@ -61,7 +61,7 @@ export class CustomizerComponent implements OnInit {
     this.layout.publishLayoutChange({ navigationPos: this.selectedLayout });
   }
   changeSidenav(data) {
-    this.navService.publishNavigationChange(data.value);
+     this.navService.publishNavigationChange(data.value);
   }
   toggleBreadcrumb(data) {
     this.layout.publishLayoutChange({ useBreadcrumb: data.checked });

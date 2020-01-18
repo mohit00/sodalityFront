@@ -29,6 +29,7 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.iconTypeMenuTitle = this.navService.iconTypeMenuTitle;
     this.menuItemsSub = this.navService.menuItems$.subscribe(menuItem => {
+     
       this.userData = JSON.parse(sessionStorage.getItem('data'))
       if(this.userData.data.user_type == 'Society'){
         this.imageUrl = environment.LOCAL_BASE+this.userData.data.societyDetail.societyLogo;
@@ -92,7 +93,7 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
       },100)
       
       if (this.userData.data.user_type == 'FamilyMember') {
-        this.navService.publishNavigationChange("Resident");
+         this.navigationChange("Resident");
 
  
         this.Service.getParentUuid(this.userData.data.uuid).subscribe(res => {
@@ -101,16 +102,22 @@ export class SidebarSideComponent implements OnInit, OnDestroy, AfterViewInit {
         })
       } else {
         sessionStorage.setItem('uuId', this.userData.data.uuid)
-         this.navService.publishNavigationChange(this.userData.data.user_type);
+         this.navigationChange(this.userData.data.user_type)
 
       }
 
     } else {
       sessionStorage.setItem('uuId', this.userData.data.uuid)
 
-      this.navService.publishNavigationChange(this.userData.data.user_type);
-
+       this.navigationChange(this.userData.data.user_type)
     }
+  }
+  navigationChange(data){
+    setTimeout(()=>{
+      this.navService.publishNavigationChange(data);
+
+    },200)
+
   }
   ngOnDestroy() {
     if (this.menuItemsSub) {
