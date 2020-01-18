@@ -81,7 +81,7 @@
               [options] = "WaterConsumptionOption" 
              [callbackFunction]="watercomsumption" [(update)]="waterupdateFlag"
               [oneToOne]="true" 
-              style="width: 1200px; height: 350px; display: block;">
+              style="width: 1200px; height: 300px; display: block;">
             </highcharts-chart> 
           </mat-tab>
           <mat-tab label="DG/Grid Consumption">
@@ -388,7 +388,7 @@
         
         <mat-card class="">
           <span class="font-weight-normal" style = "color:rgb(89, 177, 250); font-size: 15px; font-weight: bold;">Low Balance Alert</span>
-          <div
+          <div 
             echarts
             [options]="dailyTrafficChartBar"
             [autoResize]="true"

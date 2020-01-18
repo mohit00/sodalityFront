@@ -30,6 +30,7 @@ AMR_DATA = 'webapi/amr_data'
   POWER_SATE =       'webapi/power_state'
 TOWER_POWER_STATUS = 'webapi/power_status'
 TOWER_LOW_BALANCE = 'webapi/low_balance'
+GET_CURRENCY_AND_UNIT = 'webapi/measurement_unit';
   ibmsToken: any;
 
   constructor(private _http: HttpClient, private router: Router
@@ -79,6 +80,20 @@ TOWER_LOW_BALANCE = 'webapi/low_balance'
       })
     );
   }
+  getCurrent( ): Observable<any>{
+      
+    return this._http.get(environment.FACILITY_URL + this.GET_CURRENCY_AND_UNIT + '?token_id='+this.tokenId).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
   dgFuelLevel( ): Observable<any>{
       
     return this._http.get(environment.FACILITY_URL + this.DG_FUEL_LEVEL + '?token_id='+this.ibmsToken).pipe(
@@ -110,7 +125,7 @@ TOWER_LOW_BALANCE = 'webapi/low_balance'
   }
   townWeekWiselLevel( ): Observable<any>{
       
-    return this._http.get('http://13.232.173.148/web_api/webapi/week_wise_recharge?token_id=979cdecf69837155fe734a8e1e377cae').pipe(
+    return this._http.get(environment.FACILITY_URL + this.WEEK_WISE_RECHARGE+ '?token_id='+this.tokenId).pipe(
       // eg. "map" without a dot before
       map(data => {
         return data;

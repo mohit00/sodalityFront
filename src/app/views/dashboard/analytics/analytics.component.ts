@@ -170,13 +170,13 @@ userData:any;
     },
     series: [{
       name: '',
-      color: 'rgba(165,170,217,1)',
+      color: '#66a6fa',
       data: [],
       pointPadding: 0.05,
       pointPlacement: -0.2
     }, {
       name: '',
-      color: 'rgba(126,86,134,.9)',
+      color: '#3483eb',
       data: [],
       pointPadding: 0.1,
       pointPlacement: -0.2
@@ -388,7 +388,8 @@ userData:any;
         color: Highcharts.getOptions().colors[0],
         radius: '112%',
         innerRadius: '88%',
-        y: 80
+        y: 80,
+        fontSize:'9px'
       }]
     }, {
       name: 'Exercise',
@@ -396,7 +397,8 @@ userData:any;
         color: Highcharts.getOptions().colors[1],
         radius: '87%',
         innerRadius: '63%',
-        y: 65
+        y: 65,
+        fontSize:'9px'
       }]
     }, {
       name: 'Stand',
@@ -404,7 +406,8 @@ userData:any;
         color: Highcharts.getOptions().colors[2],
         radius: '62%',
         innerRadius: '38%',
-        y: 50
+        y: 50,
+        fontSize:'9px'
       }]
     }]
   };
@@ -447,7 +450,7 @@ userData:any;
         },
         yAxis: {
             lineWidth: 0,
-            tickInterval: 25,
+            tickInterval: 100,
             reversedStacks: false,
             endOnTick: true,
             showLastLabel: true
@@ -514,19 +517,31 @@ userData:any;
   }
   reCharge() {
     this.service.Recharge().subscribe(res => {
-      this.headerCount.Recharge = res.total_recharge;
+       this.headerCount.Recharge = res.total_recharge;
+      if(res.total_recharge.current_day_recharge){
+
+      }else{
+        res.total_recharge.current_day_recharge = 0;
+      }
+      if(res.total_recharge.previous_day_recharge){
+
+      }else{
+        res.total_recharge.previous_day_recharge = 0;
+
+      }
+    this.headerCount.Recharge  = res.total_recharge.current_day_recharge;
       this.dailyConsuption();
     })
   }
   dailyConsuption() {
     this.service.dailyConsumption().subscribe(res => {
-      this.headerCount.daily_consumption = res.daily_consumption;
+      this.headerCount.daily_consumption = res.daily_consumption.current_day_consumption;
       this.monthlyConsumption();
     })
   }
   monthlyConsumption() {
     this.service.monthlyConsumption().subscribe(res => {
-      this.headerCount.monthly_consumption = res.monthly_consumption;
+      this.headerCount.monthly_consumption = res.monthly_consumption.current_month_consumption;
       this.waterConsumption();
     })
   }
@@ -541,7 +556,19 @@ userData:any;
       this.WaterConsumptionOption.series[0].name = "Capacity"
       this.WaterConsumptionOption.series[0].data = res.resource.capacity
       this.WaterConsumptionOption.series[1].name = "Level"
-      this.WaterConsumptionOption.series[1].data = res.resource.level;
+      for(var i=0;i<res.resource.level.length ;i++){
+        if(res.resource.level[i] <20){
+          this.WaterConsumptionOption.series[1].data.push({
+            y:res.resource.level[i] ,
+            color:'#ff0000'
+          })
+        }else{
+          this.WaterConsumptionOption.series[1].data.push({
+            y:res.resource.level[i] ,
+            color:'#3483eb'
+          })
+        } 
+      }
       this.WaterConsumptionOption.xAxis.categories = res.resource.name
       console.log("Water Consumption" + JSON.stringify(res))
       setTimeout(() => {
@@ -583,6 +610,11 @@ userData:any;
       }, 200)
       this.armData();
 
+    })
+  }
+  getCurrentStatus(){
+    this.service.getCurrent().subscribe(res=>{
+      
     })
   }
   armData() {
@@ -710,7 +742,9 @@ userData:any;
       console.log(JSON.stringify(this.towerList))
     })
   }
-  ngAfterViewInit() { }
+  ngAfterViewInit() { 
+    this.getCurrentStatus();
+  }
   ngOnInit() {
     setTimeout(() => {
       this.waterupdateFlag = true;

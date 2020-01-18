@@ -168,10 +168,20 @@ export class NavigationService {
         { name: "Resident", state: "Resident" },
         { name: "Category", state: "Category" },
         { name: "Staff", state: "Staff" },
-        { name: "Complain", state: "SocietyComplain" },
 
        ]
-    }   
+    } ,
+    {
+      name: "Complain Management",
+      type: "dropDown",
+      tooltip: "Manage Society",
+      icon: "view_carousel",
+       sub: [
+        { name: "Complain", state: "SocietyComplain" },
+        { name: "Notice", state: "SocietyNotice" },
+
+       ]
+    }     
     // {
     //   name: "CHARTS",
     //   type: "link",
