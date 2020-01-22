@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedMaterialModule } from 'app/shared/shared-material.module';
 
 import { GroupRoutingModule } from './group-routing.module';
 import { GroupComponent } from './group.component';
 import { GroupAddComponent } from './group-add/group-add.component';
+import { SharedMaterialModule } from 'app/shared/shared-material.module';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 

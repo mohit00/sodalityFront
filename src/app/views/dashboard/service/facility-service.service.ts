@@ -32,7 +32,12 @@ TOWER_POWER_STATUS = 'webapi/power_status'
 TOWER_LOW_BALANCE = 'webapi/low_balance'
 GET_CURRENCY_AND_UNIT = 'webapi/measurement_unit';
   ibmsToken: any;
+DATA_LOGGER = 'webapi/datalogger';
 
+TOWER_DATA_LOGGER = 'webapi/tower_list';
+TOWER_DIC_LIST = 'webapi/dic_list_tower_wise';
+DIC_LIST = 'webapi/dic_list';
+SENSOR_LIST = 'webapi/sensor_list'
   constructor(private _http: HttpClient, private router: Router
     // tslint:disable-next-line: no-shadowed-variable
   ) {
@@ -50,6 +55,76 @@ GET_CURRENCY_AND_UNIT = 'webapi/measurement_unit';
   }
   get IBMSTOKEN(){
     return this.ibmsToken;
+  }
+  
+  sensorList( id): Observable<any>{
+      
+    return this._http.get(environment.FACILITY_URL + this.SENSOR_LIST + '?token_id='+this.tokenId+'&dic_id='+id).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  getDataLogger( ): Observable<any>{
+      
+    return this._http.get(environment.FACILITY_URL + this.DATA_LOGGER + '?token_id='+this.tokenId).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  getDICList( ): Observable<any>{
+      
+    return this._http.get(environment.FACILITY_URL + this.DIC_LIST + '?token_id='+this.tokenId).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  getTowerDataLogger( id): Observable<any>{
+      
+    return this._http.get(environment.FACILITY_URL + this.TOWER_DATA_LOGGER + '?token_id='+this.tokenId+'&datalogger_id='+id).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  getTowerDics( dataloggerId,towerid): Observable<any>{
+     return this._http.get(environment.FACILITY_URL + this.TOWER_DIC_LIST + '?token_id='+this.tokenId+'&datalogger_id='+dataloggerId+'&tower_id='+towerid).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
   }
   
   towerPowerStatus( ): Observable<any>{
@@ -125,7 +200,8 @@ GET_CURRENCY_AND_UNIT = 'webapi/measurement_unit';
   }
   townWeekWiselLevel( ): Observable<any>{
       
-    return this._http.get(environment.FACILITY_URL + this.WEEK_WISE_RECHARGE+ '?token_id='+this.tokenId).pipe(
+    return this._http.get(environment.FACILITY_URL + this.WEEK_WISE_RECHARGE+ '?token_id='+this.tokenId
+    ).pipe(
       // eg. "map" without a dot before
       map(data => {
         return data;

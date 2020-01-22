@@ -23,7 +23,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-import { SocietyNoitceComponent } from './views/society-noitce/society-noitce.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -51,7 +50,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     InMemoryWebApiModule.forRoot(InMemoryDataService, { passThruUnknownUrl: true}),
     RouterModule.forRoot(rootRouterConfig, { useHash: false })
   ],
-  declarations: [AppComponent, SocietyNoitceComponent],
+  declarations: [AppComponent ],
   providers: [
     { provide: ErrorHandler, useClass: ErrorHandlerService },
     { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },

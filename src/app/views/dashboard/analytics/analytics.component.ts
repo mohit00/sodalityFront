@@ -11,8 +11,8 @@ import * as Highcharts from 'highcharts';
 import highcharts3D from 'highcharts/highcharts-3d.src';
 import HC_solidgauge from 'highcharts/modules/solid-gauge';
 import HC_more from 'highcharts/highcharts-more';
-import HC_exporting from 'highcharts/modules/exporting';
-HC_exporting(Highcharts);
+// import HC_exporting from 'highcharts/modules/exporting';
+// HC_exporting(Highcharts);
 HC_more(Highcharts);
 HC_solidgauge(Highcharts);
 
@@ -412,69 +412,60 @@ userData:any;
     }]
   };
 
-  amrChartOptions = {   
-    colors: ['#FFD700', '#C0C0C0', '#CD7F32'],
-        chart: {
-            type: 'column',
-            inverted: true,
-            polar: true
+  amrChartOptions = {
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+  },
+  title: {
+      text: ''
+  },
+  tooltip: {
+      pointFormat: ''
+  },
+  plotOptions: {
+    series: {
+        dataLabels: {
+            enabled: true,
+            format: '{point.name}: {point.y:.1f}%'
         },
-        title: {
-            text: ''
-        },
-        tooltip: {
-            outside: true
-        },
-        pane: {
-            size: '85%',
-            endAngle: 270
-        },
-        xAxis: {
-            tickInterval: 1,
-            labels: {
-                align: 'right',
-                useHTML: true,
-                allowOverlap: true,
-                step: 1,
-                y: 4,
-                style: {
-                    fontSize: '12px'
-                }
-            },
-            lineWidth: 0,
-            categories: [
-                'AMR <span class="f16">'+
-                '</span></span>'
-               
-            ]
-        },
-        yAxis: {
-            lineWidth: 0,
-            tickInterval: 100,
-            reversedStacks: false,
-            endOnTick: true,
-            showLastLabel: true
-        },
-        plotOptions: {
-            column: {
-                stacking: 'normal',
-                borderWidth: 0,
-                pointPadding: 0,
-                groupPadding: 0.25
-            }
-        },
-        series: [{
-            name: 'Gateway',
-            data: []
-        }, {
-            name: 'DIC',
-            data: []
-        }, {
-            name: 'Meter',
-            data: []
-        }]
-      }; 
+        events: {
+          click: (function (event) {
+            console.log(event.point)
+              console.log(event.point.name)
+              console.log(JSON.stringify(event.point.extradata))
+// 
+console.log(event.point.index)
+if(event.point.extradata.type == "Gateway"){
+  this.getTowerWithDic(event.point.extradata.id,event.point.index,event.point.name,event.point);
 
+}else if(event.point.extradata.type == "Tower"){
+  this.getTowerDic(event.point.extradata.dataloggerId ,event.point.extradata.tower_id,event.point.index,event.point.name,event.point);
+
+}
+             // this.openDialog('supplygraph', event.point.category.split(" ")[0], 'currentDay', this.hour);
+          }).bind(this)
+       }
+    }
+   
+},
+
+
+    series: [
+        {
+            name: "Data Logger",
+            colorByPoint: true,
+            data: [
+                ]
+        }
+    ],
+    drilldown: {
+        series: [ 
+        ]
+    }
+  }
 
   doughnutChartColors1: any[] = [{
     backgroundColor: ['#44ad3e', '#49c7f5',]
@@ -513,6 +504,8 @@ userData:any;
       this.headerCount.flat_count = res.flat_count;
       // alert(JSON.stringify(res))
       this.reCharge()
+      this.getCurrentStatus();
+
     })
   }
   reCharge() {
@@ -543,13 +536,132 @@ userData:any;
     this.service.monthlyConsumption().subscribe(res => {
       this.headerCount.monthly_consumption = res.monthly_consumption.current_month_consumption;
       this.waterConsumption();
+      this.getdataLogger();
     })
   }
+  sensorShow:boolean=false;
+  sensorList(data){
+    this.amrGridchart.showLoading()
+    this.amrChartOptions.series[0].data  = [];
+    this.amrChartOptions.series[0].name = "Sensor"
+    this.amrChartOptions.drilldown.series =[];
+    console.log(data.value)
+    this.service.sensorList(data.value).subscribe(res=>{
+      this.sensorShow=true;
+      this.amrGridupdateFlag = true;
+
+      for(var i=0;i<res.resource.sensor.length;i++){
+        this.amrChartOptions.series[0].data.push({
+          name: res.resource.sensor[i].name,
+          y: 1,
+           extradata:res.resource.sensor[i]
+        })
+  
+      }
+      setTimeout(() => {
+  
+  
+        this.amrGridchart.hideLoading()
+        this.amrGridupdateFlag = false
+      }, 200)
+      console.log(res)
+
+    })
+  }
+  getdataLogger(){
+    this.sensorShow=false;
+
+    this.amrGridchart.showLoading()
+this.getDICList();
+this.amrChartOptions.series[0].data  = [];
+    this.service.getDataLogger().subscribe(res=>{
+      this.amrChartOptions.series[0].name = "Gateway"
+      this.amrChartOptions.series[0].colorByPoint = true;
+
+      for(var i =0 ;i<res.resource.datalogger.length;i++){
+          
+         this.amrGridupdateFlag = true;
+         res.resource.datalogger[i].type ="Gateway"
+
+         this.amrChartOptions.series[0].data.push({
+          name: res.resource.datalogger[i].name,
+          y: 1,
+          drilldown:res.resource.datalogger[i].name,
+          extradata:res.resource.datalogger[i]
+        })
+          
+    
+        setTimeout(() => {
+  
+  
+          this.amrGridchart.hideLoading()
+          this.amrGridupdateFlag = false
+        }, 200)
+      }
+    })
+  }
+  getTowerWithDic(id,index,name,point){
+   
+    // this.amrGridchart.showLoading()
+    this.amrGridchart.showLoading()
+
+    this.service.getTowerDataLogger(id).subscribe(res=>{
+      console.log(JSON.stringify(res));
+
+      this.amrChartOptions.drilldown.series[index] = [];
+      this.amrChartOptions.drilldown.series[index].data =[];
+      this.amrChartOptions.drilldown.series[index].name = 'Tower';
+      this.amrChartOptions.drilldown.series[index].id = name;
+      for(var i=0;i<res.resource.tower.length ;i++){
+        res.resource.tower[i].type ="Tower"
+        res.resource.tower[i].dataloggerId = id;
+        this.amrChartOptions.drilldown.series[index].data.push(
+          {
+            name: res.resource.tower[i].tower_name,
+            y: res.resource.tower[i].count,
+            drilldown:res.resource.tower[i].tower_name,
+            extradata:res.resource.tower[i]
+        }
+        )
+      }
+   
+      setTimeout(() => {
+  
+  
+        this.amrGridchart.hideLoading()
+        this.amrGridupdateFlag = false
+        this.amrGridchart.addSeriesAsDrilldown(point, this.amrChartOptions.drilldown.series[index]);
+
+      }, 200)
+    })
+  }
+  dicsList:any;
+  getDICList(){
+    this.service.getDICList().subscribe(res=>{
+       
+     this.dicsList =  res.resource.dic
+    })
+  }
+  foods: any[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'}
+  ];
+  getTowerDic(dataloggerId,towerId,index,name,point){
+    this.amrGridchart.showLoading()
+
+    this.service.getTowerDics(dataloggerId,towerId).subscribe(res=>{
+       this.dicsList = res.resource.dic 
+      this.amrGridchart.hideLoading()
+
+    }) 
+  }
+  
   waterConsumption() {
     this.waterchart.showLoading()
 
     this.service.waterConsumption().subscribe(res => {
-      this.waterchart.hideLoading()
+      
       this.waterupdateFlag = true
 
 
@@ -584,11 +696,9 @@ userData:any;
     this.service.dgGridConsumption().subscribe(res => {
       console.log("DG Grid" + JSON.stringify(res))
       this.dgGridupdateFlag = true;
-
       this.linechartOptions.xAxis.categories = res.resource.date
       this.linechartOptions.series[0].data = res.resource.dg;
       this.linechartOptions.series[1].data = res.resource.grid
-
       setTimeout(() => {
         this.dgGridchart.hideLoading()
         this.dgGridupdateFlag = false
@@ -598,43 +708,41 @@ userData:any;
   }
   loadConsumption() {
     this.currentLoadGridchart.showLoading()
-
     this.service.loadConsumption().subscribe(res => {
       console.log(JSON.stringify(res))
       this.currentLoadGridupdateFlag = true;
       this.currentLoadChartOptions.series[0].data = res.resource['Tower-Load'];
-
       setTimeout(() => {
         this.currentLoadGridchart.hideLoading()
         this.currentLoadGridupdateFlag = false
       }, 200)
       this.armData();
-
     })
   }
+  measurmentUnit:any;
   getCurrentStatus(){
     this.service.getCurrent().subscribe(res=>{
-      
+      this.measurmentUnit = res.measurement_unit;
     })
   }
   armData() {
-    this.amrGridchart.showLoading()
-
     this.service.amrDashBoard().subscribe(res => {
+      this.amrGridchart.showLoading()
+
       console.log(JSON.stringify(res))
-      this.amrGridupdateFlag = true;
-      this.amrChartOptions.series[0].name = "Gateway"
-      this.amrChartOptions.series[1].name = "DIC"
+      // this.amrGridupdateFlag = true;
+      // this.amrChartOptions.series[0].name = "Gateway"
+      // this.amrChartOptions.series[1].name = "DIC"
 
-      this.amrChartOptions.series[2].name = "Meter"
+      // this.amrChartOptions.series[2].name = "Meter"
 
-      this.amrChartOptions.series[0].data  = [res.resource.dl_count]
+      // this.amrChartOptions.series[0].data  = [res.resource.dl_count]
 
-      this.amrChartOptions.series[1].data = [res.resource.dl_count]
+      // this.amrChartOptions.series[1].data = [res.resource.dl_count]
 
-      this.amrChartOptions.series[2].data  = [res.resource.meter_count]
+      // this.amrChartOptions.series[2].data  = [res.resource.meter_count]
 
- 
+  
       setTimeout(() => {
 
 
@@ -743,7 +851,6 @@ userData:any;
     })
   }
   ngAfterViewInit() { 
-    this.getCurrentStatus();
   }
   ngOnInit() {
     setTimeout(() => {

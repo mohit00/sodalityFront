@@ -87,12 +87,94 @@ GROUP_GET="user/get/Group";
 GROUP_ADD="user/Save/Group";
 GROUP_UPDATE="user/Group/Update";
 GROUP_GET_DETAIL ="user/get/Group/";
+// Notice
+NOTICE_GET= "Notice/getall/Notice";
+NOTICE_ADD="Notice/Add/Notice";
+NOTICE_UPDATE ="Notice/Update/Notice";
+NOTICE_GET_DETAIL ="Notice/get/Notice/";
+GET_ALL_NOTIFICATION = "Notice/getall/Notificaiton"
    constructor(private _http: HttpClient, private router: Router
     // tslint:disable-next-line: no-shadowed-variable
   ) {
 
   }
 
+  getAllNotification(data,type): Observable<any>{
+    let dataJson = {
+      parentUUid:data,
+      user_type:type
+    }
+    return this._http.post(this.BASE_URL + this.GET_ALL_NOTIFICATION , dataJson).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+ noticeGet(data,type): Observable<any>{
+    let dataJson = {
+      parentUUid:data,
+      type
+    }
+    return this._http.post(this.BASE_URL + this.NOTICE_GET , dataJson).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  noticeAdd(data): Observable<any>{
+    
+    return this._http.post(this.BASE_URL + this.NOTICE_ADD , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  noticeUpdate(data): Observable<any>{
+   
+    return this._http.put(this.BASE_URL + this.NOTICE_UPDATE , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  noticeGetDetail(data): Observable<any>{
+  
+    return this._http.get(this.BASE_URL + this.NOTICE_GET_DETAIL + data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
   groupGet(data): Observable<any>{
     let dataJson = {
       parentId:data

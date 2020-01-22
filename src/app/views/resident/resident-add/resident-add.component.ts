@@ -360,10 +360,10 @@ export class ResidentAddComponent implements OnInit {
     this.fd = new FormData();
     if (this.pic.length > 0) {
       for (var i = 0; i < this.pic.length; i++) {
-        this.fd.append("pic", this.pic[i]);
+        this.fd.append("files", this.pic[i]);
       }
     } else {
-      this.fd.append("pic", "");
+      this.fd.append("files", "");
     }
     console.log(JSON.stringify(this.firstFormGroup.getRawValue().id));
     let dataJson = {

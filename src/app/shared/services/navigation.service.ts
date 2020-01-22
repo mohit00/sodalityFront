@@ -151,8 +151,7 @@ export class NavigationService {
         sub: [
         { name: "Sodality Dash", state: "dashboard/Society" },
         { name: "facility Dashboard", state: "dashboard/facility" },
-        { name: "myxenius", state: "dashboard/myxenius" },
-        ]
+         ]
     } ,
     {
       name: "Manage Society",
@@ -178,7 +177,7 @@ export class NavigationService {
       icon: "view_carousel",
        sub: [
         { name: "Complain", state: "SocietyComplain" },
-        { name: "Notice", state: "SocietyNotice" },
+        { name: "Notice", state: "Notice" },
 
        ]
     }     
@@ -218,13 +217,18 @@ export class NavigationService {
       type: "separator",
       name: "Main Items"
     },
+   
     {
       name: "DASHBOARD",
-      type: "link",
-      tooltip: "Dashboard",
+       tooltip: "Dashboard",
       icon: "dashboard",
-      state: "dashboard/Resident",
-       
+      
+      type: "dropDown",
+      
+        sub: [
+        { name: "Dashboard", state: "dashboard/Resident" },
+         { name: "Home", state: "dashboard/myxenius" },
+        ]
     } ,
     {
       name: "Manage Society",

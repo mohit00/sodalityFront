@@ -1,92 +1,104 @@
-<mat-card class="p-0" [@animate]="{ value: '*', params: { scale: '.9', delay: '200ms' } }">
-  <div fxLayout="row wrap">
-      <div
-          fxFlex="100"
-          fxFlex.gt-sm="20"
-          fxFlex.sm="50"
-      >
-          <div class="text-center pt-1 pb-1 border-right-light">
-              <mat-icon class="text-blue">account_balance_wallet</mat-icon>
-              <h4 class="m-0">5040</h4>
-              <small class="m-0 text-muted">Bitcoin Balance</small>
-          </div>
-      </div>
-      <div
-          fxFlex="100"
-          fxFlex.gt-sm="20"
-          fxFlex.sm="50"
-      >
-          <div class="text-center pt-1 pb-1 border-right-light">
-              <mat-icon class="text-orange">attach_money</mat-icon>
-              <h4 class="m-0 ">1200</h4>
-              <small class="m-0 text-muted">USD Balance</small>
-          </div>
-      </div>
-      <div
-          fxFlex="100"
-          fxFlex.gt-sm="20"
-          fxFlex.sm="50"
-      >
-          <div class="text-center pt-1 pb-1 border-right-light">
-              <mat-icon class="text-blue">business_center</mat-icon>
-              <h4 class="m-0 ">16420</h4>
-              <small class="m-0 text-muted">Invesment</small>
-          </div>
-      </div>
-      <div
-          fxFlex="100"
-          fxFlex.gt-sm="20"
-          fxFlex.sm="50"
-      >
-          <div class="text-center pt-1 pb-1 border-right-light">
-              <mat-icon class="text-blue">add</mat-icon>
-              <h4 class="m-0 ">3010</h4>
-              <small class="m-0 text-muted">Profit</small>
-          </div>
-      </div>
-      <div
-          fxFlex="100"
-          fxFlex.gt-sm="20"
-          fxFlex.sm="50"
-      >
-          <div class="text-center pt-1 pb-1">
-              <mat-icon class="text-orange">compare_arrows</mat-icon>
-              <h4 class="m-0 ">270</h4>
-              <small class="m-0 text-muted">Transactions</small>
-          </div>
-      </div>
-  </div>
-</mat-card>
-
-
-
-
 <div fxLayout="row wrap">
-  <div fxFlex="100" fxFlex.gt-sm="66.67" fxFlex.sm="50" 
-  [@animate]="{value:'*',params:{delay:'400ms',scale:'.9'}}">
-  <mat-card>
-    <div fxLayout="row wrap" fxLayoutAlign="start center">
-      <h6 class="m-0">Bitcoin vs Ethereum </h6>
-      <span fxFlex></span>
-      <button mat-icon-button [matMenuTriggerFor]="chartMenu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #chartMenu="matMenu">
-        <button mat-menu-item>
-          <span>Last 7 days</span>
-        </button>
-        <button mat-menu-item>
-          <span>Last 30 days</span>
-        </button>
-      </mat-menu>
+  <div fxFlex = "66.5">
+
+
+<mat-card   class="p-0" [@animate]="{ value: '*', params: { scale: '.9', delay: '200ms' } }">
+  <div fxLayout="row wrap">
+    <div class="text-left pt-1 pb-1 border-right-light">
+      <h5 class="m-0" style="padding-left: 5px; padding-bottom: 6px;">Start Disscusion</h5>
+      <mat-divider></mat-divider>
+      <div class="card-title-text" style="padding-top: 6px; padding-left: 6px; padding-bottom: 10px;">
+      <a href="" class="toolbar-avatar md mr-1"><img src="{{imageUrl}}" alt=""></a>
+      <span>Write something here To Start   Disscusion...</span><span fxFlex></span>
     </div>
-
-    <div echarts [options]="cryptoChart" [autoResize]="true" style="height: 340px;"></div>
-  </mat-card>
+    <mat-divider></mat-divider>
+    
+    <mat-card class="rounded-circle" fxLayoutAlign="start center">
+      <img src="assets/images/cryptocurrencies/BTC.png" width="25" alt="">
+      <span style="width: 5px"></span>
+      <div style="padding-left: 6px;">
+        <p class="m-0 text-14 text-muted line-height-1">Photo/Video</p>
+      </div>
+    </mat-card>
+    <!--<mat-card class="rounded-circle" fxLayoutAlign="start center" width="25">
+      <img src="assets/images/cryptocurrencies/BTC.png" width="25" alt="">
+      <span style="width: 5px"></span>
+      <div style="padding-left: 6px;">
+        <p class="m-0 text-14 text-muted line-height-1">Tag Friends</p>
+      </div>
+    </mat-card>
+    <mat-card class="rounded-circle" fxLayoutAlign="start center" width="25">
+      <img src="assets/images/cryptocurrencies/BTC.png" width="25" alt="">
+      <span style="width: 5px"></span>
+      <div style="padding-left: 6px;">
+        <p class="m-0 text-14 text-muted line-height-1">Feeling/Activity</p>
+      </div>
+    </mat-card>-->
+    </div>
+</div>
+</mat-card>
+ 
+<mat-card  *ngFor ="let list of notificationList">
+  <div fxLayout="row wrap" fxLayoutAlign="start center"  [@animate]="{ value: '*', params: { scale: '.9', delay: '200ms' } }" style="padding-bottom: 10px;">
+    <a href="" class="toolbar-avatar md mr-1"><img [src]="'http://localhost:8080/'+list.userImage  " alt=""></a>
+    <h4 class="m-0">{{list.userName}} </h4>
+    <span fxFlex></span>
+    <button mat-icon-button [matMenuTriggerFor]="chartMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #chartMenu="matMenu">
+      <button mat-menu-item>
+        <span>Last 7 days</span>
+      </button>
+      <button mat-menu-item>
+        <span>Last 30 days</span>
+      </button>
+    </mat-menu>
   </div>
+<mat-divider></mat-divider>
+  <div><h4 class="m-1" style="font-weight: bold;">Title : <span style="font-family: cursive;
+    font-weight: 100;"> {{list.title}}</span> </h4>
+  <mat-divider></mat-divider> 
+  <h4 class="m-1" style="font-weight: bold; padding-top: 12px; height: 60px;">Description : <span style="font-weight: 100">{{list.description}}</span></h4> </div>
+  <mat-divider></mat-divider>
+   <div style="padding-top: 10px;" >
+  <mat-card class="rounded-circle" fxLayoutAlign="start center">
+    <a href="" class="toolbar-avatar md mr-1"><img [src]="imageUrl" alt=""></a>
+    <p>Write something here...</p>
+    </mat-card></div>
+    
+ 
+</mat-card>
+ 
+</div>
 
-  <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'400ms',scale:'.9'}}">
-    <div class="m-333">
+<div fxFlex="33.5">
+  <mat-card class="default">
+    <mat-card-content class="p-0">
+      <mat-grid-list cols="3" rowHeight="1:1" class="app-gallery">
+        <!-- Gallery item -->
+        <mat-grid-tile *ngFor="let photo of photos">
+          <img [src]="photo.url" alt="">
+          <!-- item detail, show on hover -->
+          <div class="gallery-control-wrap">
+            <div class="gallery-control">
+              <h4 class="photo-detail fz-1" [fxHide.lt-sm]="true">{{photo.name}}</h4>
+              <span fxFlex></span>
+              <button mat-icon-button [matMenuTriggerFor]="photoMenu" class="">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #photoMenu="matMenu">
+                <button mat-menu-item><mat-icon>send</mat-icon>Send as attachment</button>
+                <button mat-menu-item><mat-icon>favorite</mat-icon>Favorite</button>
+                <button mat-menu-item><mat-icon>delete</mat-icon>Delete</button>
+              </mat-menu>
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-card-content>
+  </mat-card>
+  <div class="m-333">
         <mat-accordion multi="false">
             <mat-expansion-panel expanded="true">
               <mat-expansion-panel-header>
@@ -222,15 +234,11 @@
               </mat-expansion-panel>
           </mat-accordion>
     </div>
- 
-    <!-- <mat-card>
-        <div fxLayout="row wrap" fxLayoutAlign="start center">
-            <h6 class="m-0">Balance </h6>
-          </div>
-        <div echarts [options]="cryptoDonutChart" [autoResize]="true" style="height: 318px;"></div>
-    </mat-card> -->
-  </div>
 </div>
+</div>
+
+
+ 
 
 <!-- COIN ROW -->
 
@@ -287,81 +295,4 @@
   </div>
 </div>
 <!--/ COIN ROW -->
-
-<!-- Table row -->
-<div fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'800ms',scale:'.9'}}">
-  <div fxFlex="100" fxFlex.gt-sm="66.67">
-      <mat-card class="p-0 ">
-          <h6 class="pl-1 pt-1 m-0 ">Active Trades</h6>
-          <ngx-datatable
-          class="material ml-0 mr-0"
-          [rows]="activeTrades"
-          [columnMode]="'flex'"
-          [headerHeight]="50"
-          [footerHeight]="0"
-          [rowHeight]="'auto'">
-          
-          <ngx-datatable-column name="Currency" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              <div fxLayout="row wrap" fxLayoutAlign="start center">
-                  <img [src]="row.icon" alt="" class="avatar-xs mr-05">
-                  {{ row?.currency }}
-              </div>
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Balance" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{row?.balance}}
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Buying Rate" [flexGrow]="1">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{row?.buyingRate}}
-              </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Current Rate" [flexGrow]="1">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                        {{row?.currentRate}}
-                  </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Action" [flexGrow]="1">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                        <button mat-stroked-button color="primary">Close</button>
-                  </ng-template>
-          </ngx-datatable-column>
-        </ngx-datatable>    
-      </mat-card>
-  </div>
-
-  <div fxFlex="100" fxFlex.gt-sm="33.33">
-      <mat-card class="p-0 ">
-          <h6 class="ml-1 mt-1">Trending Currencies</h6>
-          <ngx-datatable
-          class="material ml-0 mr-0"
-          [rows]="trendingCurrencies"
-          [columnMode]="'flex'"
-          [headerHeight]="50"
-          [footerHeight]="0"
-          [rowHeight]="'auto'">
-          
-          <ngx-datatable-column name="Currency" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row?.currency }}
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Balance" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{row?.rate}}
-            </ng-template>
-          </ngx-datatable-column>
-          
-          <ngx-datatable-column name="Action" [flexGrow]="1">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                        <button mat-stroked-button color="warn">Buy</button>
-                  </ng-template>
-          </ngx-datatable-column>
-        </ngx-datatable>    
-      </mat-card>
-  </div>
-
-</div>
+ 

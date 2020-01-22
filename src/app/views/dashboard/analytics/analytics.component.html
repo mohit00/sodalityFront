@@ -27,7 +27,7 @@
         selected="true"><mat-icon>trending_up</mat-icon>10%</mat-chip>
       </mat-card-title>
       <mat-card-content>
-        <h3 style="color: white; font-size: 15px;">{{headerCount.Recharge}}</h3>
+        <h3 style="color: white; font-size: 15px;"  *ngIf ="measurmentUnit">{{headerCount.Recharge +' ' + measurmentUnit.currency}}</h3>
       </mat-card-content>
     </mat-card>
   </div>
@@ -43,7 +43,7 @@
         selected="true"><mat-icon>trending_up</mat-icon>9%</mat-chip>
       </mat-card-title>
       <mat-card-content>
-        <h3 style="color: white; font-size: 15px;">{{headerCount.daily_consumption}}</h3>
+        <h3 style="color: white; font-size: 15px;"  *ngIf ="measurmentUnit">{{headerCount.daily_consumption +' ' + measurmentUnit.reading_unit}}</h3>
       </mat-card-content>
     </mat-card>
   </div>
@@ -58,7 +58,7 @@
         selected="true"><mat-icon>trending_down</mat-icon>2%</mat-chip>
       </mat-card-title>
       <mat-card-content>
-        <h3 style="color: white; font-size: 15px;">{{headerCount.monthly_consumption}}</h3>
+        <h3 style="color: white; font-size: 15px;" *ngIf ="measurmentUnit">{{headerCount.monthly_consumption  }} {{ measurmentUnit.reading_unit}}</h3>
       </mat-card-content>
     </mat-card>
   </div>
@@ -193,10 +193,35 @@
           <mat-card-title class="">
           <div class="card-title-text" style="height:20px; line-height: 4px;  margin-top: 10px;">
               <span fxFlex style="color:rgb(89, 177, 250); font-weight: bold;">AMR Dashboard</span>
+              <mat-form-field style="width: 50%;
+              float: right;
+              position: absolute;
+              right: 8px;
+              top: 0;">
+                <mat-label>Select DIC</mat-label>
+                <mat-select  (selectionChange)="sensorList($event)">
+
+                  <mat-option *ngFor="let food of dicsList" [value]="food.id">
+                    {{food.name}}      <span style="float: right;" *ngIf ="food.connected =='Y'" >   <img src="assets/images/greendot.png" ></span>  
+                    <span style="float: right;" *ngIf ="food.connected =='N'" >   <img src="assets/images/reddot.png" ></span>             
+
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
           </div>
         </mat-card-title>
          <div style="align-content: center; margin-left: 30px;">
-            <highcharts-chart
+          <!-- *ngIf ="sensorShow" -->
+          <button  *ngIf ="sensorShow"
+          class="card-control"
+          mat-icon-button style="position: absolute;
+          /* right: 29%; */
+          z-index: 99999;"
+         (click) ="getdataLogger()"
+        ><mat-icon>arrow_back</mat-icon>
+
+Back To GateWay        </button>
+           <highcharts-chart
             [Highcharts] = "highcharts" 
              [options] = "amrChartOptions"  [callbackFunction]="amrGridcomsumption"
             [(update)]="amrGridupdateFlag"

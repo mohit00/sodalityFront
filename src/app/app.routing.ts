@@ -90,7 +90,11 @@ export const rootRouterConfig: Routes = [
         loadChildren: () => import('./views/staff-complain/staff-complain.module').then(m => m.StaffComplainModule),
                 data: { title: 'Complain', breadcrumb: 'Complain'}
 
-      },
+      },{
+        path:'Notice',
+        loadChildren: () => import('./views/notice/notice.module').then(m => m.NoticeModule),
+                data: { title: 'Notice', breadcrumb: 'Notice'}
+      }
      
     ]
   }

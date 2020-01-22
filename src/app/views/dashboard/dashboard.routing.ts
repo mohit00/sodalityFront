@@ -23,7 +23,7 @@ export const DashboardRoutes: Routes = [
   {
     path: "myxenius",
     component: CryptocurrencyComponent,
-    data: { title: "Cryptocurrency", breadcrumb: "myxenius" }
+    data: { title: "Cryptocurrency", breadcrumb: "NoticeBoard" }
   },
   {
     path: "dark",

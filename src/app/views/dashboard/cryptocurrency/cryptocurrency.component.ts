@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { egretAnimations } from "app/shared/animations/egret-animations";
 import { ThemeService } from "app/shared/services/theme.service";
 import tinyColor from 'tinycolor2';
+import { TablesService } from 'app/views/manage-society/manage-society.service';
 
 @Component({
   selector: "app-cryptocurrency",
@@ -14,10 +15,54 @@ export class CryptocurrencyComponent implements OnInit {
   cryptoDonutChart: any;
   activeTrades: any[];
   trendingCurrencies: any[];
+  imageUrl: string ="";
   
   constructor(    
-    private themeService: ThemeService
-  ) {}
+    private themeService: ThemeService,
+    private serive :TablesService
+  ) {
+    this.userData = JSON.parse(sessionStorage.getItem("data"));
+    if(this.userData.data.user_type == "Resident"){
+      this.imageUrl = 'http://localhost:8080/'+this.userData.data.residentDetail.profileImage
+
+    }
+    this.getParentUUid();
+  }
+  userData:any;
+  parentUuid:any;
+  getParentUUid(){
+    this.serive.getParentUuid(this.userData.data.uuid).subscribe(res => {
+      this.parentUuid = res.uuid;
+      this.getAllNotificaiton();
+      
+    })
+  }
+  notificationList:any;
+  getAllNotificaiton(){
+    this.serive.getAllNotification(this.parentUuid,this.userData.data.residentDetail.residentType).subscribe(res=>{
+      console.log(JSON.stringify(res))
+      this.notificationList = res.data;
+    })
+  }
+  photos = [{
+    name: 'Photo 1',
+    url: 'assets/images/sq-15.jpg'
+  }, {
+    name: 'Photo 2',
+    url: 'assets/images/sq-8.jpg'
+  }, {
+    name: 'Photo 3',
+    url: 'assets/images/sq-9.jpg'
+  }, {
+    name: 'Photo 4',
+    url: 'assets/images/sq-10.jpg'
+  }, {
+    name: 'Photo 5',
+    url: 'assets/images/sq-11.jpg'
+  }, {
+    name: 'Photo 6',
+    url: 'assets/images/sq-12.jpg'
+  }]
 
   ngOnInit() {
     this.themeService.onThemeChange.subscribe(activeTheme => {
