@@ -2,7 +2,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Component, Inject } from '@angular/core';
 @Component({
     selector: 'app-success',
-    template: `<h1 matDialogTitle class="mb-05">{{ data.title }}</h1>
+    template: `
+    <h1 matDialogTitle class="mb-05">{{ data.title }}</h1>
       <div mat-dialog-content class="mb-1">{{ data.message }}</div>
       <div mat-dialog-actions>
       <button 

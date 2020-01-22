@@ -10,6 +10,8 @@ import {
 import { catchError, map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { environment } from 'environments/environment';
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 
 @Injectable({
   providedIn: 'root'
@@ -92,19 +94,180 @@ NOTICE_GET= "Notice/getall/Notice";
 NOTICE_ADD="Notice/Add/Notice";
 NOTICE_UPDATE ="Notice/Update/Notice";
 NOTICE_GET_DETAIL ="Notice/get/Notice/";
-GET_ALL_NOTIFICATION = "Notice/getall/Notificaiton"
+GET_ALL_NOTIFICATION = "Notice/getall/Notificaiton";
+// websocket urk
+webSocketEndPoint: string = environment.LOCAL_BASE+'/ws';
+topic: string = "/topic/room/";
+stompClient: any;
+
+//Discussion 
+DISCUSSION_GET= "Notice/getall/discussion";
+DISCUSSION_ADD="Notice/Add/discussion";
+DISCUSSION_UPDATE ="Notice/Update/discussion";
+DISCUSSION_GET_DETAIL ="Notice/get/discussion/";
+//notification Comment
+NOTIFICATION_ADD ='Notication/Add/comment'
+NOTIFICATION_UPDATE='Notication/Update/comment'
+NOTIFICATION_GET_ALL='Notication/getall/comment'
+
    constructor(private _http: HttpClient, private router: Router
     // tslint:disable-next-line: no-shadowed-variable
   ) {
 
   }
+  loaderCheck = new EventEmitter<any>();
 
+  _connect(id) {
+      console.log("Initialize WebSocket Connection");
+      let ws = new SockJS(this.webSocketEndPoint);
+      this.stompClient = Stomp.over(ws);
+      const _this = this;
+     let url = _this.topic + id;
+      _this.stompClient.connect({}, function (frame) {
+          _this.stompClient.subscribe(url, function (sdkEvent) {
+              _this.onMessageReceived(sdkEvent);
+          });
+          //_this.stompClient.reconnect_delay = 2000;
+      }, this.errorCallBack);
+  };
+
+  _disconnect() {
+      if (this.stompClient !== null) {
+          this.stompClient.disconnect();
+      }
+      console.log("Disconnected");
+  }
+
+  // on error, schedule a reconnection attempt
+  errorCallBack(error) {
+      console.log("errorCallBack -> " + error)
+      setTimeout(() => {
+          // this._connect();
+      }, 5000);
+  }
+
+/**
+ * Send message to sever via web socket
+ * @param {*} message 
+ */
+  _send(message) {
+      console.log("calling logout api via web socket");
+      this.stompClient.send("/app/hello/416dd022-f816-4b89-b844-7a8b1ad7ace2/Owner" , {}, (JSON.stringify(message)));
+  }
+
+  onMessageReceived(message) {
+      console.log(JSON.stringify( message));
+      this.loaderCheck.emit(message);
+
+      // this.appComponent.handleMessage(JSON.stringify(message.body));
+  }
   getAllNotification(data,type): Observable<any>{
     let dataJson = {
       parentUUid:data,
       user_type:type
     }
     return this._http.post(this.BASE_URL + this.GET_ALL_NOTIFICATION , dataJson).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  notificationGet(data): Observable<any>{
+    
+    return this._http.post(this.BASE_URL + this.NOTIFICATION_GET_ALL , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  notificationAdd(data): Observable<any>{
+    
+    return this._http.post(this.BASE_URL + this.NOTIFICATION_ADD , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  notificationUpdate(data): Observable<any>{
+   
+    return this._http.put(this.BASE_URL + this.NOTIFICATION_UPDATE , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  discussionGet(data,type): Observable<any>{
+    let dataJson = {
+      parentUUid:data,
+      type
+    }
+    return this._http.post(this.BASE_URL + this.DISCUSSION_GET , dataJson).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  discussionAdd(data): Observable<any>{
+    
+    return this._http.post(this.BASE_URL + this.DISCUSSION_ADD , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  discussionUpdate(data): Observable<any>{
+   
+    return this._http.put(this.BASE_URL + this.DISCUSSION_UPDATE , data).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  discussionGetDetail(data): Observable<any>{
+  
+    return this._http.get(this.BASE_URL + this.DISCUSSION_GET_DETAIL + data).pipe(
       // eg. "map" without a dot before
       map(data => {
         return data;

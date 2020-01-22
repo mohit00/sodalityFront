@@ -1,26 +1,20 @@
 <div fxLayout="row wrap">
-  <div fxFlex = "66.5">
+  <div fxFlex="66.5">
 
 
-<mat-card   class="p-0" [@animate]="{ value: '*', params: { scale: '.9', delay: '200ms' } }">
-  <div fxLayout="row wrap">
-    <div class="text-left pt-1 pb-1 border-right-light">
-      <h5 class="m-0" style="padding-left: 5px; padding-bottom: 6px;">Start Disscusion</h5>
-      <mat-divider></mat-divider>
-      <div class="card-title-text" style="padding-top: 6px; padding-left: 6px; padding-bottom: 10px;">
-      <a href="" class="toolbar-avatar md mr-1"><img src="{{imageUrl}}" alt=""></a>
-      <span>Write something here To Start   Disscusion...</span><span fxFlex></span>
-    </div>
-    <mat-divider></mat-divider>
-    
-    <mat-card class="rounded-circle" fxLayoutAlign="start center">
-      <img src="assets/images/cryptocurrencies/BTC.png" width="25" alt="">
-      <span style="width: 5px"></span>
-      <div style="padding-left: 6px;">
-        <p class="m-0 text-14 text-muted line-height-1">Photo/Video</p>
-      </div>
-    </mat-card>
-    <!--<mat-card class="rounded-circle" fxLayoutAlign="start center" width="25">
+    <mat-card class="p-0" [@animate]="{ value: '*', params: { scale: '.9', delay: '200ms' } }">
+      <div fxLayout="row wrap">
+        <div class="text-left pt-1 pb-1 border-right-light">
+          <h5 class="m-0" style="padding-left: 5px; padding-bottom: 6px;">Start Disscusion</h5>
+          <mat-divider></mat-divider>
+          <div class="card-title-text" style="padding-top: 6px; padding-left: 6px; padding-bottom: 10px;">
+            <a href="" class="toolbar-avatar md mr-1"><img src="{{imageUrl}}" alt=""></a>
+            <span (click)="openDialog()">Write something here To Start Disscusion...</span><span fxFlex></span>
+          </div>
+          <mat-divider></mat-divider>
+
+
+          <!--<mat-card class="rounded-circle" fxLayoutAlign="start center" width="25">
       <img src="assets/images/cryptocurrencies/BTC.png" width="25" alt="">
       <span style="width: 5px"></span>
       <div style="padding-left: 6px;">
@@ -34,265 +28,327 @@
         <p class="m-0 text-14 text-muted line-height-1">Feeling/Activity</p>
       </div>
     </mat-card>-->
-    </div>
-</div>
-</mat-card>
- 
-<mat-card  *ngFor ="let list of notificationList">
-  <div fxLayout="row wrap" fxLayoutAlign="start center"  [@animate]="{ value: '*', params: { scale: '.9', delay: '200ms' } }" style="padding-bottom: 10px;">
-    <a href="" class="toolbar-avatar md mr-1"><img [src]="'http://localhost:8080/'+list.userImage  " alt=""></a>
-    <h4 class="m-0">{{list.userName}} </h4>
-    <span fxFlex></span>
-    <button mat-icon-button [matMenuTriggerFor]="chartMenu">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #chartMenu="matMenu">
-      <button mat-menu-item>
-        <span>Last 7 days</span>
-      </button>
-      <button mat-menu-item>
-        <span>Last 30 days</span>
-      </button>
-    </mat-menu>
-  </div>
-<mat-divider></mat-divider>
-  <div><h4 class="m-1" style="font-weight: bold;">Title : <span style="font-family: cursive;
-    font-weight: 100;"> {{list.title}}</span> </h4>
-  <mat-divider></mat-divider> 
-  <h4 class="m-1" style="font-weight: bold; padding-top: 12px; height: 60px;">Description : <span style="font-weight: 100">{{list.description}}</span></h4> </div>
-  <mat-divider></mat-divider>
-   <div style="padding-top: 10px;" >
-  <mat-card class="rounded-circle" fxLayoutAlign="start center">
-    <a href="" class="toolbar-avatar md mr-1"><img [src]="imageUrl" alt=""></a>
-    <p>Write something here...</p>
-    </mat-card></div>
-    
- 
-</mat-card>
- 
-</div>
+        </div>
+      </div>
+    </mat-card>
+    <ng-container *ngFor="let list of notificationList">
 
-<div fxFlex="33.5">
-  <mat-card class="default">
-    <mat-card-content class="p-0">
-      <mat-grid-list cols="3" rowHeight="1:1" class="app-gallery">
-        <!-- Gallery item -->
-        <mat-grid-tile *ngFor="let photo of photos">
-          <img [src]="photo.url" alt="">
-          <!-- item detail, show on hover -->
-          <div class="gallery-control-wrap">
-            <div class="gallery-control">
-              <h4 class="photo-detail fz-1" [fxHide.lt-sm]="true">{{photo.name}}</h4>
+      <mat-card *ngIf="list.noticeTo == 'All' || list.noticeTo == userData.data.residentDetail.residentType ">
+        <div fxLayout="row wrap" fxLayoutAlign="start center"
+          [@animate]="{ value: '*', params: { scale: '.9', delay: '200ms' } }" style="padding-bottom: 10px;">
+          <a href="" class="toolbar-avatar md mr-1"><img [src]="'http://localhost:8080/'+list.userImage  " alt=""></a>
+          <h4 class="m-0">{{list.userName}} </h4>
+          <span fxFlex></span>
+          <button mat-icon-button [matMenuTriggerFor]="chartMenu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #chartMenu="matMenu">
+            <button mat-menu-item>
+              <span>Last 7 days</span>
+            </button>
+            <button mat-menu-item>
+              <span>Last 30 days</span>
+            </button>
+          </mat-menu>
+        </div>
+        <mat-divider></mat-divider>
+        <div>
+          <h4 class="m-1" style="font-weight: bold;">Title : <span style="font-family: cursive;
+    font-weight: 100;"> {{list.title}}</span> </h4>
+          <mat-divider></mat-divider>
+          <h4 class="m-1" style="font-weight: bold; padding-top: 12px; height: 60px;">Description : <span
+              style="font-weight: 100">{{list.description}}</span></h4>
+        </div>
+        <mat-divider></mat-divider>
+        <div style="padding-top: 10px;">
+          <p id="comment" style="margin: 0px;">
+            <span style="width: 10%;text-align: center;">
+              <span style="height: 7px;" (click)="list.commentshow = !list.commentshow">
+                <mat-icon style="font-size: 20px;">comment</mat-icon>
+              </span>
+              <span>
+                  <button mat-icon-button aria-label="Example icon-button with a heart icon"
+                  (click)=" getComment( list.uuid,list) "style="font-size: 12px;">
+                  Comment
+                </button>
+            
+              </span>
+            </span>
+          </p>
+          <div fxLayout="row wrap" *ngIf="list.commentshow">
+            <div fxFlex="7">
+              <a href="" class="toolbar-avatar md mr-1"><img [src]="imageUrl " alt=""></a>
+            </div>
+            <div fxFlex="93">
+              <form [formGroup]="firstFormGroup">
+
+              <mat-form-field class="example-full-width discomment">
+                <textarea matInput placeholder="Hit Enter to Send Comment" formControlName="description" (keyup.enter)="commentAdd(list.uuid)"></textarea>
+              </mat-form-field>
+              </form>
+            </div>
+            <div fxFlex="100" *ngFor="let list1 of list.comment">
+              <div fxLayout="row wrap" style="margin-bottom:10px;">
+                <div fxFlex="7">
+                  <a href="" class="toolbar-avatar md mr-1" *ngIf ="list1.commentBy.residentDetail"><img [src]="'http://localhost:8080/'+list1.commentBy.residentDetail.profileImage " alt=""></a>
+                  <a href="" class="toolbar-avatar md mr-1" *ngIf ="list1.commentBy.societyDetail"><img [src]="'http://localhost:8080/'+list1.commentBy.societyDetail.societyLogo " alt=""></a>
+
+                </div>
+                <div fxFlex="93" style="    box-sizing: border-box;
+max-width: 90%;
+/* border-radius: 33%; */
+padding: 12px;
+background: gainsboro;
+/* border-radius: 4%; */
+border-radius: 11px;">
+                  <span><strong *ngIf ="list1.commentBy.residentDetail">{{list1.commentBy.residentDetail.firstName}}:-</strong> 
+                    <strong *ngIf ="list1.commentBy.societyDetail">{{list1.commentBy.societyDetail.societyDisplayName}}:-</strong>
+ 
+                  </span><span> {{list1.description}}</span><span style="font-size: 10px; float: right;" >{{list1.createdDate | date}}</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </mat-card>
+    </ng-container>
+  </div>
+
+  <div fxFlex="33.5">
+    <mat-card class="default">
+      <mat-card-content class="p-0">
+        <mat-grid-list cols="3" rowHeight="1:1" class="app-gallery">
+          <!-- Gallery item -->
+          <mat-grid-tile *ngFor="let photo of photos">
+            <img [src]="photo.url" alt="">
+            <!-- item detail, show on hover -->
+            <div class="gallery-control-wrap">
+              <div class="gallery-control">
+                <h4 class="photo-detail fz-1" [fxHide.lt-sm]="true">{{photo.name}}</h4>
+                <span fxFlex></span>
+                <button mat-icon-button [matMenuTriggerFor]="photoMenu" class="">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #photoMenu="matMenu">
+                  <button mat-menu-item>
+                    <mat-icon>send</mat-icon>Send as attachment
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>favorite</mat-icon>Favorite
+                  </button>
+                  <button mat-menu-item>
+                    <mat-icon>delete</mat-icon>Delete
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+    <div class="m-333">
+      <mat-accordion multi="false">
+        <mat-expansion-panel expanded="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              BTC
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="border-bottom pb-1 mb-1">
+            <div fxLyout="row wrap" class="text-blue font-weight-bold">
+              <span>BTC vs USD</span>
               <span fxFlex></span>
-              <button mat-icon-button [matMenuTriggerFor]="photoMenu" class="">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #photoMenu="matMenu">
-                <button mat-menu-item><mat-icon>send</mat-icon>Send as attachment</button>
-                <button mat-menu-item><mat-icon>favorite</mat-icon>Favorite</button>
-                <button mat-menu-item><mat-icon>delete</mat-icon>Delete</button>
-              </mat-menu>
+              <span>8897.45</span>
+            </div>
+            <div fxLyout="row wrap" class="text-muted">
+              <small>24 hour change</small>
+              <span fxFlex></span>
+              <small class="text-green">530(+3.73%)</small>
             </div>
           </div>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </mat-card-content>
-  </mat-card>
-  <div class="m-333">
-        <mat-accordion multi="false">
-            <mat-expansion-panel expanded="true">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  BTC
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <div class="border-bottom pb-1 mb-1">
-                  <div fxLyout="row wrap" class="text-blue font-weight-bold">
-                      <span>BTC vs USD</span>
-                      <span fxFlex></span>
-                      <span>8897.45</span>
-                    </div>
-                    <div fxLyout="row wrap" class="text-muted">
-                      <small>24 hour change</small>
-                      <span fxFlex></span>
-                      <small class="text-green">530(+3.73%)</small>
-                    </div>
-              </div>
-              <div class="border-bottom pb-1 mb-1">
-                  <div fxLyout="row wrap" class="text-blue font-weight-bold">
-                      <span>BTC vs EUR</span>
-                      <span fxFlex></span>
-                      <span>3829.23</span>
-                    </div>
-                    <div fxLyout="row wrap" class="text-muted">
-                      <small>24 hour change</small>
-                      <span fxFlex></span>
-                      <small class="text-red">430(-1.43%)</small>
-                    </div>
-              </div>
-              <div class="">
-                  <div fxLyout="row wrap" class="text-blue font-weight-bold">
-                      <span>BTC vs GBP</span>
-                      <span fxFlex></span>
-                      <span>5836.79</span>
-                    </div>
-                    <div fxLyout="row wrap" class="text-muted">
-                      <small>24 hour change</small>
-                      <span fxFlex></span>
-                      <small class="text-green">210(+2.23%)</small>
-                    </div>
-              </div>
+          <div class="border-bottom pb-1 mb-1">
+            <div fxLyout="row wrap" class="text-blue font-weight-bold">
+              <span>BTC vs EUR</span>
+              <span fxFlex></span>
+              <span>3829.23</span>
+            </div>
+            <div fxLyout="row wrap" class="text-muted">
+              <small>24 hour change</small>
+              <span fxFlex></span>
+              <small class="text-red">430(-1.43%)</small>
+            </div>
+          </div>
+          <div class="">
+            <div fxLyout="row wrap" class="text-blue font-weight-bold">
+              <span>BTC vs GBP</span>
+              <span fxFlex></span>
+              <span>5836.79</span>
+            </div>
+            <div fxLyout="row wrap" class="text-muted">
+              <small>24 hour change</small>
+              <span fxFlex></span>
+              <small class="text-green">210(+2.23%)</small>
+            </div>
+          </div>
 
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  ETH
-                </mat-panel-title>
-              </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              ETH
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-              <div class="border-bottom pb-1 mb-1">
-                  <div fxLyout="row wrap" class="text-blue font-weight-bold">
-                      <span>ETH vs USD</span>
-                      <span fxFlex></span>
-                      <span>8897.45</span>
-                    </div>
-                    <div fxLyout="row wrap" class="text-muted">
-                      <small>24 hour change</small>
-                      <span fxFlex></span>
-                      <small class="text-green">530(+3.73%)</small>
-                    </div>
-              </div>
-              <div class="border-bottom pb-1 mb-1">
-                  <div fxLyout="row wrap" class="text-blue font-weight-bold">
-                      <span>ETH vs EUR</span>
-                      <span fxFlex></span>
-                      <span>3829.23</span>
-                    </div>
-                    <div fxLyout="row wrap" class="text-muted">
-                      <small>24 hour change</small>
-                      <span fxFlex></span>
-                      <small class="text-red">430(-1.43%)</small>
-                    </div>
-              </div>
-              <div class="">
-                  <div fxLyout="row wrap" class="text-blue font-weight-bold">
-                      <span>ETH vs GBP</span>
-                      <span fxFlex></span>
-                      <span>5836.79</span>
-                    </div>
-                    <div fxLyout="row wrap" class="text-muted">
-                      <small>24 hour change</small>
-                      <span fxFlex></span>
-                      <small class="text-green">210(+2.23%)</small>
-                    </div>
-              </div>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    LTC
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-  
-                <div class="border-bottom pb-1 mb-1">
-                    <div fxLyout="row wrap" class="text-blue font-weight-bold">
-                        <span>LTC vs USD</span>
-                        <span fxFlex></span>
-                        <span>8897.45</span>
-                      </div>
-                      <div fxLyout="row wrap" class="text-muted">
-                        <small>24 hour change</small>
-                        <span fxFlex></span>
-                        <small class="text-green">530(+3.73%)</small>
-                      </div>
-                </div>
-                <div class="border-bottom pb-1 mb-1">
-                    <div fxLyout="row wrap" class="text-blue font-weight-bold">
-                        <span>LTC vs EUR</span>
-                        <span fxFlex></span>
-                        <span>3829.23</span>
-                      </div>
-                      <div fxLyout="row wrap" class="text-muted">
-                        <small>24 hour change</small>
-                        <span fxFlex></span>
-                        <small class="text-red">430(-1.43%)</small>
-                      </div>
-                </div>
-                <div class="">
-                    <div fxLyout="row wrap" class="text-blue font-weight-bold">
-                        <span>LTC vs GBP</span>
-                        <span fxFlex></span>
-                        <span>5836.79</span>
-                      </div>
-                      <div fxLyout="row wrap" class="text-muted">
-                        <small>24 hour change</small>
-                        <span fxFlex></span>
-                        <small class="text-green">210(+2.23%)</small>
-                      </div>
-                </div>
-              </mat-expansion-panel>
-          </mat-accordion>
+          <div class="border-bottom pb-1 mb-1">
+            <div fxLyout="row wrap" class="text-blue font-weight-bold">
+              <span>ETH vs USD</span>
+              <span fxFlex></span>
+              <span>8897.45</span>
+            </div>
+            <div fxLyout="row wrap" class="text-muted">
+              <small>24 hour change</small>
+              <span fxFlex></span>
+              <small class="text-green">530(+3.73%)</small>
+            </div>
+          </div>
+          <div class="border-bottom pb-1 mb-1">
+            <div fxLyout="row wrap" class="text-blue font-weight-bold">
+              <span>ETH vs EUR</span>
+              <span fxFlex></span>
+              <span>3829.23</span>
+            </div>
+            <div fxLyout="row wrap" class="text-muted">
+              <small>24 hour change</small>
+              <span fxFlex></span>
+              <small class="text-red">430(-1.43%)</small>
+            </div>
+          </div>
+          <div class="">
+            <div fxLyout="row wrap" class="text-blue font-weight-bold">
+              <span>ETH vs GBP</span>
+              <span fxFlex></span>
+              <span>5836.79</span>
+            </div>
+            <div fxLyout="row wrap" class="text-muted">
+              <small>24 hour change</small>
+              <span fxFlex></span>
+              <small class="text-green">210(+2.23%)</small>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              LTC
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="border-bottom pb-1 mb-1">
+            <div fxLyout="row wrap" class="text-blue font-weight-bold">
+              <span>LTC vs USD</span>
+              <span fxFlex></span>
+              <span>8897.45</span>
+            </div>
+            <div fxLyout="row wrap" class="text-muted">
+              <small>24 hour change</small>
+              <span fxFlex></span>
+              <small class="text-green">530(+3.73%)</small>
+            </div>
+          </div>
+          <div class="border-bottom pb-1 mb-1">
+            <div fxLyout="row wrap" class="text-blue font-weight-bold">
+              <span>LTC vs EUR</span>
+              <span fxFlex></span>
+              <span>3829.23</span>
+            </div>
+            <div fxLyout="row wrap" class="text-muted">
+              <small>24 hour change</small>
+              <span fxFlex></span>
+              <small class="text-red">430(-1.43%)</small>
+            </div>
+          </div>
+          <div class="">
+            <div fxLyout="row wrap" class="text-blue font-weight-bold">
+              <span>LTC vs GBP</span>
+              <span fxFlex></span>
+              <span>5836.79</span>
+            </div>
+            <div fxLyout="row wrap" class="text-muted">
+              <small>24 hour change</small>
+              <span fxFlex></span>
+              <small class="text-green">210(+2.23%)</small>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
-</div>
+  </div>
 </div>
 
 
- 
+
 
 <!-- COIN ROW -->
 
 <div fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
+  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
     <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
       <img class="avatar-md rounded-circle" src="assets/images/cryptocurrencies/BTC.png" alt="">
       <span style="width: 20px"></span>
       <div>
         <p class="m-0 text-14 text-muted line-height-1">Bitcoin</p>
-        <span class="text-18 font-weight-bold text-green">$254 <span class="material-icons mat-icon-18">arrow_drop_up</span></span>
+        <span class="text-18 font-weight-bold text-green">$254 <span
+            class="material-icons mat-icon-18">arrow_drop_up</span></span>
       </div>
     </mat-card>
   </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
+  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
     <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
       <img class="avatar-md rounded-circle" src="assets/images/cryptocurrencies/ETH.png" alt="">
       <span style="width: 20px"></span>
       <div>
         <p class="m-0 text-14 text-muted line-height-1">Ethereum</p>
-        <span class="text-18 font-weight-bold text-red">$64 <span class="material-icons mat-icon-18">arrow_drop_down</span></span>
+        <span class="text-18 font-weight-bold text-red">$64 <span
+            class="material-icons mat-icon-18">arrow_drop_down</span></span>
       </div>
     </mat-card>
   </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
+  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
     <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
       <img class="avatar-md rounded-circle" src="assets/images/cryptocurrencies/LTC.png" alt="">
       <span style="width: 20px"></span>
       <div>
         <p class="m-0 text-14 text-muted line-height-1">Litecoin</p>
-        <span class="text-18 font-weight-bold text-green">$45 <span class="material-icons mat-icon-18">arrow_drop_up</span></span>
+        <span class="text-18 font-weight-bold text-green">$45 <span
+            class="material-icons mat-icon-18">arrow_drop_up</span></span>
       </div>
     </mat-card>
   </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
+  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
     <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
       <img class="avatar-md rounded-circle" src="assets/images/cryptocurrencies/BTS.png" alt="">
       <span style="width: 20px"></span>
       <div>
         <p class="m-0 text-14 text-muted line-height-1">BTS</p>
-        <span class="text-18 font-weight-bold text-red">$10 <span class="material-icons mat-icon-18">arrow_drop_down</span></span>
+        <span class="text-18 font-weight-bold text-red">$10 <span
+            class="material-icons mat-icon-18">arrow_drop_down</span></span>
       </div>
     </mat-card>
   </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
+  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50">
     <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
       <img class="avatar-md rounded-circle" src="assets/images/cryptocurrencies/CNX.png" alt="">
       <span style="width: 20px"></span>
       <div>
         <p class="m-0 text-14 text-muted line-height-1">CNX</p>
-        <span class="text-18 font-weight-bold text-green">$80 <span class="material-icons mat-icon-18">arrow_drop_up</span></span>
+        <span class="text-18 font-weight-bold text-green">$80 <span
+            class="material-icons mat-icon-18">arrow_drop_up</span></span>
       </div>
     </mat-card>
   </div>
 </div>
 <!--/ COIN ROW -->
- 

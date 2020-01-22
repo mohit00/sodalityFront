@@ -21,12 +21,14 @@ import { ResidentDashboardComponent } from './resident-dashboard/resident-dashbo
 import { StaffDashboardComponent } from './staff-dashboard/staff-dashboard.component';
 import { FlipModule } from 'ngx-flip';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
+import { DisccustionDialogComponent } from 'app/views/disccustion-dialog/disccustion-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [FlipModule,
     SharedMaterialModule,
     CommonModule,
-     
+    ReactiveFormsModule,
     FlexLayoutModule,
     ChartsModule,
     NgxEchartsModule,
@@ -34,8 +36,9 @@ import { SharedMaterialModule } from 'app/shared/shared-material.module';
     SharedPipesModule,
     RouterModule.forChild(DashboardRoutes)
   ],
-  declarations: [HighchartsChartComponent,AnalyticsComponent, DashboardDarkComponent, CryptocurrencyComponent, DefaultDashboardComponent, AdminDashboardComponent, GroupDashboardComponent, SocietyDashboardComponent, ResidentDashboardComponent, StaffDashboardComponent],
-  exports: []
+  declarations: [DisccustionDialogComponent,HighchartsChartComponent,AnalyticsComponent, DashboardDarkComponent, CryptocurrencyComponent, DefaultDashboardComponent, AdminDashboardComponent, GroupDashboardComponent, SocietyDashboardComponent, ResidentDashboardComponent, StaffDashboardComponent],
+  exports: [],
+  entryComponents:[DisccustionDialogComponent]
 })
 export class DashboardModule {
 

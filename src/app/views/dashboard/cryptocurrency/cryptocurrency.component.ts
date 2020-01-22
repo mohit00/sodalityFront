@@ -1,8 +1,18 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit,Inject } from "@angular/core";
 import { egretAnimations } from "app/shared/animations/egret-animations";
 import { ThemeService } from "app/shared/services/theme.service";
 import tinyColor from 'tinycolor2';
 import { TablesService } from 'app/views/manage-society/manage-society.service';
+ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {DisccustionDialogComponent} from '../../disccustion-dialog/disccustion-dialog.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AppLoaderService } from "app/shared/services/app-loader/app-loader.service";
+import { AppConfirmService } from "app/shared/services/app-confirm/app-confirm.service";
+
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 @Component({
   selector: "app-cryptocurrency",
@@ -16,23 +26,110 @@ export class CryptocurrencyComponent implements OnInit {
   activeTrades: any[];
   trendingCurrencies: any[];
   imageUrl: string ="";
-  
-  constructor(    
+  animal: string;
+  name: string;
+
+  firstFormGroup: FormGroup;
+ 
+  constructor( 
+    private AppLoaderService:AppLoaderService,
+    private fb: FormBuilder,   
+    public dialog: MatDialog,
     private themeService: ThemeService,
-    private serive :TablesService
+    private serive :TablesService,
+    private dialog2: AppConfirmService
   ) {
+    this.firstFormGroup = this.fb.group({
+
+      description: ['']
+    }
+      );
+  
     this.userData = JSON.parse(sessionStorage.getItem("data"));
     if(this.userData.data.user_type == "Resident"){
       this.imageUrl = 'http://localhost:8080/'+this.userData.data.residentDetail.profileImage
-
+serive.loaderCheck.subscribe((data)=>{
+  this.notificationList = JSON.parse(data.body).data;
+})
     }
     this.getParentUUid();
   }
+  commentAdd(noticeuuid){
+    let dataJson ={
+      noticeUuid:noticeuuid,
+      uuid:this.userData.data.uuid,
+      description:this.firstFormGroup.value.description
+    }
+ 
+   
+
+    this.serive.notificationAdd(dataJson).subscribe(res=>{
+       this.AppLoaderService.close();
+      let dataJson = {
+        title: 'success',
+        message: 'Comment Successfully Added'
+      }
+      let index = this.notificationList.findIndex(x => {
+        
+      
+        return x.uuid ===noticeuuid
+      });
+    
+        this.getCommentfromService(noticeuuid,this.notificationList[index]);
+      this.dialog2.success(dataJson);
+    })
+  }
+  commentList:any =[];;
+  getCommentfromService( notificationuuid,data){
+   
+     
+       let dataJson = {
+        notificationuuid
+      }
+      this.serive.notificationGet(dataJson).subscribe(res=>{
+        data.comment = res;
+       })
+     
+   
+  }
+  getComment( notificationuuid,data){
+    data.comment = [];
+     
+    data.commentshow=!data.commentshow;
+    if(data.commentshow){
+      let dataJson = {
+        notificationuuid
+      }
+      this.serive.notificationGet(dataJson).subscribe(res=>{
+        data.comment = res;
+       })
+    }
+   
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DisccustionDialogComponent, {
+      width: '800px',
+      panelClass: 'my-class',
+
+      data: {parentId: this.parentUuid}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+
+
+
+   /** @docsNotRequired */
+   ngOnDestroy(): void {this.serive._disconnect() }
   userData:any;
   parentUuid:any;
   getParentUUid(){
     this.serive.getParentUuid(this.userData.data.uuid).subscribe(res => {
       this.parentUuid = res.uuid;
+      this.serive._connect(this.parentUuid)
       this.getAllNotificaiton();
       
     })
