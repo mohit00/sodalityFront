@@ -8,7 +8,8 @@ import {AdminDashboardComponent} from './admin-dashboard/admin-dashboard.compone
 import {GroupDashboardComponent} from './group-dashboard/group-dashboard.component';
 import {ResidentDashboardComponent} from './resident-dashboard/resident-dashboard.component';
 import {SocietyDashboardComponent} from './society-dashboard/society-dashboard.component';
-import {StaffDashboardComponent} from './staff-dashboard/staff-dashboard.component'
+import {StaffDashboardComponent} from './staff-dashboard/staff-dashboard.component';
+import {MeterDetailComponent} from './meter-detail/meter-detail.component'
 export const DashboardRoutes: Routes = [
   {
     path: "default",
@@ -49,5 +50,10 @@ export const DashboardRoutes: Routes = [
     path: "Staff",
     component: StaffDashboardComponent,
     data: { title: "Staff", breadcrumb: "Staff" }
+  },{
+    path:"meter/detail",
+    component:MeterDetailComponent,
+    data: { title: "meter", breadcrumb: "Meter" }
+
   }
 ];

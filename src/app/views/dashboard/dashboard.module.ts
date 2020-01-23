@@ -23,6 +23,7 @@ import { FlipModule } from 'ngx-flip';
 import { SharedMaterialModule } from 'app/shared/shared-material.module';
 import { DisccustionDialogComponent } from 'app/views/disccustion-dialog/disccustion-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MeterDetailComponent } from './meter-detail/meter-detail.component';
 
 @NgModule({
   imports: [FlipModule,
@@ -36,7 +37,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SharedPipesModule,
     RouterModule.forChild(DashboardRoutes)
   ],
-  declarations: [DisccustionDialogComponent,HighchartsChartComponent,AnalyticsComponent, DashboardDarkComponent, CryptocurrencyComponent, DefaultDashboardComponent, AdminDashboardComponent, GroupDashboardComponent, SocietyDashboardComponent, ResidentDashboardComponent, StaffDashboardComponent],
+  declarations: [DisccustionDialogComponent,HighchartsChartComponent,AnalyticsComponent, DashboardDarkComponent, CryptocurrencyComponent, DefaultDashboardComponent, AdminDashboardComponent, GroupDashboardComponent, SocietyDashboardComponent, ResidentDashboardComponent, StaffDashboardComponent, MeterDetailComponent],
   exports: [],
   entryComponents:[DisccustionDialogComponent]
 })

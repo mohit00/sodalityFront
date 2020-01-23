@@ -685,6 +685,8 @@ this.amrChartOptions.series[0].data  = [];
       console.log("Water Consumption" + JSON.stringify(res))
       setTimeout(() => {
         this.waterchart.hideLoading()
+        this.waterchart.reflow()
+
         this.waterupdateFlag = false
       }, 200)
 
