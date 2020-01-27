@@ -38,6 +38,11 @@ TOWER_DATA_LOGGER = 'webapi/tower_list';
 TOWER_DIC_LIST = 'webapi/dic_list_tower_wise';
 DIC_LIST = 'webapi/dic_list';
 SENSOR_LIST = 'webapi/sensor_list'
+
+SENSOR_DETAIL = 'webapi/sensor_details';
+SENSOR_MONTHLY_BILL_DETAIL = 'webapi/sensor_monthly_bill';
+SENSOR_MONTHLY_DETAIL ='webapi/sensor_monthly_details';
+SENSOR_DAILY_DETAIL ='webapi/sensor_daily_details';
   constructor(private _http: HttpClient, private router: Router
     // tslint:disable-next-line: no-shadowed-variable
   ) {
@@ -56,7 +61,62 @@ SENSOR_LIST = 'webapi/sensor_list'
   get IBMSTOKEN(){
     return this.ibmsToken;
   }
-  
+  sensorDetail( token,id): Observable<any>{
+      
+    return this._http.get(environment.FACILITY_URL + this.SENSOR_DETAIL + '?token_id='+token+'&sensor_id='+id).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  sensorMonthlyBill( token,id): Observable<any>{
+      
+    return this._http.get(environment.FACILITY_URL + this.SENSOR_MONTHLY_BILL_DETAIL + '?token_id='+token+'&sensor_id='+id).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  sensorMonthlyDetail(token, id): Observable<any>{
+      
+    return this._http.get(environment.FACILITY_URL + this.SENSOR_MONTHLY_DETAIL + '?token_id='+token+'&sensor_id='+id).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
+  sensorDailyDetail( token,id): Observable<any>{
+      
+    return this._http.get(environment.FACILITY_URL + this.SENSOR_DAILY_DETAIL + '?token_id='+token+'&sensor_id='+id).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
+  }
   sensorList( id): Observable<any>{
       
     return this._http.get(environment.FACILITY_URL + this.SENSOR_LIST + '?token_id='+this.tokenId+'&dic_id='+id).pipe(

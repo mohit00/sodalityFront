@@ -11,6 +11,7 @@ import * as Highcharts from 'highcharts';
 import highcharts3D from 'highcharts/highcharts-3d.src';
 import HC_solidgauge from 'highcharts/modules/solid-gauge';
 import HC_more from 'highcharts/highcharts-more';
+
 // import HC_exporting from 'highcharts/modules/exporting';
 // HC_exporting(Highcharts);
 HC_more(Highcharts);
@@ -18,6 +19,7 @@ HC_solidgauge(Highcharts);
 
 highcharts3D(Highcharts);
 import { FacilityServiceService } from '../service/facility-service.service'
+import { Router } from "@angular/router";
 @Component({
   selector: "app-analytics",
   templateUrl: "./analytics.component.html",
@@ -59,7 +61,8 @@ userData:any;
 
   constructor(
     private themeService: ThemeService,
-    private service: FacilityServiceService
+    private service: FacilityServiceService,
+    private Router:Router
   ) {
     this.userData = JSON.parse(sessionStorage.getItem("data"));
     const self = this;
@@ -437,13 +440,14 @@ userData:any;
               console.log(event.point.name)
               console.log(JSON.stringify(event.point.extradata))
 // 
-console.log(event.point.index)
-if(event.point.extradata.type == "Gateway"){
+ if(event.point.extradata.type == "Gateway"){
   this.getTowerWithDic(event.point.extradata.id,event.point.index,event.point.name,event.point);
 
 }else if(event.point.extradata.type == "Tower"){
   this.getTowerDic(event.point.extradata.dataloggerId ,event.point.extradata.tower_id,event.point.index,event.point.name,event.point);
 
+}else if(event.point.extradata.type =="sensor"){
+      this.sensorDetail(event.point.extradata.id)
 }
              // this.openDialog('supplygraph', event.point.category.split(" ")[0], 'currentDay', this.hour);
           }).bind(this)
@@ -499,6 +503,12 @@ if(event.point.extradata.type == "Gateway"){
     }
   };
   headerCount: any = {};
+  sensorDetail(id){
+    alert(this.service.tokenId)
+      sessionStorage.setItem("sensorId",id)
+      sessionStorage.setItem("tokenId",this.service.tokenId)
+      this.Router.navigate(['/dashboard/meter/detail'])
+  }
   flatCount() {
     this.service.flatCount().subscribe(res => {
       this.headerCount.flat_count = res.flat_count;
@@ -551,10 +561,12 @@ if(event.point.extradata.type == "Gateway"){
       this.amrGridupdateFlag = true;
 
       for(var i=0;i<res.resource.sensor.length;i++){
+        res.resource.sensor[i].type ="sensor"
         this.amrChartOptions.series[0].data.push({
           name: res.resource.sensor[i].name,
           y: 1,
-           extradata:res.resource.sensor[i]
+           extradata:res.resource.sensor[i],
+           
         })
   
       }
@@ -684,8 +696,8 @@ this.amrChartOptions.series[0].data  = [];
       this.WaterConsumptionOption.xAxis.categories = res.resource.name
       console.log("Water Consumption" + JSON.stringify(res))
       setTimeout(() => {
-        this.waterchart.hideLoading()
-        this.waterchart.reflow()
+        this.waterchart.hideLoading();
+        this.waterchart.reflow();
 
         this.waterupdateFlag = false
       }, 200)
@@ -702,7 +714,10 @@ this.amrChartOptions.series[0].data  = [];
       this.linechartOptions.series[0].data = res.resource.dg;
       this.linechartOptions.series[1].data = res.resource.grid
       setTimeout(() => {
+        this.dgGridchart.reflow();
+
         this.dgGridchart.hideLoading()
+
         this.dgGridupdateFlag = false
       }, 200)
       this.loadConsumption();

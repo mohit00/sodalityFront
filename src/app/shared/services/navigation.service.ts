@@ -180,17 +180,17 @@ export class NavigationService {
         { name: "Notice", state: "Notice" },
 
        ]
-    }     
-    // {
-    //   name: "CHARTS",
-    //   type: "link",
-    //   tooltip: "Charts",
-    //   icon: "show_chart",
-    //   state: "charts"
-    // },
-     
+    }   ,
+    {
+      name: "Report Management",
+      type: "dropDown",
+      tooltip: "Manage Society",
+      icon: "view_carousel",
+       sub: [
+        { name: "Recharged Coupen", state: "Report/RechargedCoupen" }, 
+       ]
+    }      
   ];
-
   ResidentDash: IMenuItem[] = [
     {
       name: "HOME",

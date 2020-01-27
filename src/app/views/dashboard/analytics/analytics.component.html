@@ -3,15 +3,13 @@
   <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{scale:'.9',delay:'300ms'}}">
     <mat-card style="background-image:linear-gradient(to right, rgb(20,183,216) ,rgb(38,207,204));">
       <mat-card-title fxLayoutAlign="start center">
-        <small style="color: white; font-size: 15px;">Total Flats</small>
-        <span fxFlex></span>
-        <mat-chip
-        class="icon-chip" 
-        color="primary" 
-        selected="true"><mat-icon>trending_up</mat-icon>20%</mat-chip>
+        <small style="color: white; font-size: 15px;">Total Unit</small>
+        
       </mat-card-title>
       <mat-card-content>
         <h3 style="color: white; font-size: 15px;">{{headerCount.flat_count}}</h3>
+        <small class="text-muted">Till Date</small>
+
       </mat-card-content>
     </mat-card>
   </div>
@@ -28,6 +26,8 @@
       </mat-card-title>
       <mat-card-content>
         <h3 style="color: white; font-size: 15px;"  *ngIf ="measurmentUnit">{{headerCount.Recharge +' ' + measurmentUnit.currency}}</h3>
+        <small class="text-muted">Current Month</small>
+
       </mat-card-content>
     </mat-card>
   </div>
@@ -44,6 +44,8 @@
       </mat-card-title>
       <mat-card-content>
         <h3 style="color: white; font-size: 15px;"  *ngIf ="measurmentUnit">{{headerCount.daily_consumption +' ' + measurmentUnit.reading_unit}}</h3>
+        <small class="text-muted">Current Day</small>
+
       </mat-card-content>
     </mat-card>
   </div>
@@ -59,6 +61,8 @@
       </mat-card-title>
       <mat-card-content>
         <h3 style="color: white; font-size: 15px;" *ngIf ="measurmentUnit">{{headerCount.monthly_consumption  }} {{ measurmentUnit.reading_unit}}</h3>
+        <small class="text-muted">Current Month</small>
+
       </mat-card-content>
     </mat-card>
   </div>
@@ -90,7 +94,7 @@
                 [options] = "linechartOptions"  [callbackFunction]="dgGridcomsumption"
                  [(update)]="dgFuelGridupdateFlag"
                 [oneToOne]="true"  
-                style="width: 1200px; height: 350px; display: block;">
+                style="width: 100%; height: 350px; display: block;">
               </highcharts-chart> 
          </mat-tab>
         </mat-tab-group>

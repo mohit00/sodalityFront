@@ -1,11 +1,11 @@
-<div fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+<div fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}" *ngIf ="sensorDetails">
   <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
     <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
       <img width="30" src="assets/images/home_1.ico">
       <span style="width: 20px"></span>
       <div>
         <p class="m-0 text-14 text-muted line-height-1">Address</p>
-        <span class="text-16 font-weight-bold text-green">25 GF <span style="padding-left: 30px;"></span><img src="assets/images/greendot.png"></span>
+        <span class="text-16 font-weight-bold text-green">{{sensorDetails.location_no}} <span style="padding-left: 30px;"></span><img src="assets/images/greendot.png"></span>
       </div>
     </mat-card>                                    
   </div>
@@ -15,7 +15,7 @@
       <span style="width: 20px"></span>
       <div>
         <p class="m-0 text-14 text-muted line-height-1">Balance</p>
-        <span class="text-16 font-weight-bold text-red">Rs.64 <span style="padding-left: 30px;"></span><img src="assets/images/reddot.png"></span>
+        <span class="text-16 font-weight-bold text-red">Rs.{{sensorDetails.balance_amt}} <span style="padding-left: 30px;"></span><img src="assets/images/reddot.png"></span>
       </div>
     </mat-card>
   </div>
@@ -25,7 +25,7 @@
       <span style="width: 20px"></span>
       <div>
         <p class="m-0 text-14 text-muted line-height-1">Grid Reading</p>
-        <span class="text-16 font-weight-bold text-green">5438.67 <span style="padding-left: 30px;"></span><img src="assets/images/up-green.png" width="10"></span>
+        <span class="text-16 font-weight-bold text-green">{{sensorDetails.unit_grid_closing}} <span style="padding-left: 30px;"></span><img src="assets/images/up-green.png" width="10"></span>
       </div>
     </mat-card>
   </div>
@@ -35,7 +35,7 @@
       <span style="width: 20px"></span>
       <div>
         <p class="m-0 text-14 text-muted line-height-1">DG Reading</p>
-        <span class="text-16 font-weight-bold text-red">330.46 <span style="padding-left: 30px;"></span><img src="assets/images/Down_red_arrow.png" width="10"></span>
+        <span class="text-16 font-weight-bold text-red">{{sensorDetails.unit_dg_closing}} <span style="padding-left: 30px;"></span><img src="assets/images/Down_red_arrow.png" width="10"></span>
       </div>
     </mat-card>
   </div>
@@ -51,7 +51,7 @@
   </div>
 </div>
 
-<mat-card class="p-0" [@animate]="{ value: '*', params: { scale: '.9', delay: '200ms' } }">
+<mat-card class="p-0" [@animate]="{ value: '*', params: { scale: '.9', delay: '200ms' } }" *ngIf ="sensorDetails">
   <div fxLayout="row wrap">
       <div
           fxFlex="100"
@@ -61,7 +61,7 @@
           <div class="text-center pt-1 pb-1 border-right-light">
             <mat-icon class="text-blue">person</mat-icon>
               <h4 class="m-0" style="font-weight: bold;">Name</h4>
-              <small class="m-0 text-muted">MR.D.K.SINGH</small>
+              <small class="m-0 text-muted">{{sensorDetails.consumer_name}}</small>
           </div>
       </div>
       <div
@@ -72,7 +72,7 @@
           <div class="text-center pt-1 pb-1 border-right-light">
             <mat-icon class="text-orange">comment</mat-icon>
               <h4 class="m-0 " style="font-weight: bold;">Type</h4>
-              <small class="m-0 text-muted">Probe</small>
+              <small class="m-0 text-muted">{{sensorDetails.sub_type}}</small>
           </div>
       </div>
       <div
@@ -83,7 +83,7 @@
           <div class="text-center pt-1 pb-1 border-right-light">
             <mat-icon class="text-green">show_chart</mat-icon>
               <h4 class="m-0 " style="font-weight: bold;">Reading Time Grid</h4>
-              <small class="m-0 text-muted">1 hrs 50 secs</small>
+              <small class="m-0 text-muted">{{sensorDetails.last_reading_updated_grid | date:'shortTime'}}</small>
           </div>
       </div>
       <div
@@ -94,7 +94,7 @@
           <div class="text-center pt-1 pb-1 border-right-light">
             <mat-icon class="text-red">show_chart</mat-icon>
               <h4 class="m-0 " style="font-weight: bold;">Reading Time DG</h4>
-              <small class="m-0 text-muted">12 mins 15 secs	</small>
+              <small class="m-0 text-muted">{{sensorDetails.last_reading_updated_dg | date:'shortTime'}}	</small>
           </div>
       </div>
       <div
@@ -105,13 +105,13 @@
           <div class="text-center pt-1 pb-1">
               <mat-icon class="text-orange">compare_arrows</mat-icon>
               <h4 class="m-0 " style="font-weight: bold;">Reading Recieved (Ago)</h4>
-              <small class="m-0 text-muted">12 mins 14 secs</small>
+              <small class="m-0 text-muted">{{sensorDetails.last_reading_updated | date:'shortTime'}}</small>
           </div>
       </div>
   </div>
 </mat-card>
 
-<div fxLayout="row wrap">
+<div fxLayout="row wrap" *ngIf ="sensorDetails">
   <div fxFlex="100" fxFlex.gt-sm="66.67" fxFlex.sm="50" 
   [@animate]="{value:'*',params:{delay:'400ms',scale:'.9'}}">
   <mat-card>
@@ -123,6 +123,8 @@
     <span fxflex>
       <highcharts-chart
         [Highcharts] = "highcharts" 
+        (chartInit)="dailyInit($event)"
+
         [options] = "linechartOptions" 
         style = "height: 295px; width: 700px; display: inline-flex;">
       </highcharts-chart></span>
@@ -153,23 +155,13 @@
                   <div fxLyout="row wrap" class="text-blue font-weight-bold">
                       <span>CAM Charges</span>
                       <span fxFlex></span>
-                      <span>666.45</span>
+                      <span>{{sensorDetails.CAM_charges}}</span>
                     </div>
                     <div fxLyout="row wrap" class="text-muted">
-                      <small>11:00 AM change</small>
+                      <small><span *ngIf ="sensorDetails.CAM_deduction_day == 99">Daily</span><span *ngIf ="sensorDetails.CAM_deduction_day != 99">{{sensorDetails.CAM_deduction_day}}</span>(<span *ngIf ="sensorDetails.CAM_deduction_hour >= 12" >{{sensorDetails.CAM_deduction_hour -12}} PM </span> <span *ngIf ="sensorDetails.CAM_deduction_hour < 12" >{{sensorDetails.CAM_deduction_hour}} AM</span>)  change</small>
                     </div>
               </div>
-              <div class="border-bottom pb-1 mb-1">
-                  <div fxLyout="row wrap" class="text-blue font-weight-bold">
-                      <span>CAM ST Charges</span>
-                      <span fxFlex></span>
-                      <span>3829.23</span>
-                    </div>
-                    <div fxLyout="row wrap" class="text-muted">
-                      <small>11:30 AM change</small>
-                      <span fxFlex></span>
-                    </div>
-              </div>
+          
               
             </mat-expansion-panel>
             <mat-expansion-panel>
@@ -183,24 +175,14 @@
                   <div fxLyout="row wrap" class="text-blue font-weight-bold">
                       <span>CS Charges</span>
                       <span fxFlex></span>
-                      <span>8897.45</span>
+                      <span>{{sensorDetails.CS_charges}}</span>
                     </div>
                     <div fxLyout="row wrap" class="text-muted">
-                      <small>10:00 AM change</small>
+                      <small><span *ngIf ="sensorDetails.CS_deduction_day == 99">Daily</span><span *ngIf ="sensorDetails.CS_deduction_day != 99">{{sensorDetails.CS_deduction_day}}</span>(<span *ngIf ="sensorDetails.CS_deduction_hour >= 12" >{{sensorDetails.CS_deduction_hour -12}} PM </span> <span *ngIf ="sensorDetails.CS_deduction_hour < 12" >{{sensorDetails.CS_deduction_hour}} AM</span>)  change</small>
                       <span fxFlex></span>
                     </div>
               </div>
-              <div class="border-bottom pb-1 mb-1">
-                  <div fxLyout="row wrap" class="text-blue font-weight-bold">
-                      <span>CS ST Charges</span>
-                      <span fxFlex></span>
-                      <span>3829.23</span>
-                    </div>
-                    <div fxLyout="row wrap" class="text-muted">
-                      <small>10:20 AM change</small>
-                      <span fxFlex></span>
-                    </div>
-              </div>
+            
             </mat-expansion-panel>
             <mat-expansion-panel>
                 <mat-expansion-panel-header>
@@ -213,10 +195,10 @@
                     <div fxLyout="row wrap" class="text-blue font-weight-bold">
                         <span>Grid MMC Charges</span>
                         <span fxFlex></span>
-                        <span>8897.45</span>
+                        <span>{{sensorDetails.grid_mmc_charges}}</span>
                       </div>
                       <div fxLyout="row wrap" class="text-muted">
-                        <small>11:00 AM change</small>
+                        <small><span *ngIf ="sensorDetails.mmc_deduction_day == 99">Daily</span><span *ngIf ="sensorDetails.mmc_deduction_day != 99">{{sensorDetails.mmc_deduction_day}}</span>(<span *ngIf ="sensorDetails.mmc_deduction_hour >= 12" >{{sensorDetails.mmc_deduction_hour -12}} PM </span> <span *ngIf ="sensorDetails.mmc_deduction_hour < 12" >{{sensorDetails.mmc_deduction_hour}} AM</span>)  change</small>
                         <span fxFlex></span>
                       </div>
                 </div>
@@ -224,10 +206,10 @@
                     <div fxLyout="row wrap" class="text-blue font-weight-bold">
                         <span>DG MMC Charges</span>
                         <span fxFlex></span>
-                        <span>3829.23</span>
+                        <span>{{sensorDetails.dg_mmc_charges}}</span>
                       </div>
                       <div fxLyout="row wrap" class="text-muted">
-                        <small>11:30 AM change</small>
+                        <small><span *ngIf ="sensorDetails.mmc_deduction_day == 99">Daily</span><span *ngIf ="sensorDetails.mmc_deduction_day != 99">{{sensorDetails.mmc_deduction_day}}</span>(<span *ngIf ="sensorDetails.mmc_deduction_hour >= 12" >{{sensorDetails.mmc_deduction_hour -12}} PM </span> <span *ngIf ="sensorDetails.mmc_deduction_hour < 12" >{{sensorDetails.mmc_deduction_hour}} AM</span>)  change</small>
                         <span fxFlex></span>
                       </div>
                 </div>
@@ -243,10 +225,10 @@
                     <div fxLyout="row wrap" class="text-blue font-weight-bold">
                         <span>Grid Fixed Charges</span>
                         <span fxFlex></span>
-                        <span>8897.45</span>
+                        <span>{{sensorDetails.grid_fixed_charges}}</span>
                       </div>
                       <div fxLyout="row wrap" class="text-muted">
-                        <small>12:30 AM change</small>
+                        <small><span *ngIf ="sensorDetails.fixed_deduction_day == 99">Daily</span><span *ngIf ="sensorDetails.fixed_deduction_day != 99">{{sensorDetails.fixed_deduction_day}}</span>(<span *ngIf ="sensorDetails.fixed_deduction_hour >= 12" >{{sensorDetails.fixed_deduction_hour -12}} PM </span> <span *ngIf ="sensorDetails.fixed_deduction_hour < 12" >{{sensorDetails.fixed_deduction_hour}} AM</span>)  change</small>
                         <span fxFlex></span>
                       </div>
                 </div>
@@ -254,10 +236,10 @@
                     <div fxLyout="row wrap" class="text-blue font-weight-bold">
                         <span>DG Fixed Charges</span>
                         <span fxFlex></span>
-                        <span>3829.23</span>
+                        <span>{{sensorDetails.dg_fixed_charges}}</span>
                       </div>
                       <div fxLyout="row wrap" class="text-muted">
-                        <small>09:00 AM change</small>
+                        <small><span *ngIf ="sensorDetails.fixed_deduction_day == 99">Daily</span><span *ngIf ="sensorDetails.fixed_deduction_day != 99">{{sensorDetails.fixed_deduction_day}}</span>(<span *ngIf ="sensorDetails.fixed_deduction_hour >= 12" >{{sensorDetails.fixed_deduction_hour -12}} PM </span> <span *ngIf ="sensorDetails.fixed_deduction_hour < 12" >{{sensorDetails.fixed_deduction_hour}} AM</span>)  change</small>
                         <span fxFlex></span>
                       </div>
                 </div>
@@ -273,10 +255,10 @@
                     <div fxLyout="row wrap" class="text-blue font-weight-bold">
                         <span>Other Charges</span>
                         <span fxFlex></span>
-                        <span>8897.45</span>
+                        <span>{{sensorDetails.other_charges}}</span>
                       </div>
                       <div fxLyout="row wrap" class="text-muted">
-                        <small>12:00 AM change</small>
+                        <small><span *ngIf ="sensorDetails.other_deduction_day == 99">Daily</span><span *ngIf ="sensorDetails.other_deduction_day != 99">{{sensorDetails.other_deduction_day}}</span>(<span *ngIf ="sensorDetails.other_deduction_hour >= 12" >{{sensorDetails.other_deduction_hour -12}} PM </span> <span *ngIf ="sensorDetails.other_deduction_hour < 12" >{{sensorDetails.other_deduction_hour}} AM</span>)  change</small>
                         <span fxFlex></span>
                       </div>
                 </div>
@@ -294,13 +276,15 @@
   </div>
 </div>
 
-<div fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
+<div fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}" >
   <div fxFlex="100" fxFlex.gt-sm="30" fxFlex.sm="50" >
     <mat-card class="p-0 ">
       <h4 class="pl-1 pt-1 m-0 " style="font-weight: bold;">Applicable Load</h4>
       <div
         echarts
         [options]="trafficSourcesChart"
+        (chartInit)="applicationLoad($event)"
+
         [autoResize]="true"
         style="height: 225px;"
       ></div>
@@ -340,193 +324,14 @@
       <div
         echarts
         [options]="monthlyTrafficChartBar"
+        (chartInit)="monthlyBillInit($event)"
+
         [autoResize]="true"
         style="height: 210px;"
       ></div>
     </mat-card>
   </div>
-    <!--<mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
-      <img width="30" src="assets/images/cryptocurrencies/BTC.png">
-      <span style="width: 20px"></span>
-      <div>
-        <p class="m-0 text-14 text-muted line-height-1">Slab(Area)</p>
-        <span class="text-16 font-weight-bold text-green">Master(12)</span>
-      </div>
-    </mat-card>                                    
-  </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
-    <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
-      <img width="30" src="assets/images/cryptocurrencies/ETH.png" alt="">
-      <span style="width: 20px"></span>
-      <div>
-        <p class="m-0 text-14 text-muted line-height-1">DG Load</p>
-        <span class="text-16 font-weight-bold text-red">5.00 <span style="padding-left: 30px;"></span><img src="assets/images/reddot.png"></span>
-      </div>
-    </mat-card>
-  </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
-    <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
-      <img width="30" src="assets/images/cryptocurrencies/LTC.png" alt="">
-      <span style="width: 20px"></span>
-      <div>
-        <p class="m-0 text-14 text-muted line-height-1">Grid Load</p>
-        <span class="text-16 font-weight-bold text-green">4.75 <span style="padding-left: 30px;"></span><img src="assets/images/up-green.png" width="10"></span>
-      </div>
-    </mat-card>
-  </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
-    <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
-     <img width="30" src="assets/images/cryptocurrencies/BTS.png" alt="">
-      <span style="width: 20px"></span>
-      <div>
-        <p class="m-0 text-14 text-muted line-height-1">Active Cut Off(Balance)</p>
-        <span class="text-16 font-weight-bold text-red">No(10.00) <span style="padding-left: 30px;"></span><img src="assets/images/Down_red_arrow.png" width="10"></span>
-      </div>
-    </mat-card>
-  </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
-    <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
-      <img width="30" src="assets/images/cryptocurrencies/CNX.png" alt="">
-      <span style="width: 20px"></span>
-      <div>
-        <p class="m-0 text-14 text-muted line-height-1">Flat Type(Unit)</p>
-        <span class="text-16 font-weight-bold text-green"> 2BHK (kW) </span>
-      </div>
-    </mat-card>
-  </div>-->
+   
 
 </div>
-
-<!-- COIN ROW -->
-
-<!--<div fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'600ms',scale:'.9'}}">
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
-    <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
-      <img class="avatar-md rounded-circle" src="assets/images/cryptocurrencies/BTC.png" alt="">
-      <span style="width: 20px"></span>
-      <div>
-        <p class="m-0 text-14 text-muted line-height-1">Bitcoin</p>
-        <span class="text-18 font-weight-bold text-green">$254 <span class="material-icons mat-icon-18">arrow_drop_up</span></span>
-      </div>
-    </mat-card>
-  </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
-    <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
-      <img class="avatar-md rounded-circle" src="assets/images/cryptocurrencies/ETH.png" alt="">
-      <span style="width: 20px"></span>
-      <div>
-        <p class="m-0 text-14 text-muted line-height-1">Ethereum</p>
-        <span class="text-18 font-weight-bold text-red">$64 <span class="material-icons mat-icon-18">arrow_drop_down</span></span>
-      </div>
-    </mat-card>
-  </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
-    <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
-      <img class="avatar-md rounded-circle" src="assets/images/cryptocurrencies/LTC.png" alt="">
-      <span style="width: 20px"></span>
-      <div>
-        <p class="m-0 text-14 text-muted line-height-1">Litecoin</p>
-        <span class="text-18 font-weight-bold text-green">$45 <span class="material-icons mat-icon-18">arrow_drop_up</span></span>
-      </div>
-    </mat-card>
-  </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
-    <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
-      <img class="avatar-md rounded-circle" src="assets/images/cryptocurrencies/BTS.png" alt="">
-      <span style="width: 20px"></span>
-      <div>
-        <p class="m-0 text-14 text-muted line-height-1">BTS</p>
-        <span class="text-18 font-weight-bold text-red">$10 <span class="material-icons mat-icon-18">arrow_drop_down</span></span>
-      </div>
-    </mat-card>
-  </div>
-  <div fxFlex="100" fxFlex.gt-sm="20" fxFlex.sm="50" >
-    <mat-card class="rounded-circle" fxLayout="row wrap" fxLayoutAlign="start center">
-      <img class="avatar-md rounded-circle" src="assets/images/cryptocurrencies/CNX.png" alt="">
-      <span style="width: 20px"></span>
-      <div>
-        <p class="m-0 text-14 text-muted line-height-1">CNX</p>
-        <span class="text-18 font-weight-bold text-green">$80 <span class="material-icons mat-icon-18">arrow_drop_up</span></span>
-      </div>
-    </mat-card>
-  </div>
-</div>
-/ COIN ROW -->
-
-<!-- Table row -->
-<!--<div fxLayout="row wrap" [@animate]="{value:'*',params:{delay:'800ms',scale:'.9'}}">
-  <div fxFlex="100" fxFlex.gt-sm="66.67">
-      <mat-card class="p-0 ">
-          <h6 class="pl-1 pt-1 m-0 ">Active Trades</h6>
-          <ngx-datatable
-          class="material ml-0 mr-0"
-          [rows]="activeTrades"
-          [columnMode]="'flex'"
-          [headerHeight]="50"
-          [footerHeight]="0"
-          [rowHeight]="'auto'">
-          
-          <ngx-datatable-column name="Currency" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              <div fxLayout="row wrap" fxLayoutAlign="start center">
-                  <img [src]="row.icon" alt="" class="avatar-xs mr-05">
-                  {{ row?.currency }}
-              </div>
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Balance" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{row?.balance}}
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Buying Rate" [flexGrow]="1">
-              <ng-template let-row="row" ngx-datatable-cell-template>
-                    {{row?.buyingRate}}
-              </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Current Rate" [flexGrow]="1">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                        {{row?.currentRate}}
-                  </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Action" [flexGrow]="1">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                        <button mat-stroked-button color="primary">Close</button>
-                  </ng-template>
-          </ngx-datatable-column>
-        </ngx-datatable>    
-      </mat-card>
-  </div>
-
-  <div fxFlex="100" fxFlex.gt-sm="33.33">
-      <mat-card class="p-0 ">
-          <h6 class="ml-1 mt-1">Trending Currencies</h6>
-          <ngx-datatable
-          class="material ml-0 mr-0"
-          [rows]="trendingCurrencies"
-          [columnMode]="'flex'"
-          [headerHeight]="50"
-          [footerHeight]="0"
-          [rowHeight]="'auto'">
-          
-          <ngx-datatable-column name="Currency" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-                {{ row?.currency }}
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Balance" [flexGrow]="1">
-            <ng-template let-row="row" ngx-datatable-cell-template>
-              {{row?.rate}}
-            </ng-template>
-          </ngx-datatable-column>
-          
-          <ngx-datatable-column name="Action" [flexGrow]="1">
-                  <ng-template let-row="row" ngx-datatable-cell-template>
-                        <button mat-stroked-button color="warn">Buy</button>
-                  </ng-template>
-          </ngx-datatable-column>
-        </ngx-datatable>    
-      </mat-card>
-  </div>
-
-</div>-->
+ 

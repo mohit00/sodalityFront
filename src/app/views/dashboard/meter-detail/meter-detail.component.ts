@@ -4,6 +4,7 @@ import { egretAnimations } from "app/shared/animations/egret-animations";
 import { ThemeService } from "app/shared/services/theme.service";
 import tinyColor from 'tinycolor2';
 import * as Highcharts from "highcharts";
+import { FacilityServiceService } from '../service/facility-service.service'
 
 @Component({
   selector: 'app-meter-detail',
@@ -18,11 +19,92 @@ export class MeterDetailComponent implements OnInit {
   trendingCurrencies: any[];
   trafficSourcesChart: any;
   monthlyTrafficChartBar: any;
-  
-  constructor(    
-    private themeService: ThemeService
-  ) {}
+  sensorid: string;
+  sensorDetails: any;
+  constructor(
+    private themeService: ThemeService,
+    private service: FacilityServiceService
+  ) {
+    this.sensorid = sessionStorage.getItem("sensorId")
+    this.sensorDetail();
+  }
+  applicationLoadInits;
+  dailyInits;
+  monthlyBillInits;
+  applicationLoad(e) {
+    this.applicationLoadInits = e;
 
+  }
+  monthlyBillInit(e){
+    this.monthlyBillInits = e;
+  }
+  dailyInit(e){
+    this.dailyInits =e ;
+  }
+  dailyConsumption() {
+    this.service.sensorDailyDetail(sessionStorage.getItem("tokenId"), this.sensorid).subscribe(res=>{
+      console.log("Daily Con" + JSON.stringify(res))
+      let dgArray = [];
+       
+      for(var i =0 ;i<res.resource.sensor.length;i++){
+
+      }
+    })
+   }
+  monthConsumption() {
+    this.service.sensorMonthlyDetail(sessionStorage.getItem("tokenId"), this.sensorid).subscribe(res=>{
+
+    })
+   }
+  monthConsumptionBill() {
+    this.service.sensorMonthlyBill(sessionStorage.getItem("tokenId"), this.sensorid).subscribe(res=>{
+        console.log("Month ly bill"+JSON.stringify(res))
+        let dateArray = [];
+        let valueArray = [];
+        for(var i=0 ;i<res.resource.sensor.length ;i++){
+          dateArray.push(res.resource.sensor[i].date)
+          valueArray.push(res.resource.sensor[i].consumed_amt)
+        }
+        this.monthlyTrafficChartBar.xAxis.data = dateArray;
+        this.monthlyTrafficChartBar.series[0].data = valueArray;
+        this.monthlyTrafficChartBar.series[0].name = "Consumed Amt"
+              this.monthlyBillInits.setOption(this.monthlyTrafficChartBar)
+
+    })
+   }
+  sensorDetail() {
+    this.monthConsumptionBill();
+    this.dailyConsumption();
+    this.service.sensorDetail(sessionStorage.getItem("tokenId"), this.sensorid).subscribe(res => {
+      this.sensorDetails = res.resource.sensor;
+      this.trafficSourcesChart.series[0].data[0].value = this.sensorDetails.dg_load
+      this.trafficSourcesChart.series[0].data[1].value = this.sensorDetails.grid_load
+      this.applicationLoadInits.setOption(this.trafficSourcesChart);
+      console.log(JSON.stringify(res));
+      if (this.sensorDetails.active_cut_off == 'Y') {
+        this.activeTrades[0].icon = "assets/images/Light.png";
+        this.activeTrades[0].value = "Yes";
+      } else {
+        this.activeTrades[0].icon = "assets/images/Light-off.png";
+        this.activeTrades[0].value = "N0";
+      }
+      this.activeTrades[1].value = 'Rs. ' + this.sensorDetails.active_cut_off_min_balance;
+      this.activeTrades[2].value = this.sensorDetails.mobile_no;
+      if (this.sensorDetails.notification_sms == 'Y') {
+        this.activeTrades[3].value = "Yes"
+      } else {
+        this.activeTrades[3].value = "No"
+
+      }
+      if (this.sensorDetails.notification_email == 'Y') {
+        this.activeTrades[4].value = "Yes"
+      } else {
+        this.activeTrades[4].value = "No"
+
+      }
+
+    })
+  }
   ngOnInit() {
     this.themeService.onThemeChange.subscribe(activeTheme => {
       this.initTrafficSourcesChart(activeTheme)
@@ -168,8 +250,7 @@ export class MeterDetailComponent implements OnInit {
       },
       yAxis: {
         type: "value",
-        min: 0,
-        max: 200,
+         
         interval: 50,
         axisLabel: {
           show: false
@@ -237,7 +318,7 @@ export class MeterDetailComponent implements OnInit {
         }
       ]
     };
-    
+
     this.activeTrades = [
       {
         icon: "assets/images/Light.png",
@@ -372,7 +453,7 @@ export class MeterDetailComponent implements OnInit {
               value: 4,
               name: "Grid Load"
             }
-           
+
           ],
           itemStyle: {
             emphasis: {
@@ -405,7 +486,7 @@ export class MeterDetailComponent implements OnInit {
     name: 'Photo 6',
     url: 'assets/images/sq-12.jpg'
   }]
-  
+
 
   initCryptoChart(theme) {
     this.cryptoChart = {
