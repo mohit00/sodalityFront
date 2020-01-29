@@ -4,14 +4,12 @@ import { ReportServiceService } from '../report.service';
 import { FacilityServiceService } from 'app/views/dashboard/service/facility-service.service';
 import { DatePipe } from '@angular/common';
 
-
 @Component({
-  selector: 'app-recharged-coupen',
-  templateUrl: './recharged-coupen.component.html',
-  styleUrls: ['./recharged-coupen.component.scss'],
- 
+  selector: 'app-daily-flat-wise',
+  templateUrl: './daily-flat-wise.component.html',
+  styleUrls: ['./daily-flat-wise.component.scss']
 })
-export class RechargedCoupenComponent implements OnInit {
+export class DailyFlatWiseComponent implements OnInit {
   Formgroup: FormGroup;
 
 
@@ -35,17 +33,13 @@ tokenId:any;
       from_date: ['', [
        ]],
       to_date: ['', [
-       ]], report: ['recharge_coupon'],
+       ]], report: ['daily_flat_wise'],
        format:['PDF'],
-       from_flat:['', [
+       flat:['', [
         Validators.required
       ]],
-      to_flat:['', [
-        Validators.required
-      ]],
-      mode:['ALL', [
-        Validators.required
-      ]],
+     
+   
       date:['', [
         Validators.required
       ]]
@@ -70,21 +64,17 @@ getLocationList(tokeId){
     console.log(JSON.stringify(res))
     this.locationList = res.resource.location;
     this.selectedStates = res.resource.location
-    this.selectedStates2 = res.resource.location
-
+ 
   })
 }
   selectedStates :any; 
-  selectedStates2:any;
-  selectedMode = this.mode; 
+   selectedMode = this.mode; 
   selectedFormat = this.format; 
 
    onKey(value) { 
       this.selectedStates = this.search(value);
     }
-    onKey2(value) { 
-      this.selectedStates2 = this.search(value);
-    }
+ 
 
    search(value: string) { 
     let filter = value.toLowerCase();
@@ -95,9 +85,8 @@ getLocationList(tokeId){
      this.Formgroup.value.from_date = this.pipe.transform(this.Formgroup.value.date.begin,"yyyy-MM-dd");
     this.Formgroup.value.to_date = this.pipe.transform(this.Formgroup.value.date.end,"yyyy-MM-dd");
     if(form.valid){}else{return false;}
-let url = `webapi/report?from_date=${this.Formgroup.value.from_date}&to_date=${this.Formgroup.value.to_date}&token_id=${this.tokenId}&report=${this.Formgroup.value.report}&format=${this.Formgroup.value.format}&from_flat=${this.Formgroup.value.from_flat}&to_flat=${this.Formgroup.value.to_flat}&mode=${this.Formgroup.value.mode}`
-   
-this.ReportService.retportset(url);
+let url = `webapi/report?from_date=${this.Formgroup.value.from_date}&to_date=${this.Formgroup.value.to_date}&token_id=${this.tokenId}&report=${this.Formgroup.value.report}&format=${this.Formgroup.value.format}&location_id=${this.Formgroup.value.flat}`
+ this.ReportService.retportset(url);
  
   }
   public hasfirstError = (controlName: string, errorName: string) => {

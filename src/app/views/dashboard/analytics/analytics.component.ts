@@ -808,7 +808,9 @@ this.amrChartOptions.series[0].data  = [];
         this.dgFuelGridchart.hideLoading()
         this.dgFuelGridupdateFlag = false
       }, 200)
-      this.townWeekWiseCharge();
+       this.townWeekWiseCharge();
+      // this.meterStatus();
+
     })
   }
   townWeekWiseCharge(){

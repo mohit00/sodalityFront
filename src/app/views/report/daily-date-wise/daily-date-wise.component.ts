@@ -4,14 +4,12 @@ import { ReportServiceService } from '../report.service';
 import { FacilityServiceService } from 'app/views/dashboard/service/facility-service.service';
 import { DatePipe } from '@angular/common';
 
-
 @Component({
-  selector: 'app-recharged-coupen',
-  templateUrl: './recharged-coupen.component.html',
-  styleUrls: ['./recharged-coupen.component.scss'],
- 
+  selector: 'app-daily-date-wise',
+  templateUrl: './daily-date-wise.component.html',
+  styleUrls: ['./daily-date-wise.component.scss']
 })
-export class RechargedCoupenComponent implements OnInit {
+export class DailyDateWiseComponent implements OnInit {
   Formgroup: FormGroup;
 
 
@@ -35,7 +33,7 @@ tokenId:any;
       from_date: ['', [
        ]],
       to_date: ['', [
-       ]], report: ['recharge_coupon'],
+       ]], report: ['daily_date_wise'],
        format:['PDF'],
        from_flat:['', [
         Validators.required
@@ -92,10 +90,9 @@ getLocationList(tokeId){
   }
 
   execute(form){
-     this.Formgroup.value.from_date = this.pipe.transform(this.Formgroup.value.date.begin,"yyyy-MM-dd");
-    this.Formgroup.value.to_date = this.pipe.transform(this.Formgroup.value.date.end,"yyyy-MM-dd");
-    if(form.valid){}else{return false;}
-let url = `webapi/report?from_date=${this.Formgroup.value.from_date}&to_date=${this.Formgroup.value.to_date}&token_id=${this.tokenId}&report=${this.Formgroup.value.report}&format=${this.Formgroup.value.format}&from_flat=${this.Formgroup.value.from_flat}&to_flat=${this.Formgroup.value.to_flat}&mode=${this.Formgroup.value.mode}`
+     this.Formgroup.value.date = this.pipe.transform(this.Formgroup.value.date,"yyyy-MM-dd");
+     if(form.valid){}else{return false;}
+let url = `webapi/report?date=${this.Formgroup.value.date}&token_id=${this.tokenId}&report=${this.Formgroup.value.report}&format=${this.Formgroup.value.format}&from_flat=${this.Formgroup.value.from_flat}&to_flat=${this.Formgroup.value.to_flat}`
    
 this.ReportService.retportset(url);
  

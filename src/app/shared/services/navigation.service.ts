@@ -26,7 +26,7 @@ interface IBadge {
 
 @Injectable()
 export class NavigationService {
-  constructor() {}
+  constructor() { }
   AdminDash: IMenuItem[] = [
     {
       name: "HOME",
@@ -59,19 +59,19 @@ export class NavigationService {
       tooltip: "Dashboard",
       icon: "dashboard",
       state: "dashboard/Admin",
-       
-    } ,
+
+    },
     {
       name: "Manage Society",
       type: "dropDown",
       tooltip: "Manage Society",
       icon: "view_carousel",
-       sub: [
+      sub: [
         { name: "Group", state: "Group/List" },
-       ]
-    }    
+      ]
+    }
   ];
- GroupDash: IMenuItem[] = [
+  GroupDash: IMenuItem[] = [
     {
       name: "HOME",
       type: "icon",
@@ -103,17 +103,17 @@ export class NavigationService {
       tooltip: "Dashboard",
       icon: "dashboard",
       state: "dashboard/Group",
-       
-    } ,
+
+    },
     {
       name: "Manage Society",
       type: "dropDown",
       tooltip: "Manage Society",
       icon: "view_carousel",
-       sub: [
+      sub: [
         { name: "Society", state: "society/List" },
-       ]
-    }    
+      ]
+    }
   ];
   societyDash: IMenuItem[] = [
     {
@@ -143,22 +143,22 @@ export class NavigationService {
     },
     {
       name: "DASHBOARD",
-       tooltip: "Dashboard",
+      tooltip: "Dashboard",
       icon: "dashboard",
-      
+
       type: "dropDown",
-      
-        sub: [
+
+      sub: [
         { name: "Sodality Dash", state: "dashboard/Society" },
         { name: "facility Dashboard", state: "dashboard/facility" },
-         ]
-    } ,
+      ]
+    },
     {
       name: "Manage Society",
       type: "dropDown",
       tooltip: "Manage Society",
       icon: "view_carousel",
-       sub: [
+      sub: [
         { name: "Society Info", state: "society/Update" },
         { name: "Tower", state: "Tower" },
         { name: "Unit Type", state: "UnitType/List" },
@@ -168,28 +168,70 @@ export class NavigationService {
         { name: "Category", state: "Category" },
         { name: "Staff", state: "Staff" },
 
-       ]
-    } ,
+      ]
+    },
     {
       name: "Complain Management",
       type: "dropDown",
       tooltip: "Manage Society",
       icon: "view_carousel",
-       sub: [
+      sub: [
         { name: "Complain", state: "SocietyComplain" },
         { name: "Notice", state: "Notice" },
 
-       ]
-    }   ,
+      ]
+    },
+    // state: "state: "Report/DailyFlatWise" "
     {
       name: "Report Management",
       type: "dropDown",
       tooltip: "Manage Society",
       icon: "view_carousel",
-       sub: [
-        { name: "Recharged Coupen", state: "Report/RechargedCoupen" }, 
-       ]
-    }      
+      sub: [
+        {
+          name: "Coupon Related Report", type: "dropDown",
+          icon: "view_carousel",
+          sub: [
+            { name: "Recharged Coupon", state: "Report/RechargedCoupen" },
+            { name: "Coupon Request", state: "Report/CouponRequest" },
+            { name: "Printed Coupon", state: "Report/PrintedCoupon" },
+          ]
+
+        },
+        {
+          name: "Analytic Report", type: "dropDown",
+          icon: "view_carousel", sub: [
+            { name: "Daily (Flat-Wise)", state: "Report/DailyFlatWise" },
+            { name: "Daily (Date-Wise)", state: "Report/DailyDateWise" },
+            { name: "Monthly (Flat-Wise)", state: "Report/MonthlyFlatWise" },
+            { name: "Monthly (Month-Wise)", state: "Report/MonthlyDateWise" },
+ 
+          ]
+        },  {
+          name: "Misc/Utility", type: "dropDown",
+          icon: "view_carousel", sub: [
+            { name: "Detailed DG Running", state: "Report/DetailedDgRunning" },
+            { name: "Member Details(Tower-Wise)", state: "Report/MemberDetailsTowerWise" },
+            { name: "Meter Status", state: "Report/MeterStatus" },
+            { name: "Alarming Balance", state: "Report/AlarmingBalance" },
+
+          ]},  {
+            name: "Billing Reports", type: "dropDown",
+            icon: "view_carousel", sub: [
+              { name: "Monthly Bill", state: "Report/MonthlyBill" },
+              { name: "Flat Debit/Credit", state: "Report/FlatDebitCredit" },
+
+            ]}, {
+              name: "CSV Reports", type: "dropDown",
+              icon: "view_carousel", sub: [
+                { name: "Daily Data", state: "Report/DailyData" },
+                { name: "Monthly Data(Flat-Wise)", state: "Report/MonthlyDataFlatWise" },
+                { name: "Monthly Data(Date-Wise)", state: "Report/MonthlyDataDateWise" },
+                { name: "Coupon Recharge Data", state: "Report/CouponRecharge" },
+                { name: "Coupon Generation Data", state: "Report/CouponGeneration" },]
+        },
+      ]
+    }
   ];
   ResidentDash: IMenuItem[] = [
     {
@@ -217,27 +259,27 @@ export class NavigationService {
       type: "separator",
       name: "Main Items"
     },
-   
+
     {
       name: "DASHBOARD",
-       tooltip: "Dashboard",
+      tooltip: "Dashboard",
       icon: "dashboard",
-      
+
       type: "dropDown",
-      
-        sub: [
+
+      sub: [
         { name: "Dashboard", state: "dashboard/Resident" },
-         { name: "Home", state: "dashboard/myxenius" },
-        ]
-    } ,
+        { name: "Home", state: "dashboard/myxenius" },
+      ]
+    },
     {
       name: "Manage Society",
       type: "dropDown",
       tooltip: "Manage Society",
       icon: "view_carousel",
-       sub: [
+      sub: [
         { name: "Complain", state: "Complain/List" },
-       ]
+      ]
     }
     // {
     //   name: "CHARTS",
@@ -246,7 +288,7 @@ export class NavigationService {
     //   icon: "show_chart",
     //   state: "charts"
     // },
-     
+
   ];
   staffDash: IMenuItem[] = [
     {
@@ -280,16 +322,16 @@ export class NavigationService {
       tooltip: "Dashboard",
       icon: "dashboard",
       state: "dashboard/Staff",
-       
-    } ,
+
+    },
     {
       name: "Manage Society",
       type: "dropDown",
       tooltip: "Manage Society",
       icon: "view_carousel",
-       sub: [
+      sub: [
         { name: "Complain", state: "StaffComplain/List" },
-       ]
+      ]
     }
     // {
     //   name: "CHARTS",
@@ -298,7 +340,7 @@ export class NavigationService {
     //   icon: "show_chart",
     //   state: "charts"
     // },
-     
+
   ];
   // Icon menu TITLE at the very top of navigation.
   // This title will appear if any icon type item is present in menu.
@@ -313,24 +355,24 @@ export class NavigationService {
   // Or you can customize this method to supply different menu for
   // different user type.
   publishNavigationChange(menuType: string) {
-     switch (menuType) {
+    switch (menuType) {
       case "SuperAdmin":
         this.menuItems.next(this.AdminDash);
         break;
-        case "Admin":
-          this.menuItems.next(this.GroupDash);
-          break;
+      case "Admin":
+        this.menuItems.next(this.GroupDash);
+        break;
       case "Society":
         this.menuItems.next(this.societyDash);
         break;
-        case "Resident":
+      case "Resident":
         this.menuItems.next(this.ResidentDash);
         break;
-        case "Staff":
+      case "Staff":
         this.menuItems.next(this.staffDash);
         break;
       default:
-        // this.menuItems.next(this.AdminDash);
+      // this.menuItems.next(this.AdminDash);
     }
   }
 }

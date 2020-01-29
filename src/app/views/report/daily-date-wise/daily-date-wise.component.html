@@ -1,6 +1,6 @@
 <mat-card class="p-0">
   <mat-card-title class="">
-    <div class="card-title-text">Recharged Coupon Report{{pageType}}</div>
+    <div class="card-title-text">Daily Consumption Report (Date-Wise) {{pageType}}</div>
     <mat-divider></mat-divider>
   </mat-card-title>
   <mat-card-content>
@@ -41,30 +41,18 @@
         </div>
         <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="100">
 
-          <mat-form-field appearance="outline">
-            <mat-label>Choose Start and End Date</mat-label>
+        
 
-            <input matInput
-                placeholder="Choose a date"
-                [satDatepicker]="picker"
-                [value]="date"   formControlName="date" required >
-            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
-            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
-            <mat-error *ngIf="hasfirstError('date','required')">
-              This field <strong>required</strong>
-            </mat-error>
+          <mat-form-field appearance="outline">
+            <mat-label>Select Date</mat-label>
+
+            <input matInput [matDatepicker]="picker" placeholder="Select Date" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
         
-        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
-          <mat-form-field appearance="outline">
-            <mat-label>Select Mode</mat-label>
-            <mat-select  formControlName="mode" required >
-              <mat-option *ngFor="let mode of selectedMode" [value]="mode">{{mode}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-  
+         
         <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
           <mat-form-field appearance="outline">
             <mat-label>Select Format</mat-label>

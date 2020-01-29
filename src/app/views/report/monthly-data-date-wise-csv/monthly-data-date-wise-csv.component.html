@@ -1,74 +1,55 @@
 <mat-card class="p-0">
   <mat-card-title class="">
-    <div class="card-title-text">Recharged Coupon Report{{pageType}}</div>
+    <div class="card-title-text">Monthly Data Report(Month-Wise){{pageType}}</div>
     <mat-divider></mat-divider>
   </mat-card-title>
   <mat-card-content>
-    <form   [formGroup]="Formgroup" >
+    <form  >
       <ng-template matStepLabel>Category Info</ng-template>
-      
-     
-       <div fxLayout="row wrap">
+
+      <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="100">
           <mat-form-field appearance="outline">
             <mat-label>From Flat</mat-label>
-            <mat-select    formControlName="from_flat" required >
+            <mat-select   >
               <input style="padding: 10px;
               width: 90%;
               border-bottom: 1px solid;" matInput  placeholder="Select Flat" (keyup)="onKey($event.target.value)">
 
-<mat-option *ngFor="let state of selectedStates" [value]="state.id">{{state.name}}</mat-option>
-</mat-select>
-            <mat-error *ngIf="hasfirstError('from_flat','required')">
-              This field <strong>required</strong>
-            </mat-error>
+              <mat-option *ngFor="let state of selectedStates" [value]="state">{{state}}</mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="100">
           <mat-form-field appearance="outline">
-            <mat-label>TO Flat</mat-label>
-            <mat-select   formControlName="to_flat" required >
+            <mat-label>To Flat</mat-label>
+            <mat-select   >
               <input style="padding: 10px;
               width: 90%;
-              border-bottom: 1px solid;" matInput  placeholder="Select Flat" (keyup)="onKey2($event.target.value)">
+              border-bottom: 1px solid;" matInput  placeholder="Select Flat" (keyup)="onKey($event.target.value)">
 
-              <mat-option *ngFor="let state of selectedStates2" [value]="state.id">{{state.name}}</mat-option>
+              <mat-option *ngFor="let state of selectedStates" [value]="state">{{state}}</mat-option>
             </mat-select>
-            <mat-error *ngIf="hasfirstError('to_flat','required')">
-              This field <strong>required</strong>
-            </mat-error>
           </mat-form-field>
         </div>
         <div fxFlex="100" fxFlex.gt-sm="33.3" fxFlex.sm="100">
 
           <mat-form-field appearance="outline">
-            <mat-label>Choose Start and End Date</mat-label>
+            <mat-label>Choose Start and End Year-Month</mat-label>
 
             <input matInput
                 placeholder="Choose a date"
                 [satDatepicker]="picker"
-                [value]="date"   formControlName="date" required >
+                [value]="date">
             <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
             <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
-            <mat-error *ngIf="hasfirstError('date','required')">
-              This field <strong>required</strong>
-            </mat-error>
           </mat-form-field>
         </div>
         
         <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
           <mat-form-field appearance="outline">
-            <mat-label>Select Mode</mat-label>
-            <mat-select  formControlName="mode" required >
-              <mat-option *ngFor="let mode of selectedMode" [value]="mode">{{mode}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-  
-        <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
-          <mat-form-field appearance="outline">
             <mat-label>Select Format</mat-label>
-            <mat-select  formControlName="format" required >
+            <mat-select   >
            
 
               <mat-option *ngFor="let format of selectedFormat" [value]="format">{{format}}</mat-option>
@@ -81,7 +62,7 @@
       <div fxLayout="row">
         <!-- <button mat-raised-button color="accent" routerLink="/">Back</button> -->
         <span fxFlex="8px"></span>
-        <button mat-raised-button color="primary"  (click) ="execute(Formgroup)">Execute</button>
+        <button mat-raised-button color="primary"  >Execute</button>
  
       </div>
     </form>

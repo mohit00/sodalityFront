@@ -43,6 +43,7 @@ SENSOR_DETAIL = 'webapi/sensor_details';
 SENSOR_MONTHLY_BILL_DETAIL = 'webapi/sensor_monthly_bill';
 SENSOR_MONTHLY_DETAIL ='webapi/sensor_monthly_details';
 SENSOR_DAILY_DETAIL ='webapi/sensor_daily_details';
+GET_LOCATION ='/webapi/location_select'
   constructor(private _http: HttpClient, private router: Router
     // tslint:disable-next-line: no-shadowed-variable
   ) {
@@ -60,6 +61,20 @@ SENSOR_DAILY_DETAIL ='webapi/sensor_daily_details';
   }
   get IBMSTOKEN(){
     return this.ibmsToken;
+  }
+  getLocationList( token): Observable<any>{
+      
+    return this._http.get(environment.FACILITY_URL + this.GET_LOCATION + '?token_id='+token).pipe(
+      // eg. "map" without a dot before
+      map(data => {
+        return data;
+      }),
+      // "catchError" instead "catch"
+      catchError(error => {
+        alert("Something went wrong ;)");
+        return Observable.throw('Something went wrong ;)');
+      })
+    );
   }
   sensorDetail( token,id): Observable<any>{
       
