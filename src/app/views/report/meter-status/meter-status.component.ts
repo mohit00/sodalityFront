@@ -12,8 +12,14 @@ export class MeterStatusComponent implements OnInit {
   Formgroup: FormGroup;
 
 
-  mode: string[] = [
-    'ALL', 'XE-MAIN','WEB', 'PAYTM', 'HDFC', 'MOBIKWIK', 'IVRS'
+  mode: any = [{
+    value:'N',
+    name:'Connected'
+  },{
+    value:'Y',
+    name:'Disconnected'
+  }
+  
   ];
 
   states: string[] = [
@@ -21,7 +27,8 @@ export class MeterStatusComponent implements OnInit {
   ];
 
   format: string[] = [
-    'PDF'
+    'pdf',
+    'csv'
   ];
 tokenId:any;
   userData: any;
@@ -29,9 +36,11 @@ tokenId:any;
     this.userData = JSON.parse(sessionStorage.getItem("data"));
 
     this.Formgroup = this.fb.group({
-      name: ['', [
+      name: ['meter_status', [
         Validators.required
       ]],
+      format:['pdf'],
+      state:['Disconnected'],
   })
   if(FacilityService.tokenId){
     this.tokenId  = FacilityService.tokenId;
@@ -48,7 +57,12 @@ tokenId:any;
   selectedStates = this.states; 
   selectedMode = this.mode; 
   selectedFormat = this.format; 
-
+  execute(form){
+     if(form.valid){}else{return false;}
+    let url = `/webapi/report?state=${this.Formgroup.value.state}&token_id=${this.tokenId}&report=${this.Formgroup.value.name}&format=${this.Formgroup.value.format}`
+      
+    this.ReportService.retportset(url);
+  }
    onKey(value) { 
       this.selectedStates = this.search(value);
       this.selectedMode = this.searchMode(value);

@@ -21,7 +21,8 @@ export class AlarmingBalanceComponent implements OnInit {
   ];
 
   format: string[] = [
-    'PDF'
+    'pdf',
+    'csv'
   ];
 tokenId:any;
   userData: any;
@@ -29,9 +30,10 @@ tokenId:any;
     this.userData = JSON.parse(sessionStorage.getItem("data"));
 
     this.Formgroup = this.fb.group({
-      name: ['', [
+      name: ['alarming_balance', [
         Validators.required
       ]],
+      format:['pdf']
   })
   if(FacilityService.tokenId){
     this.tokenId  = FacilityService.tokenId;
@@ -44,7 +46,12 @@ tokenId:any;
 
   }
 }
-
+execute(form){
+  if(form.valid){}else{return false;}
+ let url = `/webapi/report?token_id=${this.tokenId}&report=${this.Formgroup.value.name}&format=${this.Formgroup.value.format}`
+   
+ this.ReportService.retportset(url);
+}
   selectedStates = this.states; 
   selectedMode = this.mode; 
   selectedFormat = this.format; 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReportServiceService } from '../report.service';
 import { FacilityServiceService } from 'app/views/dashboard/service/facility-service.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-detailed-dg-running',
@@ -21,17 +22,20 @@ export class DetailedDgRunningComponent implements OnInit {
   ];
 
   format: string[] = [
-    'PDF'
+    'pdf'
   ];
 tokenId:any;
   userData: any;
-  constructor(private fb :FormBuilder,private ReportService:ReportServiceService,private FacilityService:FacilityServiceService) {
+  constructor(private pipe:DatePipe,private fb :FormBuilder,private ReportService:ReportServiceService,private FacilityService:FacilityServiceService) {
     this.userData = JSON.parse(sessionStorage.getItem("data"));
 
     this.Formgroup = this.fb.group({
-      name: ['', [
-        Validators.required
+      name: ['detailed_dg', [
+        Validators.required,
+        
       ]],
+      date:[],
+      format:['']
   })
   if(FacilityService.tokenId){
     this.tokenId  = FacilityService.tokenId;
@@ -73,5 +77,13 @@ tokenId:any;
   
   ngOnInit() {
   }
+  execute(form){
+    this.Formgroup.value.from_date = this.pipe.transform(this.Formgroup.value.date.begin,"yyyy-MM-dd");
+   this.Formgroup.value.to_date = this.pipe.transform(this.Formgroup.value.date.end,"yyyy-MM-dd");
+   if(form.valid){}else{return false;}
+let url = `webapi/report?from_date=${this.Formgroup.value.from_date}&to_date=${this.Formgroup.value.to_date}&token_id=${this.tokenId}&report=${this.Formgroup.value.name}&format=${this.Formgroup.value.format}`
+  
+this.ReportService.retportset(url);
 
+ }
 }

@@ -386,7 +386,6 @@ let societyLogoArray=[];
     }
 
 
-
     let dataJson = {
       id:this.dataDetail.id,
 

@@ -4,14 +4,14 @@
     <mat-divider></mat-divider>
   </mat-card-title>
   <mat-card-content>
-    <form  >
+    <form   [formGroup]="Formgroup" >
       <ng-template matStepLabel>Category Info</ng-template>
 
       <div fxLayout="row wrap">
         <div fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="100">
           <mat-form-field appearance="outline">
             <mat-label>Select Format</mat-label>
-            <mat-select   >
+            <mat-select   formControlName="format" >
            
 
               <mat-option *ngFor="let format of selectedFormat" [value]="format">{{format}}</mat-option>
@@ -24,7 +24,7 @@
       <div fxLayout="row">
         <!-- <button mat-raised-button color="accent" routerLink="/">Back</button> -->
         <span fxFlex="8px"></span>
-        <button mat-raised-button color="primary"  >Execute</button>
+        <button mat-raised-button color="primary"  (click) ="execute(Formgroup)">Execute</button>
  
       </div>
     </form>
